@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="9. Sınıf 2. Dönem Performans Değerlendirme Ölçekleri - Karaman MTAL">
+    <title>9. Sınıf 2. Dönem Ölçekler | Karaman MTAL</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon">📊</div>
+                    <div class="logo-text">
+                        <span class="logo-title">Ölçek Sistemi</span>
+                        <span class="logo-subtitle">9. Sınıf • 2. Dönem</span>
+                    </div>
+                </div>
+                <button class="sidebar-close" id="sidebarClose" aria-label="Menüyü Kapat">✕</button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <span class="nav-section-title">Öğrenci Bilgileri</span>
+                    <a href="#" class="nav-item active" data-page="ogrenci_bilgileri" id="nav-ogrenci">
+                        <span class="nav-icon">👤</span>
+                        <span class="nav-label">Öğrenci Listesi</span>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <span class="nav-section-title">3. Tema Ölçekleri</span>
+                    <a href="#" class="nav-item" data-page="tema3_konusma" id="nav-tema3-konusma">
+                        <span class="nav-icon">🎤</span>
+                        <span class="nav-label">3. Tema Konuşma</span>
+                    </a>
+                    <a href="#" class="nav-item" data-page="tema3_yazma" id="nav-tema3-yazma">
+                        <span class="nav-icon">✍️</span>
+                        <span class="nav-label">3. Tema Yazma</span>
+                    </a>
+                    <a href="#" class="nav-item" data-page="tema3_kitap" id="nav-tema3-kitap">
+                        <span class="nav-icon">📚</span>
+                        <span class="nav-label">3. Tema Kitap</span>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <span class="nav-section-title">4. Tema Ölçekleri</span>
+                    <a href="#" class="nav-item" data-page="tema4_konusma" id="nav-tema4-konusma">
+                        <span class="nav-icon">🎤</span>
+                        <span class="nav-label">4. Tema Konuşma</span>
+                    </a>
+                    <a href="#" class="nav-item" data-page="tema4_yazma" id="nav-tema4-yazma">
+                        <span class="nav-icon">✍️</span>
+                        <span class="nav-label">4. Tema Yazma</span>
+                    </a>
+                    <a href="#" class="nav-item" data-page="tema4_kitap" id="nav-tema4-kitap">
+                        <span class="nav-icon">📚</span>
+                        <span class="nav-label">4. Tema Kitap</span>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <span class="nav-section-title">Diğer Ölçekler</span>
+                    <a href="#" class="nav-item" data-page="ders_ici" id="nav-ders-ici">
+                        <span class="nav-icon">📝</span>
+                        <span class="nav-label">Ders İçi Performans</span>
+                    </a>
+                    <a href="#" class="nav-item" data-page="film" id="nav-film">
+                        <span class="nav-icon">🎬</span>
+                        <span class="nav-label">Film Değerlendirme</span>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <span class="nav-section-title">Sonuçlar</span>
+                    <a href="#" class="nav-item" data-page="performans_puani" id="nav-performans">
+                        <span class="nav-icon">🏆</span>
+                        <span class="nav-label">Performans Puanı</span>
+                    </a>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="btn-save" id="btnSaveAll" title="Tüm verileri kaydet">
+                    <span>💾</span> Verileri Kaydet
+                </button>
+                <button class="btn-export" id="btnPrintPDF" title="Performans tablosunu PDF olarak yazdır">
+                    <span>🖨️</span> PDF Yazdır
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-bar">
+                <button class="hamburger" id="hamburger" aria-label="Menüyü Aç">
+                    <span></span><span></span><span></span>
+                </button>
+                <h1 class="page-title" id="pageTitle">Öğrenci Bilgileri</h1>
+                <div class="top-bar-actions">
+                    <div class="student-count" id="studentCount">
+                        <span class="count-icon">👥</span>
+                        <span class="count-text">0 Öğrenci</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-area" id="contentArea">
+                <!-- Content will be dynamically rendered here -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast notification -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
