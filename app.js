@@ -78,7 +78,7 @@
         dialog(title, el('p', { text: message }), [button('Vazgeç', () => $('#dialog').close()), button(label, () => { $('#dialog').close(); action(); }, 'button primary')]);
     }
     function heading(title, description, actions = []) {
-        return el('div', { className: 'page-heading' }, [el('div', {}, [el('p', { className: 'eyebrow', text: '9. SINIF / 1. DÖNEM' }), el('h1', { text: title }), el('p', { className: 'muted', text: description })]), el('div', { className: 'actions' }, actions)]);
+        return el('div', { className: 'page-heading' }, [el('div', {}, [el('h1', { text: title }), description ? el('p', { className: 'muted', text: description }) : null]), actions.length ? el('div', { className: 'actions' }, actions) : null]);
     }
     function go(page) {
         currentPage = page;
@@ -89,8 +89,29 @@
         render();
         window.scrollTo(0, 0);
     }
+    function studentActions() {
+        return [button('+ Öğrenci ekle', () => editStudent(), 'button primary'), button('Excel’den toplu ekle', importStudents)];
+    }
     function emptyState() {
-        return el('section', { className: 'empty-state card' }, [el('span', { className: 'empty-symbol', text: '01' }), el('h2', { text: 'Öğrencilerinizi ekleyerek başlayın' }), el('p', { text: 'Aynı öğrenci listesi her iki performans ve tüm tema ölçeklerinde kullanılır.' }), el('div', { className: 'actions' }, [button('Toplu öğrenci ekle', importStudents, 'button primary'), button('Tek öğrenci ekle', () => editStudent())])]);
+        const steps = ['Öğrenci ekle', 'Notu gir ve dağıt', 'Yazdır'];
+        return el('section', { className: 'empty-state card' }, [
+            el('h2', { text: 'İlk öğrencinizi ekleyin' }),
+            el('div', { className: 'actions' }, studentActions()),
+            el('ol', { className: 'quick-steps', 'aria-label': 'Kullanım sırası' }, steps.map((text, index) => el('li', {}, [el('span', { className: 'step-number', text: index + 1, 'aria-hidden': 'true' }), el('span', { text })])))
+        ]);
+    }
+    function gradeHelp() {
+        const weights = el('div', { className: 'weight-cards' });
+        [1, 2].forEach(p => weights.append(el('section', { className: 'weight-card' }, [
+            el('h3', { text: `${p}. Performans` }),
+            el('ul', { className: 'weight-tags' }, C.keysFor(p).map(key => el('li', { text: `${R[key].title} · %${R[key].weight}` })))
+        ])));
+        return el('details', { className: 'grade-help card' }, [el('summary', { text: 'Hesaplama ve kullanım' }), el('div', { className: 'grade-help-content' }, [
+            el('p', { text: '0–100 arasında not girin. “Notu dağıt”, bu notu ölçeklere uygular; “Ölçeği aç” ile ölçütleri değiştirebilirsiniz.' }),
+            el('p', { text: 'Enter ile sıradaki öğrenciye geçin. Not alanını boş bırakırsanız tamamlanan ölçeklerin sonucu kullanılır.' }),
+            weights,
+            el('p', { text: 'Alt ölçek puanları önce 100 üzerinden yuvarlanır, ardından bu oranlarla performans notu hesaplanır. Dağıtılan ölçütleri yazdırmadan önce kontrol edin.' })
+        ])]);
     }
     function render() {
         if (!data.students.some(s => s.id === selectedId)) selectedId = data.students[0]?.id ?? null;
@@ -108,14 +129,12 @@
         return el('input', { type: 'search', value: search, className: 'search-input', placeholder: 'Öğrenci adı veya numarası ara', 'aria-label': 'Öğrenci ara', onInput: event => { search = event.target.value; onInput(); } });
     }
     function renderGrades() {
-        $('#main').append(heading('Performans puanları', 'Notu doğrudan girin veya dereceli ölçeklerden hesaplayın. Enter ile sıradaki öğrenciye geçin.', [button('Sınıf notlarını yazdır', () => showPrint('summary')), button('+ Öğrenci ekle', () => editStudent(), 'button primary')]));
-        const weights = el('div', { className: 'weight-cards' });
-        [1, 2].forEach(p => weights.append(el('section', { className: 'weight-card' }, [el('span', { className: 'performance-number', text: `0${p}` }), el('div', {}, [el('h2', { text: `${p}. Performans` }), el('p', { text: p === 1 ? '1. ve 2. tema konuşma / yazma' : '1. ve 2. tema kitap okuma / ders içi' }), el('div', { className: 'weight-tags' }, C.keysFor(p).map(key => el('span', { text: `${R[key].title} %${R[key].weight}` })))])])));
-        $('#main').append(weights);
-        if (!data.students.length) { $('#main').append(emptyState()); return; }
+        const hasStudents = data.students.length > 0;
+        $('#main').append(heading('Performans notları', hasStudents ? 'Notu girin → Notu dağıt → Yazdır' : '', hasStudents ? [...studentActions(), button('Sınıf notlarını yazdır', () => showPrint('summary'))] : []));
+        if (!hasStudents) { $('#main').append(emptyState(), gradeHelp()); return; }
         const card = el('section', { className: 'card grade-card' });
         card.append(el('div', { className: 'card-toolbar' }, [el('h2', { text: `Öğrenci listesi · ${data.students.length}` }), searchBox(renderGradeRows)]), el('div', { className: 'grade-table-header', 'aria-hidden': 'true' }, [el('span', { text: 'ÖĞRENCİ' }), el('span', { text: '1. PERFORMANS' }), el('span', { text: '2. PERFORMANS' }), el('span', { text: 'ÖLÇEK ÇIKTISI' })]), el('div', { id: 'gradeRows' }));
-        $('#main').append(card, el('p', { className: 'hint', text: '“Ölçeğe uygula” girilen not için 1–3 derecelerinden bir taslak oluşturur. Ölçütleri kontrol edip değiştirebilirsiniz. Boş not alanı, tamamlanan ölçeklerin sonucunu kullanır.' }));
+        $('#main').append(card, gradeHelp());
         renderGradeRows();
     }
     function renderGradeRows() {
@@ -164,7 +183,7 @@
             }
             if (event.key === 'Escape') { input.value = student.grades[p] ?? ''; input.setAttribute('aria-invalid', 'false'); updateNote(); }
         });
-        cell.append(el('span', { className: 'mobile-label', text: `${p}. Performans` }), el('div', { className: 'grade-entry' }, [input, button('Ölçeğe uygula', () => {
+        cell.append(el('span', { className: 'mobile-label', text: `${p}. Performans` }), el('div', { className: 'grade-entry' }, [input, button('Notu dağıt', () => {
             if (!input.validity.valid) { input.reportValidity(); return; }
             applyDistribution(student, p);
         }, 'button small')]), el('div', { className: 'grade-detail' }, [note, button('Ölçeği aç', () => openRubric(student.id, p), 'text-button')]));
@@ -246,7 +265,7 @@
         summary.after(notice);
     }
     function renderStudents() {
-        $('#main').append(heading('Öğrenci listesi', 'Öğrenci numarası ve ad soyadı tüm performans ölçeklerinde ortak kullanılır.', [button('Toplu ekle', importStudents), button('+ Öğrenci ekle', () => editStudent(), 'button primary')]));
+        $('#main').append(heading('Öğrenci listesi', '', data.students.length ? studentActions() : []));
         if (!data.students.length) { $('#main').append(emptyState()); return; }
         const list = el('section', { className: 'card roster' });
         data.students.forEach(student => list.append(el('div', { className: 'roster-row' }, [el('span', { className: 'roster-no', text: student.no || '—' }), el('strong', { text: studentName(student) }), el('div', { className: 'actions' }, [button('Düzenle', () => editStudent(student), 'button small'), button('Sil', () => confirmAction('Öğrenciyi sil', `${studentName(student)} ve bu öğrenciye ait iki performansın puanları silinecek.`, () => { C.removeStudent(data, student.id); save(); render(); }, 'Öğrenciyi sil'), 'button small danger')])])));
@@ -288,7 +307,7 @@
         const labels = { school: 'Okul adı', year: 'Eğitim öğretim yılı', className: 'Sınıf / şube', teacher: 'Öğretmen', book1: '1. tema kitabının adı', book2: '2. tema kitabının adı' };
         Object.entries(labels).forEach(([key, label]) => grid.append(field(label, el('input', { value: data.metadata[key], placeholder: key === 'year' ? 'Örn. 2026–2027' : '', maxLength: 200, onInput: event => { data.metadata[key] = event.target.value; save(); } }))));
         $('#main').append(
-            heading('Sınıf bilgileri', 'Bu bilgiler sınıf not çizelgelerinde ve öğrenci ölçeklerinin yazdırma çıktılarında kullanılır.'),
+            heading('Sınıf bilgileri', 'Yazdırma çıktılarında kullanılacak bilgileri girin.'),
             el('section', { className: 'card class-info-card', 'aria-label': 'Sınıf bilgileri' }, [grid]),
             el('p', { className: 'hint', text: 'Değişiklikler otomatik kaydedilir.' })
         );

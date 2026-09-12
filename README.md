@@ -4,9 +4,11 @@ Türk Dili ve Edebiyatı dersi için öğrenci listesi, iki ayrı performans not
 
 ## Kullanım
 
-1. **Öğrenci listesi** bölümünden tek öğrenci ekleyin veya Excel’den numara / ad soyad sütunlarını **Toplu ekle** alanına yapıştırın.
+Açılışta öğrenci ekleme düğmeleri ve üç adımlı kullanım sırası görünür. Sekmeler simgeli düğmelerle ayrılır. Ayrıntılı oranlar ve açıklamalar **Hesaplama ve kullanım** açılır bölümündedir.
+
+1. **Öğrenci listesi** bölümünden tek öğrenci ekleyin veya Excel’den numara / ad soyad sütunlarını **Excel’den toplu ekle** alanına yapıştırın.
 2. **Puan girişi** ekranında 1. ve 2. performans notlarını yan yana girin. Bu ekrandaki **+ Öğrenci ekle** düğmesi tek öğrenci formunu açar. Notlar otomatik kaydedilir. Enter, aynı performansın sonraki öğrencisine geçer.
-3. İsterseniz **Ölçeğe uygula** ile girilen notu ilgili performansın ölçütlerine dağıtın. Dağıtım, hedef performans notunu koruyarak alt ölçeklerin 100’lük notlarını mümkün olduğunca birbirinden farklı seçer. Bütün notların farklı olması matematiksel olarak mümkün değilse en fazla çeşitlilik sağlayan dağılım kullanılır. Bu işlem diğer performansı etkilemez. Mevcut ölçüt puanları varsa değiştirmeden önce sorulur. Oluşturulan dereceler ekranda taslak olarak belirtilir ve değiştirilebilir; bu uyarı yazdırılmaz. Daha önce hesaplanmış bir not da aynı düğmeyle yeniden dağıtılabilir.
+3. İsterseniz **Notu dağıt** ile girilen notu ilgili performansın ölçütlerine dağıtın. Dağıtım, hedef performans notunu koruyarak alt ölçeklerin 100’lük notlarını mümkün olduğunca birbirinden farklı seçer. Bütün notların farklı olması matematiksel olarak mümkün değilse en fazla çeşitlilik sağlayan dağılım kullanılır. Bu işlem diğer performansı etkilemez. Mevcut ölçüt puanları varsa değiştirmeden önce sorulur. Oluşturulan dereceler ekranda taslak olarak belirtilir ve değiştirilebilir; bu uyarı yazdırılmaz. Daha önce hesaplanmış bir not da aynı düğmeyle yeniden dağıtılabilir.
 4. **Dereceli ölçekler** bölümünde öğrenci ve performansı seçin. **Tema ölçeği** açılır menüsünden ölçeği açın ve 1, 2 veya 3 puan işaretleyin. Seçili dereceye tekrar basmak o ölçütü temizler.
 5. Öğrenci satırındaki **Yazdır** ile tek ölçek, bir performans veya tüm ölçekleri önizleyin. **Yazdır / PDF kaydet** tarayıcının yazdırma penceresini açar. Her ölçek yeni bir A4 sayfada başlar. **Sınıf notlarını yazdır**, iki performansı ayrı sayfalara ayırır. 1. performans çizelgesinde dört konuşma/yazma alt notu, 2. performans çizelgesinde iki kitap ve ders içi alt notu ayrı sütunlardadır. Sütunlar 100 üzerinden puanları, başlıklar Excel’deki ağırlıkları gösterir.
 6. **Öğrenci listesi** yanındaki **Sınıf bilgileri** sekmesinden okul, yıl, şube, öğretmen ve kitap adlarını girin. Bilgiler otomatik kaydedilir ve yazdırma çıktılarında kullanılır.
@@ -29,7 +31,7 @@ Her ölçek önce `ROUND(hamPuan / enYuksekPuan * 100, 0)` ile 100’lük sistem
 
 Boş ölçüt, sıfır puan anlamına gelmez. Eksik ölçeğin puanı geçici olarak gösterilir; tüm ölçütler tamamlanmadan kesin performans sonucu üretilmez. Doğrudan girilmiş **0** notu ise korunur. Ölçütler yalnızca 1–3 derecesini kabul ettiği için **0–32** notları doğrudan kaydedilebilir, fakat bu notlar ölçütlere dağıtılamaz.
 
-Doğrudan not girişi mevcut ölçüt puanlarını değiştirmez. Bir doğrudan not varken ölçekten hesaplanan sonuç ayrıca gösterilir. Not alanını temizlemek veya **Ölçek sonucunu kullan** düğmesine basmak hesaplanan sonuca döner. **Ölçeğe uygula** sonrasında not yeniden ölçeklere bağlı hale gelir. Öğrenciye ait tekil ölçek çıktılarında diğer ölçeklerin puan özeti ve taslak uyarısı bulunmaz; sınıf çizelgesindeki alt not sütunları korunur.
+Doğrudan not girişi mevcut ölçüt puanlarını değiştirmez. Bir doğrudan not varken ölçekten hesaplanan sonuç ayrıca gösterilir. Not alanını temizlemek veya **Ölçek sonucunu kullan** düğmesine basmak hesaplanan sonuca döner. **Notu dağıt** sonrasında not yeniden ölçeklere bağlı hale gelir. Öğrenciye ait tekil ölçek çıktılarında diğer ölçeklerin puan özeti ve taslak uyarısı bulunmaz; sınıf çizelgesindeki alt not sütunları korunur.
 
 ## Kayıt ve önceki sürüm
 
