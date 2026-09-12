@@ -6,7 +6,7 @@ Türk Dili ve Edebiyatı dersi için öğrenci listesi, iki ayrı performans not
 
 Açılışta öğrenci ekleme düğmeleri ve üç adımlı kullanım sırası görünür. Sekmeler simgeli düğmelerle ayrılır. Ayrıntılı oranlar ve açıklamalar **Hesaplama ve kullanım** açılır bölümündedir.
 
-1. **Öğrenci listesi** bölümünden tek öğrenci ekleyin veya Excel’den numara / ad soyad sütunlarını **Excel’den toplu ekle** alanına yapıştırın.
+1. **Öğrenci listesi** bölümünden tek öğrenci ekleyin veya e-Okul / Excel’den numara / ad soyad sütunlarını **E-Okuldan Kopyala** alanına yapıştırın.
 2. **Puan girişi** ekranında 1. ve 2. performans notlarını yan yana girin. Bu ekrandaki **+ Öğrenci ekle** düğmesi tek öğrenci formunu açar. Notlar otomatik kaydedilir. Enter, aynı performansın sonraki öğrencisine geçer.
 3. İsterseniz **Notu dağıt** ile girilen notu ilgili performansın ölçütlerine dağıtın. Dağıtım, hedef performans notunu koruyarak alt ölçeklerin 100’lük notlarını mümkün olduğunca birbirinden farklı seçer. Bütün notların farklı olması matematiksel olarak mümkün değilse en fazla çeşitlilik sağlayan dağılım kullanılır. Bu işlem diğer performansı etkilemez. Mevcut ölçüt puanları varsa değiştirmeden önce sorulur. Oluşturulan dereceler ekranda taslak olarak belirtilir ve değiştirilebilir; bu uyarı yazdırılmaz. Daha önce hesaplanmış bir not da aynı düğmeyle yeniden dağıtılabilir.
 4. **Dereceli ölçekler** bölümünde öğrenci ve performansı seçin. **Tema ölçeği** açılır menüsünden ölçeği açın ve 1, 2 veya 3 puan işaretleyin. Seçili dereceye tekrar basmak o ölçütü temizler.

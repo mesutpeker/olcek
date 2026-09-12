@@ -90,7 +90,7 @@
         window.scrollTo(0, 0);
     }
     function studentActions() {
-        return [button('+ Öğrenci ekle', () => editStudent(), 'button primary'), button('Excel’den toplu ekle', importStudents)];
+        return [button('+ Öğrenci ekle', () => editStudent(), 'button primary'), button('E-Okuldan Kopyala', importStudents)];
     }
     function emptyState() {
         const steps = ['Öğrenci ekle', 'Notu gir ve dağıt', 'Yazdır'];
@@ -288,7 +288,7 @@
     }
     function importStudents() {
         const textarea = el('textarea', { rows: 9, placeholder: '101\tÖrnek Öğrenci\n102\tÖrnek Öğrenci', 'aria-label': 'Toplu öğrenci listesi' });
-        const preview = el('p', { className: 'hint', text: 'Excel’den numara ve ad soyad sütunlarını kopyalayıp yapıştırın. Sıra no / öğrenci no / ad soyad biçimi de desteklenir.' });
+        const preview = el('p', { className: 'hint', text: 'E-Okul veya Excel’den numara ve ad soyad sütunlarını kopyalayıp yapıştırın. Sıra no / öğrenci no / ad soyad biçimi de desteklenir.' });
         const content = el('div', {}, [textarea, preview]);
         textarea.addEventListener('input', () => { const result = C.parseStudents(textarea.value); preview.textContent = `${result.students.length} öğrenci bulundu. ${result.skipped} başlık veya geçersiz satır atlanacak.`; });
         dialog('Toplu öğrenci ekle', content, [button('Listeye ekle', () => {
