@@ -38,7 +38,7 @@
     function storageError(message) {
         $('#storageAlert').hidden = false;
         $('#storageAlert').textContent = message;
-        $('#saveStatus').textContent = 'Kaydedilemedi · yedek alın';
+        $('#saveStatus').textContent = 'Kaydedilemedi';
     }
     function save() {
         if (storageBlocked) return false;
@@ -47,7 +47,7 @@
             $('#saveStatus').textContent = 'Kaydedildi · bu tarayıcıda';
             return true;
         } catch (error) {
-            storageError('Değişiklikler tarayıcıya kaydedilemiyor. Veri kaybetmemek için Sınıf ve yedekleme bölümünden yedek indirin.');
+            storageError('Değişiklikler tarayıcıya kaydedilemiyor. Tarayıcınızın bu site için depolamaya izin verdiğini ve yeterli boş alan bulunduğunu kontrol edin.');
             return false;
         }
     }
@@ -65,7 +65,7 @@
             }
         } catch (error) {
             storageBlocked = true;
-            storageError('Kayıt okunamadığı için mevcut verinin üzerine yazılmadı. Sınıf ve yedekleme bölümünden ham kaydı indirin veya geçerli bir yedek yükleyin.');
+            storageError('Kayıt okunamadığı için mevcut verinin üzerine yazılmadı. Kayıt sorunu çözülene kadar değişiklikler kaydedilemez.');
         }
     }
     function dialog(title, content, actions = []) {
@@ -97,6 +97,7 @@
         $('#main').replaceChildren();
         if (currentPage === 'students') renderStudents();
         else if (currentPage === 'rubrics') renderRubrics();
+        else if (currentPage === 'class') renderClassInfo();
         else renderGrades();
     }
     function matchingStudents() {
@@ -107,7 +108,7 @@
         return el('input', { type: 'search', value: search, className: 'search-input', placeholder: 'Öğrenci adı veya numarası ara', 'aria-label': 'Öğrenci ara', onInput: event => { search = event.target.value; onInput(); } });
     }
     function renderGrades() {
-        $('#main').append(heading('Performans puanları', 'Notu doğrudan girin veya dereceli ölçeklerden hesaplayın. Enter ile sıradaki öğrenciye geçin.', [button('Sınıf notlarını yazdır', () => showPrint('summary')), button('+ Öğrenci ekle', importStudents, 'button primary')]));
+        $('#main').append(heading('Performans puanları', 'Notu doğrudan girin veya dereceli ölçeklerden hesaplayın. Enter ile sıradaki öğrenciye geçin.', [button('Sınıf notlarını yazdır', () => showPrint('summary')), button('+ Öğrenci ekle', () => editStudent(), 'button primary')]));
         const weights = el('div', { className: 'weight-cards' });
         [1, 2].forEach(p => weights.append(el('section', { className: 'weight-card' }, [el('span', { className: 'performance-number', text: `0${p}` }), el('div', {}, [el('h2', { text: `${p}. Performans` }), el('p', { text: p === 1 ? '1. ve 2. tema konuşma / yazma' : '1. ve 2. tema kitap okuma / ders içi' }), el('div', { className: 'weight-tags' }, C.keysFor(p).map(key => el('span', { text: `${R[key].title} %${R[key].weight}` })))])])));
         $('#main').append(weights);
@@ -171,7 +172,7 @@
         return cell;
     }
     function applyDistribution(student, p) {
-        const target = student.grades[p];
+        const target = student.grades[p] ?? C.performanceResult(data, student.id, p).calculated;
         if (target === null) { toast('Önce performans notunu girin.'); return; }
         let allocation;
         try { allocation = C.distribution(p, target); } catch (error) { toast(error.message); return; }
@@ -282,33 +283,15 @@
             save(); $('#dialog').close(); render(); toast(`${added} öğrenci eklendi.${duplicates ? ` ${duplicates} yinelenen numara atlandı.` : ''}`);
         }, 'button primary')]);
     }
-    function download(name, text, type = 'application/json') {
-        const url = URL.createObjectURL(new Blob([text], { type }));
-        const link = el('a', { href: url, download: name }); document.body.append(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
-    }
-    function settings() {
-        const content = el('div');
+    function renderClassInfo() {
         const grid = el('div', { className: 'form-grid' });
         const labels = { school: 'Okul adı', year: 'Eğitim öğretim yılı', className: 'Sınıf / şube', teacher: 'Öğretmen', book1: '1. tema kitabının adı', book2: '2. tema kitabının adı' };
         Object.entries(labels).forEach(([key, label]) => grid.append(field(label, el('input', { value: data.metadata[key], placeholder: key === 'year' ? 'Örn. 2026–2027' : '', maxLength: 200, onInput: event => { data.metadata[key] = event.target.value; save(); } }))));
-        const file = el('input', { type: 'file', accept: '.json,application/json', 'aria-label': 'Yedek dosyası', onChange: async event => {
-            const selected = event.target.files[0]; if (!selected) return;
-            try {
-                if (selected.size > 10 * 1024 * 1024) throw new Error('Yedek dosyası en fazla 10 MB olabilir.');
-                const parsed = JSON.parse(await selected.text());
-                const restored = parsed.version === 2 ? C.normalizeData(parsed) : C.migrateLegacy(parsed);
-                confirmAction('Yedeği geri yükle', `${restored.students.length} öğrenci içeren yedek mevcut listenin ve puanların yerini alacak. Önce mevcut verilerinizin yedeğini indirebilirsiniz.`, () => {
-                    data = restored; storageBlocked = false; $('#storageAlert').hidden = true; save(); render(); toast('Yedek geri yüklendi.');
-                }, 'Geri yükle');
-            } catch (error) { toast(error.message); }
-            event.target.value = '';
-        } });
-        content.append(grid, el('hr'), el('h3', { text: 'Verilerinizi yedekleyin' }), el('p', { className: 'hint', text: 'Yedek dosyası öğrenci listesini, iki performansın notlarını, tüm ölçüt puanlarını ve sınıf bilgilerini içerir.' }), button('Yedeği indir', () => download('olcek-1-donem-yedek.json', JSON.stringify(data, null, 2))), field('Yedekten geri yükle', file));
-        if (data.legacyArchive) content.append(el('p', { className: 'hint', text: 'Önceki sürümün 2. dönem kayıtları arşivlendi. 1. dönem hesaplamalarına dahil edilmez.' }), button('2. dönem arşivini indir', () => download('olcek-2-donem-arsiv.json', JSON.stringify(data.legacyArchive, null, 2))));
-        if (storageBlocked) content.append(button('Okunamayan ham kaydı indir', () => {
-            try { download('olcek-kurtarma.txt', localStorage.getItem(C.STORAGE_KEY) || localStorage.getItem(C.LEGACY_KEY) || '', 'text/plain'); } catch { toast('Tarayıcı depolamasına erişilemiyor.'); }
-        }));
-        dialog('Sınıf ve yedekleme', content, [button('Tamam', () => { $('#dialog').close(); render(); }, 'button primary')]);
+        $('#main').append(
+            heading('Sınıf bilgileri', 'Bu bilgiler sınıf not çizelgelerinde ve öğrenci ölçeklerinin yazdırma çıktılarında kullanılır.'),
+            el('section', { className: 'card class-info-card', 'aria-label': 'Sınıf bilgileri' }, [grid]),
+            el('p', { className: 'hint', text: 'Değişiklikler otomatik kaydedilir.' })
+        );
     }
     function printChoice(student) {
         const select = el('select', { 'aria-label': 'Yazdırılacak ölçekler' }, [el('option', { value: 'all', text: '1. ve 2. performans · tüm ölçekler' }), el('option', { value: '1', text: 'Yalnızca 1. performans ölçekleri' }), el('option', { value: '2', text: 'Yalnızca 2. performans ölçekleri' }), ...Object.keys(R).map(key => el('option', { value: key, text: R[key].title }))]);
@@ -323,6 +306,5 @@
         window.OlcekPrint.show(data, { kind, students, keys });
     }
     document.querySelectorAll('[data-page]').forEach(node => node.addEventListener('click', () => go(node.dataset.page)));
-    $('#settingsButton').addEventListener('click', settings);
     load(); render();
 })();

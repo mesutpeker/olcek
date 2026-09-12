@@ -50,6 +50,31 @@ test('33–100 notlarının tamamı her iki performansa tam ve bağımsız dağ�
     }
     for (const invalid of [0, 32, -1, 101, 80.5, NaN, Infinity, null]) assert.throws(() => C.distribution(1, invalid));
 });
+test('Mümkün olan tüm hedeflerde alt ölçeklerin 100’lük notları birbirinden farklıdır', () => {
+    for (const [performance, minimum] of [[1, 35], [2, 36]]) {
+        for (let target = minimum; target <= 98; target++) {
+            const { data, student } = fixture();
+            for (const [key, values] of Object.entries(C.distribution(performance, target))) {
+                values.forEach((degree, index) => C.setDegree(data, student.id, key, index, degree));
+            }
+            const scores = C.keysFor(performance).map(key => C.rubricResult(data, student.id, key).score);
+            assert.equal(new Set(scores).size, scores.length, `P${performance} / ${target}: ${scores}`);
+            assert.equal(C.performanceResult(data, student.id, performance).final, target);
+        }
+    }
+});
+test('Sınır notlarında hedef korunur ve mümkün olan en çok farklı alt not kullanılır', () => {
+    const cases = [[1,33,1], [1,34,3], [1,99,3], [1,100,2], [2,33,1], [2,34,2], [2,35,2], [2,99,2], [2,100,1]];
+    for (const [performance, target, distinct] of cases) {
+        const { data, student } = fixture();
+        for (const [key, values] of Object.entries(C.distribution(performance, target))) {
+            values.forEach((degree, index) => C.setDegree(data, student.id, key, index, degree));
+        }
+        const scores = C.keysFor(performance).map(key => C.rubricResult(data, student.id, key).score);
+        assert.equal(new Set(scores).size, distinct, `P${performance} / ${target}`);
+        assert.equal(C.performanceResult(data, student.id, performance).final, target);
+    }
+});
 test('Doğrudan not, ölçek puanlarını değiştirmez; silinince hesaplanan not kullanılır', () => {
     const { data, student } = fixture();
     for (const key of C.keysFor(1)) applyRaw(data, student, key, C.RUBRICS[key].maxScore);
@@ -75,7 +100,7 @@ test('Eski kayıtlar arşivlenir, 2. dönem notları 1. döneme aktarılmaz', ()
     assert.equal(C.performanceResult(data, data.students[0].id, 2).final, null);
     assert.deepEqual(C.normalizeData(JSON.parse(JSON.stringify(data))).legacyArchive, original);
 });
-test('Yedek doğrulaması geçersiz puan ve yinelenen kimlikleri reddeder', () => {
+test('Kayıt doğrulaması geçersiz puan ve yinelenen kimlikleri reddeder', () => {
     const { data, student } = fixture();
     C.setDegree(data, student.id, 'tema1_konusma', 0, 3);
     assert.deepEqual(C.normalizeData(data).scores.tema1_konusma[student.id], { 0: 3 });

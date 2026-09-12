@@ -23,10 +23,6 @@
             return `<tr><td>${index + 1}</td><td class="report-description"><b>${esc(criterion.group)} · </b>${esc(criterion.text)}</td>${[1, 2, 3].map(value => `<td class="report-degree${value === degree ? ' marked' : ''}">${value === degree ? '●' : ''}</td>`).join('')}<td>${degree ?? '—'}</td></tr>`;
         }).join('');
         const book = key.includes('kitap') ? `<p>Kitabın adı: ${text(data.metadata[key === 'tema1_kitap' ? 'book1' : 'book2'])}</p>` : '';
-        const breakdown = C.keysFor(rubric.performance).map(rKey => {
-            const s = C.rubricResult(data, student.id, rKey);
-            return `<span>${esc(R[rKey].title)} (%${R[rKey].weight}): ${s.complete ? fmt(s.score) : 'Eksik'}</span>`;
-        }).join('');
         return `<article class="report-page${rubric.criteria.length > 16 ? ' report-long' : ''}">
             ${header(data, `${rubric.performance}. Performans · ${rubric.title}`)}
             <h2 class="report-subtitle">Dereceli Puanlama Ölçeği</h2>
@@ -35,27 +31,32 @@
             <table class="report-table"><colgroup><col style="width:5%"><col style="width:67%"><col style="width:7%"><col style="width:7%"><col style="width:7%"><col style="width:7%"></colgroup>
             <thead><tr><th>No</th><th>Ölçüt ve açıklama</th><th>1</th><th>2</th><th>3</th><th>Puan</th></tr></thead><tbody>${rows}</tbody></table>
             <div class="report-totals"><span>Ham puan: <b>${result.raw} / ${rubric.maxScore}</b></span><span>${result.complete ? '100’lük puan' : 'Geçici 100’lük puan'}: <b>${fmt(result.score)}</b></span><span>Tamamlanan ölçüt: <b>${result.entered} / ${result.count}</b></span></div>
-            <div class="report-breakdown">${breakdown}</div>
-            <p>Hesaplama: her ölçeğin (ham puanı / en yüksek puanı × 100) tam sayıya yuvarlanır, sonra yukarıdaki ağırlıklar uygulanır.</p>
             <p class="report-result">${rubric.performance}. performans ağırlıklı sonucu: <b>${fmt(performance.raw)}</b> · Tam sayı not: <b>${fmt(performance.calculated)}</b>${performance.manual ? ` · Doğrudan girilen not: <b>${performance.final}</b>` : ''}</p>
             ${!performance.complete ? '<p class="report-note">Eksik ölçütler nedeniyle performansın ölçek hesabı tamamlanmamıştır.</p>' : ''}
-            ${data.drafts[rubric.performance]?.[student.id] ? '<p class="report-note">Bu dereceler girilen nottan oluşturulmuş taslaktır; öğretmen tarafından kontrol edilmelidir.</p>' : ''}
             ${signatures(data)}
         </article>`;
     }
-    function summaryPage(data, students) {
+    function summaryPage(data, students, performance) {
+        const keys = C.keysFor(performance);
+        const headings = keys.map(key => `<th scope="col">${esc(R[key].title)}<br>(%${R[key].weight})</th>`).join('');
+        const componentWidth = 48 / keys.length;
+        const columns = `<col style="width:5%"><col style="width:8%"><col style="width:27%">${keys.map(() => `<col style="width:${componentWidth}%">`).join('')}<col style="width:12%">`;
         const rows = students.map((student, index) => {
-            const one = C.performanceResult(data, student.id, 1);
-            const two = C.performanceResult(data, student.id, 2);
-            const grade = result => `${fmt(result.final)}${result.manual ? ' *' : ''}`;
-            return `<tr><td>${index + 1}</td><td>${esc(student.no)}</td><td class="report-description">${esc(student.name)}</td><td>${grade(one)}</td><td>${grade(two)}</td></tr>`;
+            const result = C.performanceResult(data, student.id, performance);
+            const components = keys.map(key => {
+                const score = C.rubricResult(data, student.id, key);
+                return `<td>${fmt(score.score)}${score.entered && !score.complete ? ' †' : ''}</td>`;
+            }).join('');
+            const weighted = result.raw !== null && (result.manual || result.raw !== result.final)
+                ? `<small class="summary-weighted">Hesap: ${fmt(result.raw)}</small>` : '';
+            return `<tr><td>${index + 1}</td><td>${esc(student.no)}</td><td class="report-description">${esc(student.name)}</td>${components}<td class="summary-final"><strong>${fmt(result.final)}${result.manual ? ' *' : ''}</strong>${weighted}</td></tr>`;
         }).join('');
-        return `<article class="report-page summary-page">${header(data, '1. ve 2. Performans Not Çizelgesi')}
+        return `<article class="report-page summary-page" aria-label="${performance}. performans not çizelgesi">${header(data, `1. Dönem ${performance}. Performans Puanı`)}
             <p>Sınıf / şube: ${text(data.metadata.className)} · Öğrenci sayısı: ${students.length}</p>
-            <table class="report-table"><thead><tr><th>Sıra</th><th>No</th><th>Ad soyad</th><th>1. Performans</th><th>2. Performans</th></tr></thead><tbody>${rows}</tbody></table>
-            <p>1. performans: 1. tema konuşma %25, 2. tema konuşma %25, 1. tema yazma %25, 2. tema yazma %25.</p>
-            <p>2. performans: 1. tema kitap %33, 2. tema kitap %33, ders içi %34.</p>
-            <p>* Doğrudan girilen not. — Not girilmemiş veya ölçekler eksik. Ölçek notları, Excel ağırlıklı sonucunun tam sayıya yuvarlanmış halidir.</p>
+            <table class="report-table"><colgroup>${columns}</colgroup><thead><tr><th scope="col">Sıra no.</th><th scope="col">Öğrenci no.</th><th scope="col">Öğrencinin adı soyadı</th>${headings}<th scope="col">${performance}. Performans puanı</th></tr></thead><tbody>${rows}</tbody></table>
+            <p>Alt notlar 100 üzerindendir. Her ölçeğin ham puanı önce 100’lük sisteme yuvarlanır; sütun başlıklarındaki oranlarla ağırlıklı toplamı hesaplanır.</p>
+            <p>Performans puanı, ağırlıklı toplamın tam sayıya yuvarlanmış halidir. “Hesap” Excel’deki ondalıklı ağırlıklı sonucu gösterir.</p>
+            <p>* Doğrudan girilen not. † Eksik ölçütün geçici puanı. — Henüz not girilmedi veya hesaplama tamamlanmadı.</p>
             ${signatures(data)}</article>`;
     }
     function close() {
@@ -69,8 +70,8 @@
     function show(data, { kind, students, keys }) {
         previousFocus = document.activeElement; previousTitle = document.title; previousScroll = window.scrollY;
         const preview = document.getElementById('printPreview');
-        const pages = kind === 'summary' ? summaryPage(data, students) : students.map(student => keys.map(key => rubricPage(data, student, key)).join('')).join('');
-        preview.innerHTML = `<div class="print-toolbar"><button type="button" class="button" id="closePreview">← Geri dön</button><span>Yazdırma önizlemesi · A4${kind === 'rubrics' ? ` · ${students.length * keys.length} ölçek` : ''}</span><button type="button" class="button primary" id="printDocument">Yazdır / PDF kaydet</button></div><div class="report-pages">${pages}</div>`;
+        const pages = kind === 'summary' ? [1, 2].map(performance => summaryPage(data, students, performance)).join('') : students.map(student => keys.map(key => rubricPage(data, student, key)).join('')).join('');
+        preview.innerHTML = `<div class="print-toolbar"><button type="button" class="button" id="closePreview">← Geri dön</button><span>Yazdırma önizlemesi · A4${kind === 'rubrics' ? ` · ${students.length * keys.length} ölçek` : ' · 1. ve 2. performans ayrı sayfalarda'}</span><button type="button" class="button primary" id="printDocument">Yazdır / PDF kaydet</button></div><div class="report-pages">${pages}</div>`;
         document.getElementById('appShell').hidden = true;
         document.body.classList.add('preview-open'); preview.hidden = false;
         document.title = kind === 'summary' ? '9. Sınıf 1. Dönem Performans Notları' : `${students[0].name || 'Öğrenci'} - Dereceli Puanlama Ölçekleri`;

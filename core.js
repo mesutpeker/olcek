@@ -50,13 +50,13 @@
     }
 
     function normalizeData(input) {
-        if (!input || input.version !== 2 || !Array.isArray(input.students) || !input.scores || typeof input.scores !== 'object') throw new Error('Geçerli bir Ölçek Sistemi yedeği seçin.');
+        if (!input || input.version !== 2 || !Array.isArray(input.students) || !input.scores || typeof input.scores !== 'object') throw new Error('Ölçek Sistemi kaydı geçersiz.');
         const data = newData();
         const ids = new Set();
         data.students = input.students.map(item => {
-            if (!item || typeof item.id !== 'string' || !/^[a-zA-Z0-9_-]+$/.test(item.id) || ['__proto__', 'constructor', 'prototype'].includes(item.id) || ids.has(item.id) || typeof item.name !== 'string' || typeof item.no !== 'string') throw new Error('Yedekteki öğrenci bilgileri geçersiz veya yinelenmiş.');
+            if (!item || typeof item.id !== 'string' || !/^[a-zA-Z0-9_-]+$/.test(item.id) || ['__proto__', 'constructor', 'prototype'].includes(item.id) || ids.has(item.id) || typeof item.name !== 'string' || typeof item.no !== 'string') throw new Error('Kayıttaki öğrenci bilgileri geçersiz veya yinelenmiş.');
             ids.add(item.id);
-            for (const p of [1, 2]) if (item.grades?.[p] != null && !validGrade(item.grades[p])) throw new Error('Yedekte 0–100 aralığı dışında bir not var.');
+            for (const p of [1, 2]) if (item.grades?.[p] != null && !validGrade(item.grades[p])) throw new Error('Kayıtta 0–100 aralığı dışında bir not var.');
             return { id: item.id, no: item.no, name: item.name, grades: { 1: item.grades?.[1] ?? null, 2: item.grades?.[2] ?? null } };
         });
         for (const key of Object.keys(RUBRICS)) {
@@ -100,40 +100,63 @@
         return { students, skipped };
     }
 
-    // Find valid rubric totals whose Excel-weighted result rounds to the target.
-    // Deterministic, no random criteria and no invented 0-point degree.
+    // Enumerate valid totals once per performance. Prefer the greatest number of
+    // distinct 100-point rubric grades, then keep them as close to the target as
+    // possible. Keeping only one partial result per sum would lose distinct solutions.
     const distributionCache = new Map();
-    function distribution(performance, target) {
-        if (!validGrade(target) || target < 33) throw new Error('1–3 dereceli ölçeklerde en düşük hesaplanan not 33’tür. 0–32 arası notlar doğrudan kaydedilebilir; ölçütlere dağıtılamaz.');
-        const cacheKey = `${performance}:${target}`;
-        if (distributionCache.has(cacheKey)) return distributionCache.get(cacheKey);
+    function distributionOptions(performance) {
         const keys = keysFor(performance);
         if (!keys.length) throw new Error('Geçersiz performans.');
-        let states = new Map([[0, { cost: 0, totals: [] }]]);
-        for (const key of keys) {
+        const candidates = keys.map(key => {
             const rubric = RUBRICS[key];
-            const next = new Map();
-            for (const [sum, state] of states) {
-                for (let raw = rubric.criteria.length; raw <= rubric.maxScore; raw++) {
-                    const score = Math.round(raw / rubric.maxScore * 100);
-                    const total = sum + score * rubric.weight;
-                    const cost = state.cost + (score - target) ** 2;
-                    if (!next.has(total) || cost < next.get(total).cost) next.set(total, { cost, totals: [...state.totals, raw] });
+            return Array.from({ length: rubric.maxScore - rubric.criteria.length + 1 }, (_, index) => {
+                const raw = rubric.criteria.length + index;
+                const score = Math.round(raw / rubric.maxScore * 100);
+                return { raw, score, weighted: score * rubric.weight };
+            });
+        });
+        const bestByTarget = new Map();
+        const totals = [];
+        const scores = [];
+        function visit(index, weighted, distinct) {
+            if (index === keys.length) {
+                const target = Math.round(weighted / 100);
+                const cost = scores.reduce((sum, score) => sum + (score - target) ** 2, 0);
+                const distance = Math.abs(weighted - target * 100);
+                const best = bestByTarget.get(target);
+                if (!best || distinct > best.distinct || (distinct === best.distinct &&
+                    (cost < best.cost || (cost === best.cost && distance < best.distance)))) {
+                    bestByTarget.set(target, { distinct, cost, distance, totals: [...totals] });
                 }
+                return;
             }
-            states = next;
+            for (const candidate of candidates[index]) {
+                const isNew = !scores.includes(candidate.score);
+                scores.push(candidate.score);
+                totals.push(candidate.raw);
+                visit(index + 1, weighted + candidate.weighted, distinct + Number(isNew));
+                scores.pop();
+                totals.pop();
+            }
         }
-        const matching = [...states].filter(([sum]) => Math.round(sum / 100) === target)
-            .sort((a, b) => a[1].cost - b[1].cost || Math.abs(a[0] - target * 100) - Math.abs(b[0] - target * 100));
-        if (!matching.length) throw new Error('Bu not 1–3 dereceleriyle tam olarak oluşturulamıyor. Doğrudan not olarak kaydedebilirsiniz.');
+        visit(0, 0, 0);
+        return bestByTarget;
+    }
+
+    function distribution(performance, target) {
+        if (!validGrade(target) || target < 33) throw new Error('1–3 dereceli ölçeklerde en düşük hesaplanan not 33’tür. 0–32 arası notlar doğrudan kaydedilebilir; ölçütlere dağıtılamaz.');
+        performance = Number(performance);
+        const keys = keysFor(performance);
+        if (!distributionCache.has(performance)) distributionCache.set(performance, distributionOptions(performance));
+        const allocation = distributionCache.get(performance).get(target);
+        if (!allocation) throw new Error('Bu not 1–3 dereceleriyle tam olarak oluşturulamıyor. Doğrudan not olarak kaydedebilirsiniz.');
         const result = {};
         keys.forEach((key, index) => {
             const count = RUBRICS[key].criteria.length;
-            const raw = matching[0][1].totals[index];
+            const raw = allocation.totals[index];
             const base = Math.floor(raw / count);
             result[key] = Array.from({ length: count }, (_, i) => base + (i < raw % count ? 1 : 0));
         });
-        distributionCache.set(cacheKey, result);
         return result;
     }
 

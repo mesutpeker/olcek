@@ -1,14 +1,17 @@
 :root {
+    /* Original repository colors. */
+    --gradient-primary: linear-gradient(135deg, #0f766e 0%, #2563eb 100%);
+    --gradient-card: linear-gradient(145deg, rgba(15, 118, 110, 0.07) 0%, rgba(37, 99, 235, 0.05) 100%);
     color-scheme:light;
-    --bg:#f5f6f3;
+    --bg:#f4f7fb;
     --paper:#fff;
-    --ink:#202c29;
-    --muted:#68736d;
-    --line:#dfe5df;
-    --green:#214e42;
-    --soft:#edf3ec;
-    --warm:#f5ede0;
-    --danger:#a13528;
+    --ink:#18212f;
+    --muted:#526072;
+    --line:rgba(125, 138, 154, 0.24);
+    --accent:#0f766e;
+    --soft:rgba(15, 118, 110, 0.08);
+    --warm:#eef3f8;
+    --danger:#dc2626;
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
     font-size:14px;
     line-height:1.5;
@@ -21,7 +24,11 @@
 }
 
 body {
-    margin:0
+    margin:0;
+    background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.08), transparent 28%),
+        radial-gradient(circle at top right, rgba(15, 118, 110, 0.07), transparent 24%),
+        var(--bg);
 }
 
 button,input,select,textarea {
@@ -42,7 +49,7 @@ button:disabled {
 }
 
 button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible {
-    outline:3px solid #c59c42;
+    outline:3px solid #0f766e;
     outline-offset:3px
 }
 
@@ -109,17 +116,17 @@ strong {
 
 .button:hover,.icon-button:hover {
     background:var(--soft);
-    border-color:#acbdac
+    border-color:rgba(15, 118, 110, 0.34)
 }
 
 .button.primary {
-    background:var(--green);
+    background:var(--gradient-primary);
     color:white;
-    border-color:var(--green)
+    border-color:var(--accent)
 }
 
 .button.primary:hover {
-    background:#143d32
+    background:#115e59
 }
 
 .button.quiet {
@@ -145,7 +152,7 @@ strong {
 .text-button {
     border:0;
     padding:2px 0;
-    color:var(--green);
+    color:var(--accent);
     background:transparent;
     font-size:11px;
     text-decoration:underline;
@@ -185,8 +192,8 @@ strong {
 .brand-symbol {
     display:grid;
     place-items:center;
-    background:var(--green);
-    color:#f3eddf;
+    background:var(--gradient-primary);
+    color:#ffffff;
     border-radius:12px;
     width:43px;
     height:46px;
@@ -213,8 +220,8 @@ strong {
 }
 
 .term-badge {
-    background:#e8ede6;
-    border:1px solid #dae2d6;
+    background:rgba(15, 118, 110, 0.1);
+    border:1px solid rgba(15, 118, 110, 0.18);
     padding:5px 10px;
     border-radius:6px;
     font-size:12px;
@@ -232,14 +239,14 @@ strong {
     width:6px;
     height:6px;
     border-radius:50%;
-    background:#668b65;
+    background:#059669;
     margin-right:6px
 }
 
 .nav-bar {
     border-top:1px solid var(--line);
     border-bottom:1px solid var(--line);
-    background:white;
+    background:#fbfdff;
     display:flex;
     align-items:center;
     justify-content:space-between;
@@ -264,13 +271,8 @@ strong {
 }
 
 .nav-bar nav button[aria-current] {
-    border-color:var(--green);
-    color:var(--green)
-}
-
-.nav-bar>.button {
-    font-size:11px;
-    padding:6px 10px
+    border-color:var(--accent);
+    color:var(--accent)
 }
 
 main {
@@ -314,7 +316,7 @@ main {
     background:var(--paper);
     border:1px solid var(--line);
     border-radius:12px;
-    box-shadow:0 2px 3px #14281e02
+    box-shadow:0 2px 3px rgba(15, 23, 42, 0.02)
 }
 
 .weight-cards {
@@ -330,24 +332,24 @@ main {
     padding:20px;
     border:1px solid var(--line);
     border-radius:12px;
-    background:#edf1e9
+    background:var(--gradient-card)
 }
 
 .weight-card:nth-child(2) {
-    background:#f3eee5;
-    border-color:#e6dfd4
+    background:var(--gradient-card);
+    border-color:var(--line)
 }
 
 .performance-number {
     font-size:32px;
     font-weight:300;
-    color:#6a7d64;
+    color:#0f766e;
     line-height:1.1;
     letter-spacing:-1px
 }
 
 .weight-card:nth-child(2) .performance-number {
-    color:#9b8357
+    color:#2563eb
 }
 
 .weight-card h2 {
@@ -365,11 +367,11 @@ main {
     flex-wrap:wrap;
     gap:5px 14px;
     font-size:10px;
-    color:#4d6050
+    color:#526072
 }
 
 .weight-card:nth-child(2) .weight-tags {
-    color:#806d4e
+    color:#526072
 }
 
 .card-toolbar {
@@ -391,7 +393,7 @@ main {
 }
 
 input,select,textarea {
-    border:1px solid #ced8ce;
+    border:1px solid var(--line);
     border-radius:7px;
     background:#fff;
     color:var(--ink);
@@ -405,12 +407,12 @@ select {
 }
 
 input::placeholder,textarea::placeholder {
-    color:#88958b
+    color:#7d8a9a
 }
 
 input[aria-invalid="true"] {
     border:2px solid var(--danger);
-    background:#fff0ec
+    background:rgba(239, 68, 68, 0.08)
 }
 
 textarea {
@@ -431,13 +433,13 @@ textarea {
     font-weight:700;
     padding-top:12px;
     padding-bottom:12px;
-    background:#fafbf8;
+    background:#eef3f8;
     border-bottom:1px solid var(--line)
 }
 
 .grade-row {
     align-items:center;
-    border-bottom:1px solid #edf0eb
+    border-bottom:1px solid var(--line)
 }
 
 .grade-row:last-child {
@@ -445,7 +447,7 @@ textarea {
 }
 
 .grade-row:hover {
-    background:#fdfefc
+    background:#f7fafd
 }
 
 .student-identity {
@@ -474,8 +476,8 @@ textarea {
 
 .student-avatar {
     font-size:11px;
-    color:#879584;
-    background:#f0f3ed;
+    color:#0f766e;
+    background:rgba(15, 118, 110, 0.1);
     border-radius:8px;
     padding:8px;
     flex-shrink:0
@@ -495,14 +497,14 @@ textarea {
     font-size:18px;
     font-weight:600;
     font-variant-numeric:tabular-nums;
-    background:#fafbf9;
+    background:#ffffff;
     padding:6px
 }
 
 .grade-input.filled {
-    background:#edf4ec;
-    color:var(--green);
-    border-color:#b6cdb4
+    background:rgba(15, 118, 110, 0.1);
+    color:var(--accent);
+    border-color:rgba(15, 118, 110, 0.34)
 }
 
 .grade-input::-webkit-inner-spin-button,.grade-input::-webkit-outer-spin-button {
@@ -515,7 +517,7 @@ textarea {
 }
 
 .grade-entry>.button {
-    background:#fafbf8;
+    background:#eef3f8;
     padding:8px;
     font-size:10px
 }
@@ -563,7 +565,7 @@ textarea {
     height:52px;
     background:var(--soft);
     border-radius:16px;
-    color:#71896b;
+    color:#0f766e;
     font-size:20px;
     margin-bottom:16px
 }
@@ -650,7 +652,7 @@ textarea {
 .segmented {
     display:flex;
     gap:4px;
-    background:#edf0e9;
+    background:#eef3f8;
     border-radius:7px;
     padding:3px;
     align-self:start
@@ -667,8 +669,8 @@ textarea {
 
 .segmented button.active {
     background:white;
-    color:var(--green);
-    box-shadow:0 1px 3px #1d402319;
+    color:var(--accent);
+    box-shadow:0 1px 3px rgba(15, 23, 42, 0.08);
     font-weight:600
 }
 
@@ -698,7 +700,7 @@ textarea {
     grid-template-columns:repeat(4,minmax(0,1fr));
     gap:16px;
     padding:14px 20px;
-    background:var(--green);
+    background:var(--gradient-primary);
     color:white;
     position:sticky;
     top:0;
@@ -711,7 +713,7 @@ textarea {
 
 .rubric-summary span {
     font-size:10px;
-    color:#c5d5c9;
+    color:#ffffff;
     display:block
 }
 
@@ -726,8 +728,8 @@ textarea {
 
 .rubric-notice {
     padding:10px 20px;
-    background:#f4f6ef;
-    color:#526448;
+    background:rgba(15, 118, 110, 0.08);
+    color:#526072;
     font-size:11px;
     line-height:1.6
 }
@@ -756,7 +758,7 @@ textarea {
     gap:14px;
     align-items:center;
     padding:13px 20px;
-    border-bottom:1px solid #e9eee6
+    border-bottom:1px solid var(--line)
 }
 
 .criterion-row:last-child {
@@ -765,12 +767,12 @@ textarea {
 
 .criterion-number {
     font-size:10px;
-    color:#92a08f
+    color:#7d8a9a
 }
 
 .criterion-group {
     display:block;
-    color:#7c8b78;
+    color:#0f766e;
     font-size:10px;
     margin-bottom:3px
 }
@@ -791,22 +793,22 @@ textarea {
     height:36px;
     width:36px;
     flex-shrink:0;
-    border:1px solid #d6dfd3;
+    border:1px solid var(--line);
     border-radius:7px;
-    color:#6d7c69;
+    color:#526072;
     background:white;
     font-size:13px;
     font-weight:600
 }
 
 .degree-button:hover {
-    background:#f1f5ee
+    background:#f7fafd
 }
 
 .degree-button.selected {
-    background:var(--green);
+    background:var(--accent);
     color:white;
-    border-color:var(--green)
+    border-color:var(--accent)
 }
 
 .rubric-bottom {
@@ -851,12 +853,12 @@ dialog {
     border:1px solid var(--line);
     border-radius:14px;
     padding:24px;
-    box-shadow:0 16px 80px #132c3933;
+    box-shadow:0 16px 80px rgba(15, 23, 42, 0.12);
     color:var(--ink)
 }
 
 dialog::backdrop {
-    background:#132d2455;
+    background:rgba(31, 41, 55, 0.18);
     backdrop-filter:blur(2px)
 }
 
@@ -889,6 +891,11 @@ dialog::backdrop {
     font-size:13px
 }
 
+.class-info-card {
+    max-width:840px;
+    padding:24px
+}
+
 dialog p {
     font-size:13px;
     line-height:1.7
@@ -904,24 +911,16 @@ dialog hr {
     margin:24px 0
 }
 
-dialog .field:has(input[type="file"]) {
-    margin-top:20px
-}
-
-input[type="file"] {
-    font-size:12px
-}
-
 #toast {
     position:fixed;
     bottom:24px;
     left:50%;
     transform:translateX(-50%);
     padding:13px 20px;
-    background:#243e32;
+    background:#0f766e;
     color:white;
     border-radius:10px;
-    box-shadow:0 4px 22px #20372c33;
+    box-shadow:0 4px 22px rgba(15, 23, 42, 0.12);
     font-size:13px;
     max-width:min(620px,calc(100% - 30px));
     width:max-content;
@@ -937,13 +936,33 @@ input[type="file"] {
 }
 
 .warning {
-    background:#fff0dc;
-    color:#815220;
-    border:1px solid #edd2ad
+    background:rgba(245, 158, 11, 0.1);
+    color:#d97706;
+    border:1px solid rgba(217, 119, 6, 0.3)
 }
 
+/* The original rubric degree colors: red, amber, green. */
+.degree-button.selected[data-degree="1"] {
+    background:rgba(239, 68, 68, 0.15);
+    border-color:#dc2626;
+    color:#dc2626;
+}
+.degree-button.selected[data-degree="2"] {
+    background:rgba(245, 158, 11, 0.15);
+    border-color:#d97706;
+    color:#d97706;
+}
+.degree-button.selected[data-degree="3"] {
+    background:rgba(16, 185, 129, 0.15);
+    border-color:#059669;
+    color:#059669;
+}
+.rubric-legend span:nth-child(1) { color:#dc2626; }
+.rubric-legend span:nth-child(2) { color:#d97706; }
+.rubric-legend span:nth-child(3) { color:#059669; }
+
 .preview-open {
-    background:#e8ebe6
+    background:#eef3f8
 }
 
 .print-toolbar {
@@ -954,8 +973,8 @@ input[type="file"] {
     position:sticky;
     top:0;
     z-index:3;
-    background:#f8faf6;
-    border-bottom:1px solid #cad5c7;
+    background:#fbfdff;
+    border-bottom:1px solid var(--line);
     padding:14px max(20px,calc((100vw - 940px)/2));
     font-size:12px
 }
@@ -1094,20 +1113,19 @@ input[type="file"] {
     break-inside:avoid
 }
 
-.summary-page .report-table th:nth-child(1) {
-    width:8%
+.summary-page .report-table th {
+    overflow-wrap:anywhere;
 }
 
-.summary-page .report-table th:nth-child(2) {
-    width:12%
+.summary-final {
+    background:#eef3f8;
 }
 
-.summary-page .report-table th:nth-child(3) {
-    width:44%
-}
-
-.summary-page .report-table th:nth-child(4),.summary-page .report-table th:nth-child(5) {
-    width:18%
+.summary-weighted {
+    display:block;
+    font-size:7pt;
+    color:#526072;
+    margin-top:2px;
 }
 
 @media(min-width:1400px) {
@@ -1190,11 +1208,6 @@ input[type="file"] {
     }
     .nav-bar nav button {
         font-size:11px
-    }
-    .nav-bar>.button {
-        font-size:9px;
-        padding:4px 0;
-        border:0
     }
     main {
         padding:24px 20px
@@ -1333,13 +1346,11 @@ input[type="file"] {
     .nav-bar nav {
         width:100%;
         justify-content:space-between;
-        gap:8px
+        gap:4px
     }
     .nav-bar nav button {
-        padding:13px 0
-    }
-    .nav-bar>.button {
-        margin:0 0 8px auto
+        padding:13px 0;
+        font-size:clamp(10px,2.85vw,11px)
     }
     main {
         padding:22px 16px
@@ -1559,6 +1570,6 @@ input[type="file"] {
 }
 
 .grade-input.filled::placeholder {
-    color: var(--green);
+    color: var(--accent);
     opacity: 1;
 }
