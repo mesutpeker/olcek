@@ -153,9 +153,12 @@
         if (!students.length) { rows.append(el('p', { className: 'no-results', text: 'Aramanızla eşleşen öğrenci yok.' })); return; }
         students.forEach(student => {
             const row = el('article', { className: 'grade-row', 'aria-label': studentName(student) });
-            row.append(el('div', { className: 'student-identity' }, [el('span', { className: 'student-avatar', text: String(data.students.indexOf(student) + 1).padStart(2, '0') }), el('div', {}, [el('strong', { text: studentName(student) }), el('span', { className: 'muted', text: `No ${student.no || '—'} · ${data.metadata.className || '9. sınıf'}` })]), button('Düzenle', () => editStudent(student), 'text-button edit-student', { 'aria-label': `${studentName(student)} bilgilerini düzenle` })]));
+            row.append(el('div', { className: 'student-identity' }, [el('span', { className: 'student-avatar', text: String(data.students.indexOf(student) + 1).padStart(2, '0') }), el('div', {}, [el('strong', { text: studentName(student) }), el('span', { className: 'muted', text: `No ${student.no || '—'} · ${data.metadata.className || '9. sınıf'}` })])]));
             [1, 2].forEach(p => row.append(gradeCell(student, p)));
-            row.append(button('Yazdır', () => printChoice(student), 'button quiet print-student', { 'aria-label': `${studentName(student)} ölçeklerini yazdır` }));
+            row.append(el('div', { className: 'grade-actions' }, [
+                button('✎', () => editStudent(student), 'icon-button edit-student', { 'aria-label': `${studentName(student)} bilgilerini düzenle`, title: 'Öğrenciyi düzenle' }),
+                button('Yazdır', () => printChoice(student), 'button quiet print-student', { 'aria-label': `${studentName(student)} ölçeklerini yazdır` })
+            ]));
             rows.append(row);
         });
     }

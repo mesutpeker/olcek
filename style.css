@@ -419,7 +419,7 @@ textarea {
 
 .grade-table-header,.grade-row {
     display:grid;
-    grid-template-columns:minmax(160px,1.1fr) minmax(195px,1fr) minmax(195px,1fr) 92px;
+    grid-template-columns:minmax(160px,1.1fr) minmax(195px,1fr) minmax(195px,1fr) 118px;
     gap:20px;
     padding:18px 20px
 }
@@ -457,12 +457,6 @@ textarea {
 
 .student-identity>div {
     min-width:0
-}
-
-.student-identity .edit-student {
-    margin-left:auto;
-    flex-shrink:0;
-    font-size:10px
 }
 
 .student-identity strong {
@@ -546,6 +540,19 @@ textarea {
 .print-student {
     font-size:11px;
     padding:8px 12px
+}
+
+.grade-actions {
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    gap:7px
+}
+
+.grade-actions .edit-student {
+    border-color:rgba(15, 118, 110, 0.34);
+    color:var(--accent);
+    background:rgba(15, 118, 110, 0.08)
 }
 
 .mobile-label {
@@ -1155,7 +1162,7 @@ dialog hr {
 
 @media(min-width:1400px) {
     .grade-table-header,.grade-row {
-        grid-template-columns:minmax(230px,1.15fr) minmax(195px,1fr) minmax(195px,1fr) 95px
+        grid-template-columns:minmax(230px,1.15fr) minmax(195px,1fr) minmax(195px,1fr) 118px
     }
 }
 
@@ -1166,7 +1173,7 @@ dialog hr {
         gap:12px
     }
     .grade-table-header,.grade-row {
-        grid-template-columns:minmax(130px,1fr) minmax(170px,1fr) minmax(170px,1fr) 70px;
+        grid-template-columns:minmax(130px,1fr) minmax(170px,1fr) minmax(170px,1fr) 112px;
         gap:12px;
         padding-left:16px;
         padding-right:16px
@@ -1274,7 +1281,7 @@ dialog hr {
         color:var(--muted);
         margin-bottom:6px
     }
-    .print-student {
+    .grade-actions {
         grid-column:1/-1;
         justify-self:end
     }
