@@ -7,11 +7,11 @@ Türk Dili ve Edebiyatı dersi için öğrenci listesi, iki ayrı performans not
 Açılışta öğrenci ekleme düğmeleri ve üç adımlı kullanım sırası görünür. Sekmeler simgeli düğmelerle ayrılır. Ayrıntılı oranlar ve açıklamalar **Hesaplama ve kullanım** açılır bölümündedir.
 
 1. **Öğrenci listesi** bölümünden tek öğrenci ekleyin veya e-Okul / Excel’den numara / ad soyad sütunlarını **E-Okuldan Kopyala** alanına yapıştırın.
-2. **Puan girişi** ekranında 1. ve 2. performans notlarını yan yana girin. Bu ekrandaki **+ Öğrenci ekle** düğmesi tek öğrenci formunu açar. Notlar otomatik kaydedilir. Enter, aynı performansın sonraki öğrencisine geçer.
+2. **Puan girişi** ekranında 1. ve 2. performans notlarını yan yana girin. Bu ekrandaki **+ Öğrenci ekle** düğmesi tek öğrenci formunu açar; öğrenci satırındaki **Düzenle** ile numara ve ad soyadı güncelleyebilirsiniz. Notlar sayfa açıkken otomatik kaydedilir. Enter, aynı performansın sonraki öğrencisine geçer.
 3. İsterseniz **Notu dağıt** ile girilen notu ilgili performansın ölçütlerine dağıtın. Dağıtım, hedef performans notunu koruyarak alt ölçeklerin 100’lük notlarını mümkün olduğunca birbirinden farklı seçer. Bütün notların farklı olması matematiksel olarak mümkün değilse en fazla çeşitlilik sağlayan dağılım kullanılır. Bu işlem diğer performansı etkilemez. Mevcut ölçüt puanları varsa değiştirmeden önce sorulur. Oluşturulan dereceler ekranda taslak olarak belirtilir ve değiştirilebilir; bu uyarı yazdırılmaz. Daha önce hesaplanmış bir not da aynı düğmeyle yeniden dağıtılabilir.
 4. **Dereceli ölçekler** bölümünde öğrenci ve performansı seçin. **Tema ölçeği** açılır menüsünden ölçeği açın ve 1, 2 veya 3 puan işaretleyin. Seçili dereceye tekrar basmak o ölçütü temizler.
 5. Öğrenci satırındaki **Yazdır** ile tek ölçek, bir performans veya tüm ölçekleri önizleyin. **Yazdır / PDF kaydet** tarayıcının yazdırma penceresini açar. Her ölçek yeni bir A4 sayfada başlar. **Sınıf notlarını yazdır**, iki performansı ayrı sayfalara ayırır. 1. performans çizelgesinde dört konuşma/yazma alt notu, 2. performans çizelgesinde iki kitap ve ders içi alt notu ayrı sütunlardadır. Sütunlar 100 üzerinden puanları, başlıklar Excel’deki ağırlıkları gösterir.
-6. **Öğrenci listesi** yanındaki **Sınıf bilgileri** sekmesinden okul, yıl, şube, öğretmen ve kitap adlarını girin. Bilgiler otomatik kaydedilir ve yazdırma çıktılarında kullanılır.
+6. **Öğrenci listesi** yanındaki **Sınıf bilgileri** sekmesinden okul, yıl, şube, öğretmen ve kitap adlarını girin. Bilgiler sayfa açıkken otomatik kaydedilir ve yazdırma çıktılarında kullanılır.
 
 ## Excel ile aynı hesaplama
 
@@ -33,12 +33,11 @@ Boş ölçüt, sıfır puan anlamına gelmez. Eksik ölçeğin puanı geçici ol
 
 Doğrudan not girişi mevcut ölçüt puanlarını değiştirmez. Bir doğrudan not varken ölçekten hesaplanan sonuç ayrıca gösterilir. Not alanını temizlemek veya **Ölçek sonucunu kullan** düğmesine basmak hesaplanan sonuca döner. **Notu dağıt** sonrasında not yeniden ölçeklere bağlı hale gelir. Öğrenciye ait tekil ölçek çıktılarında diğer ölçeklerin puan özeti ve taslak uyarısı bulunmaz; sınıf çizelgesindeki alt not sütunları korunur.
 
-## Kayıt ve önceki sürüm
+## Temiz başlangıç ve geçici kayıt
 
-- Kayıtlar tarayıcının bu adresine ait `localStorage` alanında otomatik saklanır.
-- Yeni veri anahtarı `olcek_app_data_v2`’dir. Öğrenciler sabit kimliklerle tutulur; birini silmek diğer öğrencilerin puanlarını kaydırmaz.
-- Eski `olcek_app_data_v1` bulunursa öğrenci listesi aktarılır. Eski 2. dönem ölçeklerinin puanları 1. döneme dönüştürülmez. Tam eski kayıt güncel kaydın `legacyArchive` alanında saklanır; orijinal anahtar silinmez.
-- Bozuk kayıt algılanırsa üzerine otomatik yazılmaz ve kayıt sorunu ekranda belirtilir.
+- Uygulama her açıldığında yalnızca Ölçek uygulamasına ait tarayıcı kayıtları ve çerezler temizlenir; diğer `mesutpeker.com` araçlarının verilerine dokunulmaz.
+- Öğrenciler, puanlar ve sınıf bilgileri sayfa açıkken otomatik kaydedilir. Sayfa yenilendiğinde veya yeniden açıldığında uygulama boş başlar.
+- Öğrenciler sabit kimliklerle tutulur; numara ve ad soyadı düzenlemek mevcut notları ve ölçek puanlarını değiştirmez.
 
 ## Dosyalar ve doğrulama
 
@@ -52,4 +51,4 @@ Hesaplama testleri: `node --test core.test.js`.
 
 Yerel önizleme: `python3 -m http.server 8765 --bind 127.0.0.1` ve ardından `http://127.0.0.1:8765`.
 
-Tarayıcıda doğrulanan akışlar: toplu öğrenci ekleme, Enter ile sonraki öğrenciye geçme, iki performansın bağımsız puanlanması, sayfa yenileme sonrası kayıt, geçersiz not kontrolü, derece seçme/temizleme, tema ve öğrenci değiştirme, tek ve tüm ölçek çıktıları. 1024 ve 390 piksel genişliklerde puan alanları ve derece düğmeleri yatay taşmadan kullanılır. Fiziksel yazıcı çıktısı alınmamıştır.
+Tarayıcıda doğrulanan akışlar: toplu öğrenci ekleme, öğrenci düzenleme, Enter ile sonraki öğrenciye geçme, iki performansın bağımsız puanlanması, sayfa yenileme sonrası temiz başlangıç, geçersiz not kontrolü, derece seçme/temizleme, tema ve öğrenci değiştirme, tek ve tüm ölçek çıktıları. 1024 ve 390 piksel genişliklerde puan alanları ve derece düğmeleri yatay taşmadan kullanılır. Fiziksel yazıcı çıktısı alınmamıştır.

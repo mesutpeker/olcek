@@ -92,6 +92,25 @@ test('Öğrenci silme ve sıralama kalan puanları yanlış öğrenciye taşıma
     assert.equal(data.students[0].id, second.id);
     assert.equal(C.rubricResult(data, second.id, 'tema1_konusma').raw, 2);
 });
+test('Öğrenci düzenleme kimliği, notları ve ölçek puanlarını korur', () => {
+    const { data, student } = fixture();
+    const second = C.newStudent('102', 'İkinci Öğrenci'); data.students.push(second);
+    student.grades[1] = 84;
+    C.setDegree(data, student.id, 'tema1_konusma', 0, 3);
+    data.drafts[1] = { [student.id]: true };
+    const originalId = student.id;
+
+    C.updateStudent(data, student.id, { no: '201', name: '  Düzenlenen Öğrenci  ' });
+
+    assert.equal(student.id, originalId);
+    assert.equal(student.no, '201');
+    assert.equal(student.name, 'Düzenlenen Öğrenci');
+    assert.equal(student.grades[1], 84);
+    assert.equal(C.rubricResult(data, student.id, 'tema1_konusma').raw, 3);
+    assert.equal(data.drafts[1][student.id], true);
+    assert.throws(() => C.updateStudent(data, student.id, { no: '102', name: 'Başka Öğrenci' }), /zaten listede/);
+    assert.throws(() => C.updateStudent(data, student.id, { no: '201', name: '   ' }), /boş bırakılamaz/);
+});
 test('Eski kayıtlar arşivlenir, 2. dönem notları 1. döneme aktarılmaz', () => {
     const original = { students: [{ no: '101', name: 'Önceki Öğrenci', targetScore: 75 }], scores: { ders_ici: { 0: { 0: 3 } }, tema3_konusma: { 0: { 0: 2 } } } };
     const data = C.migrateLegacy(original);

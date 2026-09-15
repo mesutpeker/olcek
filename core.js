@@ -49,6 +49,20 @@
         for (const entries of Object.values(data.drafts)) delete entries[id];
     }
 
+    function updateStudent(data, id, { no = '', name = '' }) {
+        const student = data.students.find(item => item.id === id);
+        const normalizedNo = String(no).trim();
+        const normalizedName = String(name).trim();
+        if (!student) throw new Error('Öğrenci bulunamadı.');
+        if (!normalizedName) throw new Error('Öğrenci adı soyadı boş bırakılamaz.');
+        if (normalizedNo && data.students.some(item => item.id !== id && item.no === normalizedNo)) {
+            throw new Error('Bu öğrenci numarası zaten listede.');
+        }
+        student.no = normalizedNo;
+        student.name = normalizedName;
+        return student;
+    }
+
     function normalizeData(input) {
         if (!input || input.version !== 2 || !Array.isArray(input.students) || !input.scores || typeof input.scores !== 'object') throw new Error('Ölçek Sistemi kaydı geçersiz.');
         const data = newData();
@@ -161,7 +175,7 @@
     }
 
     const api = { RUBRICS, STORAGE_KEY, LEGACY_KEY, keysFor, validGrade, validDegree, newStudent, newData,
-        rubricResult, performanceResult, setDegree, removeStudent, normalizeData, migrateLegacy, parseStudents, distribution };
+        rubricResult, performanceResult, setDegree, removeStudent, updateStudent, normalizeData, migrateLegacy, parseStudents, distribution };
     if (typeof module === 'object' && module.exports) module.exports = api;
     else root.OlcekCore = api;
 })(typeof window === 'undefined' ? this : window);

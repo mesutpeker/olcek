@@ -40,11 +40,33 @@
         $('#storageAlert').textContent = message;
         $('#saveStatus').textContent = 'Kaydedilemedi';
     }
+    function clearSavedAppData() {
+        try {
+            localStorage.removeItem(C.STORAGE_KEY);
+            localStorage.removeItem(C.LEGACY_KEY);
+            sessionStorage.removeItem(C.STORAGE_KEY);
+            sessionStorage.removeItem(C.LEGACY_KEY);
+        } catch (error) {
+            storageBlocked = true;
+            storageError('Tarayıcı kayıtları temizlenemedi. Uygulama yine boş bir sayfayla açıldı; bu oturumdaki değişiklikler tarayıcıya kaydedilemeyebilir.');
+        }
+
+        try {
+            const cookieNames = document.cookie.split(';')
+                .map(cookie => cookie.split('=')[0].trim())
+                .filter(name => /^olcek(?:_|-|$)/i.test(name));
+            for (const name of cookieNames) {
+                for (const path of ['/', '/olcek', '/olcek/']) {
+                    document.cookie = `${encodeURIComponent(name)}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=${path}; SameSite=Lax`;
+                }
+            }
+        } catch {}
+    }
     function save() {
         if (storageBlocked) return false;
         try {
             localStorage.setItem(C.STORAGE_KEY, JSON.stringify(data));
-            $('#saveStatus').textContent = 'Kaydedildi · bu tarayıcıda';
+            $('#saveStatus').textContent = 'Kaydedildi · bu sayfa açıkken';
             return true;
         } catch (error) {
             storageError('Değişiklikler tarayıcıya kaydedilemiyor. Tarayıcınızın bu site için depolamaya izin verdiğini ve yeterli boş alan bulunduğunu kontrol edin.');
@@ -52,21 +74,8 @@
         }
     }
     function load() {
-        try {
-            const saved = localStorage.getItem(C.STORAGE_KEY);
-            if (saved) data = C.normalizeData(JSON.parse(saved));
-            else {
-                const old = localStorage.getItem(C.LEGACY_KEY);
-                if (old) {
-                    data = C.migrateLegacy(JSON.parse(old));
-                    save();
-                    toast('Öğrenci listesi aktarıldı. Önceki 2. dönem puanları arşivde saklanıyor.');
-                }
-            }
-        } catch (error) {
-            storageBlocked = true;
-            storageError('Kayıt okunamadığı için mevcut verinin üzerine yazılmadı. Kayıt sorunu çözülene kadar değişiklikler kaydedilemez.');
-        }
+        clearSavedAppData();
+        data = C.newData();
     }
     function dialog(title, content, actions = []) {
         $('#dialogBody').replaceChildren(el('div', { className: 'dialog-heading' }, [
@@ -144,7 +153,7 @@
         if (!students.length) { rows.append(el('p', { className: 'no-results', text: 'Aramanızla eşleşen öğrenci yok.' })); return; }
         students.forEach(student => {
             const row = el('article', { className: 'grade-row', 'aria-label': studentName(student) });
-            row.append(el('div', { className: 'student-identity' }, [el('span', { className: 'student-avatar', text: String(data.students.indexOf(student) + 1).padStart(2, '0') }), el('div', {}, [el('strong', { text: studentName(student) }), el('span', { className: 'muted', text: `No ${student.no || '—'} · ${data.metadata.className || '9. sınıf'}` })])]));
+            row.append(el('div', { className: 'student-identity' }, [el('span', { className: 'student-avatar', text: String(data.students.indexOf(student) + 1).padStart(2, '0') }), el('div', {}, [el('strong', { text: studentName(student) }), el('span', { className: 'muted', text: `No ${student.no || '—'} · ${data.metadata.className || '9. sınıf'}` })]), button('Düzenle', () => editStudent(student), 'text-button edit-student', { 'aria-label': `${studentName(student)} bilgilerini düzenle` })]));
             [1, 2].forEach(p => row.append(gradeCell(student, p)));
             row.append(button('Yazdır', () => printChoice(student), 'button quiet print-student', { 'aria-label': `${studentName(student)} ölçeklerini yazdır` }));
             rows.append(row);
@@ -277,10 +286,15 @@
         const form = el('form', { className: 'form-grid' }, [field('Öğrenci numarası', no), field('Ad soyad', name)]);
         const submit = () => {
             if (!name.value.trim()) { name.reportValidity(); return; }
-            if (no.value.trim() && data.students.some(s => s.id !== student?.id && s.no === no.value.trim())) { toast('Bu öğrenci numarası zaten listede.'); return; }
-            if (student) { student.no = no.value.trim(); student.name = name.value.trim(); }
-            else data.students.push(C.newStudent(no.value.trim(), name.value.trim()));
+            if (student) {
+                try { C.updateStudent(data, student.id, { no: no.value, name: name.value }); }
+                catch (error) { toast(error.message); return; }
+            } else {
+                if (no.value.trim() && data.students.some(s => s.no === no.value.trim())) { toast('Bu öğrenci numarası zaten listede.'); return; }
+                data.students.push(C.newStudent(no.value.trim(), name.value.trim()));
+            }
             save(); $('#dialog').close(); render();
+            toast(student ? 'Öğrenci bilgileri güncellendi.' : 'Öğrenci eklendi.');
         };
         form.addEventListener('submit', event => { event.preventDefault(); submit(); });
         dialog(student ? 'Öğrenciyi düzenle' : 'Öğrenci ekle', form, [button('Kaydet', submit, 'button primary')]);
@@ -309,7 +323,7 @@
         $('#main').append(
             heading('Sınıf bilgileri', 'Yazdırma çıktılarında kullanılacak bilgileri girin.'),
             el('section', { className: 'card class-info-card', 'aria-label': 'Sınıf bilgileri' }, [grid]),
-            el('p', { className: 'hint', text: 'Değişiklikler otomatik kaydedilir.' })
+            el('p', { className: 'hint', text: 'Değişiklikler bu sayfa açıkken otomatik kaydedilir.' })
         );
     }
     function printChoice(student) {
@@ -325,5 +339,11 @@
         window.OlcekPrint.show(data, { kind, students, keys });
     }
     document.querySelectorAll('[data-page]').forEach(node => node.addEventListener('click', () => go(node.dataset.page)));
+    window.addEventListener('pageshow', event => {
+        if (event.persisted) {
+            clearSavedAppData();
+            window.location.reload();
+        }
+    });
     load(); render();
 })();
