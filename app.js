@@ -1,6 +1,7 @@
 import { RUBRICS } from './rubrics.js';
 import { evaluateStudent, gradeStatus, format, displayed, parseDelimited, parseGrade, studentsFromRows, rubricsFor, validShape, emptyScores, criterionValue, parseEokul } from './core.js';
 import { buildReportHTML, reportIssues } from './reports.js';
+import { reportModels } from './layout.js';
 import { createWorkbook, importWorkbook } from './xlsx.js';
 
 const $ = id => document.getElementById(id);
@@ -56,7 +57,7 @@ function loadWorkspace() {
 }
 
 let ws = loadWorkspace();
-let evaluations = [], sheet = 'grades', drawerIndex = -1, sortState = null;
+let evaluations = [], sheet = 'grades', drawerIndex = -1, sortState = null, step = 1;
 const cls = () => ws.classes.find(c => c.id === ws.activeId) || ws.classes[0];
 // Shown wherever the class is named; a new work session starts without a class name.
 const classLabel = (c = cls()) => c.name.trim() || (ws.classes.filter(x => !x.name.trim()).length > 1 ? `Adsız sınıf ${ws.classes.indexOf(c) + 1}` : 'Sınıf adı girilmedi');
@@ -68,9 +69,8 @@ const rubricById = id => RUBRICS.find(r => r.id === id);
 const body = $('sheet-body');
 
 const hasWork = () => ws.classes.some(c => c.students.some(s => !isBlank(s)));
-function save() {
-  $('save-status').textContent = hasWork() ? 'Kaydedilmez · saklamak için yedek indirin' : 'Sayfa kapanınca bilgiler silinir';
-}
+// Nothing is stored; refresh the parts that summarise the work.
+function save() { renderSteps(); }
 
 // ---------- Toast with undo ----------
 function toast(message, action) {
@@ -102,42 +102,58 @@ function statusHTML(s, entry, p) {
 const needsWork = kind => ['pending', 'error', 'incomplete'].includes(kind);
 
 // ---------- Steps ----------
+const STEPS = ['Sınıf bilgileri', 'Öğrenci listesi', 'Notlar ve kriterler', 'Yazdır / Excel'];
 function renderSteps() {
   const issues = issueList(), p = ws.profile;
   const listed = students().map((s, i) => [s, i]).filter(([s]) => !isBlank(s));
   const missing = [!cls().name.trim() && 'sınıf adı', !p.school.trim() && 'okul adı', !p.teacher.trim() && 'öğretmen adı'].filter(Boolean);
-  const graded = listed.filter(([s, i]) => [1, 2].some(q => evaluations[i][q - 1].data) && ![1, 2].some(q => needsWork(gradeStatus(s, evaluations[i][q - 1], q).kind))).length;
-  const steps = [
-    { title: 'Sınıf bilgileri', text: missing.length ? `Eksik: ${missing.join(', ')}` : `${p.school} · ${p.teacher}`, state: missing.length ? 'todo' : 'done', action: 'info' },
-    { title: 'Öğrenci listesi', text: listed.length ? `${listed.length} öğrenci · e-Okul’dan güncelle` : 'e-Okul’dan yapıştırın', state: listed.length ? 'done' : 'todo', action: 'eokul' },
-    { title: 'Notlar ve kriterler', text: !listed.length ? 'Önce öğrenci ekleyin' : issues.length ? `${issues.length} not kontrol bekliyor` : `${graded} öğrencinin notu hazır`, state: !listed.length ? 'idle' : issues.length ? 'warn' : graded ? 'done' : 'todo', action: 'notes' },
-    { title: 'Yazdır / Excel', text: !graded ? 'Notlar girildikten sonra' : issues.length ? 'Önce uyarıları giderin' : 'Çizelgeler hazır', state: graded && !issues.length ? 'ready' : 'idle', action: 'print' },
+  const graded = listed.filter(([s, i]) => [1, 2].some(q => evaluations[i]?.[q - 1]?.data) && ![1, 2].some(q => needsWork(gradeStatus(s, evaluations[i][q - 1], q).kind))).length;
+  const info = [
+    { text: missing.length ? `Eksik: ${missing.join(', ')}` : `${cls().name.trim()} · ${p.school}`, state: missing.length ? 'todo' : 'done' },
+    { text: listed.length ? `${listed.length} öğrenci` : 'Liste boş', state: listed.length ? 'done' : 'todo' },
+    { text: !listed.length ? 'Önce öğrenci ekleyin' : issues.length ? `${issues.length} not kontrol bekliyor` : graded ? `${graded} öğrenci hazır` : 'Notları girin', state: !listed.length ? 'idle' : issues.length ? 'warn' : graded ? 'done' : 'todo' },
+    { text: !graded ? 'Notlardan sonra' : issues.length ? 'Önce uyarıları giderin' : 'Hazır', state: graded && !issues.length ? 'done' : 'idle' },
   ];
-  $('steps').innerHTML = steps.map((s, i) => `<li><button class="step ${s.state}" data-step="${s.action}"><span class="step-n">${s.state === 'done' ? '✓' : i + 1}</span><span class="step-t"><b>${s.title}</b><small>${esc(s.text)}</small></span></button></li>`).join('');
+  $('stepper').innerHTML = STEPS.map((title, i) => `<li><button class="step ${info[i].state}${step === i + 1 ? ' current' : ''}" data-step="${i + 1}" ${step === i + 1 ? 'aria-current="step"' : ''}><span class="step-n">${info[i].state === 'done' && step !== i + 1 ? '✓' : i + 1}</span><span class="step-t"><b>${title}</b><small>${esc(info[i].text)}</small></span></button></li>`).join('');
+  $('step-prev').hidden = step === 1;
+  $('step-next').hidden = step === STEPS.length;
+  $('step-next').textContent = step < STEPS.length ? `İleri: ${STEPS[step]} →` : '';
 }
-$('steps').onclick = event => {
-  const action = event.target.closest('[data-step]')?.dataset.step;
-  if (action === 'info') openInfo();
-  if (action === 'eokul') openEokul();
-  if (action === 'notes') { const it = issueList()[0]; if (it) goTo(it); else showSheet('grades'); }
-  if (action === 'print') printReport('all');
-};
+function showStep(n) {
+  step = Math.min(STEPS.length, Math.max(1, n));
+  document.querySelectorAll('[data-panel]').forEach(panel => { panel.hidden = Number(panel.dataset.panel) !== step; });
+  if (step === 1) fillInfo();
+  if (step === 2) renderRoster();
+  if (step === 3) { renderPicks(); renderSheet(); }
+  if (step === 4) renderOutput();
+  renderSteps();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+$('stepper').onclick = event => { const n = event.target.closest('[data-step]')?.dataset.step; if (n) showStep(Number(n)); };
+$('step-prev').onclick = () => showStep(step - 1);
+$('step-next').onclick = () => showStep(step + 1);
 
-// ---------- Sheet tabs ----------
-function renderTabs() {
-  const tab = (id, label, kind, sub = '') => `<button role="tab" class="sheet-btn ${kind}" data-sheet="${id}" aria-selected="${sheet === id}"><b>${esc(label)}</b>${sub ? `<small>${esc(sub)}</small>` : ''}</button>`;
-  const row = (p, title, weights) => `<span class="nav-label p${p}"><b>${title}</b><small>${weights}</small></span>${rubricsFor(p).map(r => tab(r.id, r.name, `p${p}`, `${r.criteria.length} kriter`)).join('')}${p === 2 ? '<span class="nav-gap" aria-hidden="true"></span>' : ''}`;
-  $('sheet-tabs').innerHTML = `${tab('grades', 'Performans notları', 'main', 'Not girişi · tüm öğrenciler')}<div class="nav-grid">${row(1, '1. Performans', 'her ölçek %25')}${row(2, '2. Performans', '%33 · %33 · %34')}</div>`;
+// ---------- Sheet choice: grades table or one of the seven scales (drop-down menus) ----------
+function renderPicks() {
+  for (const p of [1, 2]) {
+    const select = $(`pick-p${p}`), current = rubricById(sheet);
+    select.innerHTML = `<option value="">${p}. performans çizelgesi seçin</option>` + rubricsFor(p).map(r => `<option value="${r.id}">${esc(r.name)} · ${r.criteria.length} kriter</option>`).join('');
+    select.value = current?.performance === p ? current.id : '';
+    select.closest('.pick').classList.toggle('active', current?.performance === p);
+  }
+  $('view-grades').setAttribute('aria-pressed', sheet === 'grades');
+  $('add-row').hidden = sheet !== 'grades';
 }
-$('sheet-tabs').onclick = event => { const id = event.target.closest('[data-sheet]')?.dataset.sheet; if (id) showSheet(id); };
-function showSheet(id) { sheet = id; renderTabs(); renderSheet(); }
+for (const p of [1, 2]) $(`pick-p${p}`).onchange = event => showSheet(event.target.value || 'grades');
+$('view-grades').onclick = () => showSheet('grades');
+function showSheet(id) { sheet = id; renderPicks(); renderSheet(); }
 
 function renderSheet() {
   const r = rubricById(sheet);
   body.classList.toggle('is-rubric', Boolean(r));
   if (!r) {
     $('sheet-title').textContent = `${classLabel()} · Performans notları`;
-    $('sheet-desc').textContent = 'Notu yazın; kriter puanları ölçeklere otomatik dağıtılır. Kriterleri kendiniz girmek için yukarıdaki ölçek sekmelerini kullanın.';
+    $('sheet-desc').textContent = 'Her öğrencinin 1. ve 2. performans notunu yazın. Satırdaki “Ölçekler” bağlantısı öğrencinin bütün kriterlerini açar.';
     renderGrades();
   } else {
     const part = r.performance === 1 ? '1. performansın %25’i' : `2. performansın %${WEIGHT[r.id]}’ü (100’lük karşılığı)`;
@@ -165,7 +181,7 @@ function gradeRow(s, i) {
   const input = k => `<input data-field="${k}" value="${esc(s[k])}" aria-label="${i + 1}. satır ${label[k]}" ${k === 'no' ? 'maxlength="30" inputmode="numeric" placeholder="No"' : k === 'name' ? 'maxlength="150" placeholder="Adı ve soyadı"' : 'maxlength="6" inputmode="decimal" placeholder="—" autocomplete="off"'}>`;
   return `<tr data-id="${esc(s.id)}"><td class="c-idx">${i + 1}</td><td class="c-no">${input('no')}</td><td class="c-name">${input('name')}</td>${[1, 2].map(p => `<td class="c-grade p${p}" data-label="${p}. Performans"><div class="grade-cell">${input(`p${p}`)}<span class="status" data-status="${p}"></span></div></td>`).join('')}<td class="c-act"><button class="btn link" data-open>Ölçekler</button><button class="btn icon subtle" data-remove aria-label="${i + 1}. satırı sil" title="Sil">×</button></td></tr>`;
 }
-const emptyState = () => `<div class="empty-state"><h2>${cls().name.trim() ? `${esc(cls().name.trim())} sınıfında henüz öğrenci yok` : 'Henüz öğrenci yok'}</h2><p>e-Okul’daki öğrenci listesini kopyalayıp buraya aktarın. Notlar da varsa birlikte alınabilir.</p><div><button class="btn primary" data-empty="eokul">📋 e-Okul’dan yapıştır</button><button class="btn" data-empty="add">Tek tek ekle</button></div></div>`;
+const emptyState = () => `<div class="empty-state"><h2>${cls().name.trim() ? `${esc(cls().name.trim())} sınıfında henüz öğrenci yok` : 'Henüz öğrenci yok'}</h2><p>Önce 2. adımda öğrenci listesini e-Okul’dan aktarın.</p><div><button class="btn primary" data-empty="eokul">← Öğrenci listesine git</button><button class="btn" data-empty="add">Tek tek ekle</button></div></div>`;
 function renderGrades() {
   const list = students();
   body.innerHTML = list.length ? `<table class="grid grades"><thead><tr><th class="c-idx">#</th><th class="c-no"><button class="sort" data-sort="no">No</button></th><th class="c-name"><button class="sort" data-sort="name">Adı ve soyadı</button></th><th class="c-grade p1">1. Performans<small>Konuşma · Yazma</small></th><th class="c-grade p2">2. Performans<small>Kitap okuma · Gözlem</small></th><th class="c-act"><span class="sr-only">İşlemler</span></th></tr></thead><tbody id="rows">${list.map(gradeRow).join('')}</tbody></table>` : emptyState();
@@ -195,18 +211,26 @@ function markDuplicates() {
   });
 }
 function renderClassSelect() {
-  $('class-select').innerHTML = ws.classes.map(c => `<option value="${esc(c.id)}">${esc(classLabel(c))} · ${c.students.filter(s => s.name.trim()).length} öğrenci</option>`).join('') + (ws.classes.length < MAX_CLASSES ? '<option value="__new">＋ Yeni sınıf ekle</option>' : '');
+  $('class-select').innerHTML = ws.classes.map(c => `<option value="${esc(c.id)}">${esc(classLabel(c))} · ${c.students.filter(s => s.name.trim()).length} öğrenci</option>`).join('');
   $('class-select').value = cls().id;
+  $('class-picker').hidden = ws.classes.length < 2;
+  $('delete-class').hidden = ws.classes.length < 2;
+  $('new-class').disabled = ws.classes.length >= MAX_CLASSES;
 }
 function renderAll() {
-  evaluateAll(); renderClassSelect(); renderTabs(); renderSheet(); renderSteps();
+  evaluateAll(); renderClassSelect();
+  if (step === 1) fillInfo();
+  if (step === 2) renderRoster();
+  if (step === 3) { renderPicks(); renderSheet(); }
+  if (step === 4) renderOutput();
+  renderSteps();
   if ($('student-dialog').open) { if (drawerIndex < students().length) renderDrawer(); else $('student-dialog').close(); }
 }
 // Refresh after one student changed, without rebuilding the inputs being typed in.
 function changed(i) {
   evaluations[i] = evaluateStudent(students()[i]);
   if (rubricById(sheet)) updateRubricRow(i); else updateRow(i);
-  renderSteps(); renderFoot(); renderClassSelect(); save();
+  renderSteps(); if (step === 3) renderFoot(); renderClassSelect();
   if ($('student-dialog').open && drawerIndex === i) renderDrawer();
 }
 function focusCell(i, field) {
@@ -214,14 +238,13 @@ function focusCell(i, field) {
   if (input) { input.focus(); input.select?.(); input.scrollIntoView({ block: 'center' }); }
 }
 function goTo(issue) {
-  if ($('issues-dialog').open) $('issues-dialog').close();
-  showSheet(issue.rubric || 'grades');
+  sheet = issue.rubric || 'grades'; showStep(3);
   focusCell(issue.i, issue.rubric ? `k${issue.k}` : issue.field);
 }
 function addRow(focusField = 'no') {
   if (students().length >= MAX_STUDENTS) return toast(`Bir sınıfta en fazla ${MAX_STUDENTS} öğrenci olabilir.`);
-  if (sheet !== 'grades') sheet = 'grades';
-  students().push(blankStudent()); renderAll(); save(); focusCell(students().length - 1, focusField);
+  sheet = 'grades';
+  students().push(blankStudent()); if (step !== 3) showStep(3); renderAll(); focusCell(students().length - 1, focusField);
 }
 // Puts a performance in criterion mode: the grade is computed from the teacher's scores.
 function setManual(i, p, scores) {
@@ -296,7 +319,7 @@ body.addEventListener('paste', event => {
 });
 body.addEventListener('click', event => {
   const empty = event.target.closest('[data-empty]');
-  if (empty) return empty.dataset.empty === 'eokul' ? openEokul() : addRow();
+  if (empty) return empty.dataset.empty === 'eokul' ? showStep(2) : addRow();
   const sort = event.target.closest('[data-sort]');
   if (sort) return sortBy(sort.dataset.sort);
   const row = event.target.closest('tr[data-id]'); if (!row) return;
@@ -440,14 +463,13 @@ $('student-dialog').addEventListener('keydown', event => {
   if (event.key === 'ArrowRight' && drawerIndex < students().length - 1) openDrawer(drawerIndex + 1);
 });
 
-// ---------- e-Okul list ----------
+// ---------- 2. Student list: e-Okul copy and roster ----------
 let eokulParsed = null;
 function openEokul(textValue) {
-  $('eokul-error').textContent = '';
+  showStep(2);
   if (typeof textValue === 'string') $('eokul-text').value = textValue;
   previewEokul();
-  if (!$('eokul-dialog').open) $('eokul-dialog').showModal();
-  if (!$('eokul-text').value) $('eokul-text').focus();
+  $('eokul-text').focus();
 }
 const savedColumns = () => { try { return JSON.parse(localStorage.getItem(EOKUL_KEY)) || {}; } catch { return {}; } };
 function previewEokul() {
@@ -460,7 +482,7 @@ function previewEokul() {
   const known = new Set(students().map(s => s.no.trim()).filter(Boolean)), fresh = list.filter(s => !known.has(s.no)).length;
   const merge = $('eokul-replace').checked || !known.size ? '' : ` · ${fresh} yeni öğrenci eklenecek, ${list.length - fresh} öğrenci numarasıyla eşleşip güncellenecek`;
   $('eokul-preview').innerHTML = `<div class="eokul-found"><b>✓ ${list.length} öğrenci bulundu</b>${merge}</div>${used.length ? `<div class="eokul-map"><p>Kopyada not sütunları da var. e-Okul’daki sütun sırasına göre hangisinin hangi performans olduğunu seçin; emin değilseniz <b>Aktarma</b> bırakın.</p><div class="form-grid">${select(1)}${select(2)}</div></div>` : ''}<div class="eokul-table"><table><thead><tr><th>No</th><th>Adı soyadı</th>${used.map(c => `<th>${c + 1}. not</th>`).join('')}</tr></thead><tbody>${list.slice(0, 6).map(s => `<tr><td>${esc(s.no)}</td><td>${esc(s.name)}</td>${used.map(c => `<td>${esc(s.grades[c] || '')}</td>`).join('')}</tr>`).join('')}${list.length > 6 ? `<tr><td colspan="${2 + used.length}" class="muted">… ${list.length - 6} öğrenci daha</td></tr>` : ''}</tbody></table></div>`;
-  $('eokul-import').disabled = false; $('eokul-import').textContent = `${list.length} öğrenciyi aktar`;
+  $('eokul-import').disabled = false; $('eokul-import').textContent = `${list.length} öğrenciyi listeye aktar`;
 }
 $('eokul-text').addEventListener('input', previewEokul);
 $('eokul-replace').addEventListener('change', previewEokul);
@@ -472,7 +494,7 @@ $('eokul-import').onclick = () => {
   if (!eokulParsed) return;
   const map = { 1: $('eokul-p1')?.value ?? '', 2: $('eokul-p2')?.value ?? '' };
   if (map[1] !== '' && map[1] === map[2]) { $('eokul-error').textContent = 'İki performans için aynı sütun seçilemez.'; return; }
-  localStorage.setItem(EOKUL_KEY, JSON.stringify(map));
+  try { localStorage.setItem(EOKUL_KEY, JSON.stringify(map)); } catch {}
   const replace = $('eokul-replace').checked, list = replace ? [] : structuredClone(students().filter(s => !isBlank(s)));
   const byNo = new Map(list.filter(s => s.no.trim()).map(s => [s.no.trim(), s]));
   let added = 0, updated = 0, bad = 0, grades = 0;
@@ -487,49 +509,72 @@ $('eokul-import').onclick = () => {
   }
   if (list.length > MAX_STUDENTS) { $('eokul-error').textContent = `Bir sınıfta en fazla ${MAX_STUDENTS} öğrenci olabilir.`; return; }
   const restore = snapshot();
-  cls().students = list; renderAll(); save();
-  $('eokul-dialog').close(); $('eokul-text').value = ''; $('eokul-replace').checked = false;
+  cls().students = list; $('eokul-text').value = ''; $('eokul-replace').checked = false; previewEokul(); renderAll();
   undoable(`${added} öğrenci eklendi${updated ? `, ${updated} güncellendi` : ''}${grades ? `, ${grades} not alındı` : ''}${bad ? `, ${bad} geçersiz not atlandı` : ''}.`, restore);
 };
-$('eokul-open').onclick = () => openEokul();
+// Editable roster: number and name only; grades are entered in step 3.
+function renderRoster() {
+  const list = students(), count = list.filter(s => !isBlank(s)).length;
+  $('roster-title').textContent = count ? `Listedeki öğrenciler (${count})` : 'Listedeki öğrenciler';
+  $('roster').innerHTML = list.length ? `<table class="grid roster"><thead><tr><th class="c-idx">#</th><th class="c-no">No</th><th>Adı ve soyadı</th><th class="c-act"><span class="sr-only">Sil</span></th></tr></thead><tbody>${list.map((s, i) => `<tr data-id="${esc(s.id)}"><td class="c-idx">${i + 1}</td><td class="c-no"><input data-rfield="no" value="${esc(s.no)}" maxlength="30" inputmode="numeric" placeholder="No" aria-label="${i + 1}. satır numara"></td><td><input data-rfield="name" value="${esc(s.name)}" maxlength="150" placeholder="Adı ve soyadı" aria-label="${i + 1}. satır ad soyad"></td><td class="c-act"><button class="btn icon subtle" data-rremove aria-label="${i + 1}. satırı sil" title="Sil">×</button></td></tr>`).join('')}</tbody></table>` : '<p class="roster-empty">Henüz öğrenci yok. Yukarıdaki kutuya e-Okul listesini yapıştırın ya da tek tek ekleyin.</p>';
+}
+$('roster').addEventListener('input', event => {
+  const input = event.target, field = input.dataset.rfield, row = input.closest('tr[data-id]'); if (!field || !row) return;
+  students()[indexOf(row.dataset.id)][field] = input.value; renderClassSelect(); renderSteps();
+});
+$('roster').addEventListener('keydown', event => {
+  const input = event.target, field = input.dataset?.rfield; if (!field || event.key !== 'Enter') return;
+  event.preventDefault();
+  const row = input.closest('tr'), next = row.nextElementSibling?.querySelector(`[data-rfield="${field}"]`);
+  if (next) next.focus(); else $('roster-add').click();
+});
+$('roster').addEventListener('click', event => {
+  const button = event.target.closest('[data-rremove]'); if (!button) return;
+  const i = indexOf(button.closest('tr').dataset.id), s = students()[i], restore = snapshot();
+  students().splice(i, 1); renderAll();
+  if (!isBlank(s)) undoable(`${s.name.trim() || 'Öğrenci'} silindi.`, restore);
+});
+$('roster-add').onclick = () => {
+  if (students().length >= MAX_STUDENTS) return toast(`Bir sınıfta en fazla ${MAX_STUDENTS} öğrenci olabilir.`);
+  students().push(blankStudent()); evaluateAll(); renderRoster(); renderSteps();
+  $('roster').querySelector('tbody tr:last-child [data-rfield="no"]')?.focus();
+};
 
-// ---------- Classes and report details ----------
+// ---------- 1. Class details ----------
 const INFO = { className: ['class', 'name'], book1: ['class', 'book1'], book2: ['class', 'book2'], school: ['profile', 'school'], teacher: ['profile', 'teacher'], year: ['profile', 'year'], date: ['profile', 'date'] };
-function openInfo() { for (const [id, [where, key]] of Object.entries(INFO)) $(`f-${id}`).value = (where === 'class' ? cls() : ws.profile)[key]; $('info-dialog').showModal(); }
+function fillInfo() { for (const [id, [where, key]] of Object.entries(INFO)) { const input = $(`f-${id}`); if (document.activeElement !== input) input.value = (where === 'class' ? cls() : ws.profile)[key]; } }
 for (const [id, [where, key]] of Object.entries(INFO)) $(`f-${id}`).addEventListener('input', event => {
   const value = event.target.value;
   if (where === 'class') cls()[key] = value; else ws.profile[key] = value;
-  save(); renderClassSelect(); renderSteps();
+  renderClassSelect(); renderSteps();
 });
-$('info-dialog').addEventListener('close', () => renderSheet());
 function nextClassName() {
   const m = cls().name.match(/^(\d+)\s*[\/-]\s*([A-ZÇĞİÖŞÜ])$/u), letters = 'ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZ';
   const next = m && letters[letters.indexOf(m[2]) + 1], name = next ? `${m[1]}/${next}` : '';
   return name && ws.classes.some(c => c.name === name) ? '' : name;
 }
-$('class-select').onchange = event => {
-  if (event.target.value === '__new') {
-    const c = newClass(nextClassName()); ws.classes.push(c); ws.activeId = c.id; sheet = 'grades'; save(); renderAll();
-    openInfo(); $('f-className').select();
-  } else { ws.activeId = event.target.value; sortState = null; save(); renderAll(); }
+$('new-class').onclick = () => {
+  const c = newClass(nextClassName()); ws.classes.push(c); ws.activeId = c.id; sheet = 'grades'; sortState = null;
+  renderAll(); fillInfo(); $('f-className').focus(); $('f-className').select();
+  toast('Yeni sınıf eklendi. Bilgilerini girip öğrenci listesine geçin.');
 };
-$('open-info').onclick = openInfo;
+$('class-select').onchange = event => { ws.activeId = event.target.value; sheet = 'grades'; sortState = null; renderAll(); fillInfo(); };
 $('delete-class').onclick = () => {
   const c = cls(), count = c.students.filter(s => !isBlank(s)).length;
   if (!confirm(`${classLabel(c)}${c.name.trim() ? ' sınıfı' : ''}${count ? ` ve ${count} öğrencisi` : ''} silinsin mi? Bu işlem geri alınamaz.`)) return;
   ws.classes = ws.classes.filter(x => x.id !== c.id);
   if (!ws.classes.length) ws.classes.push(newClass());
-  ws.activeId = ws.classes[0].id; save(); $('info-dialog').close(); renderAll(); toast(`${c.name.trim() || 'Sınıf'} silindi.`);
+  ws.activeId = ws.classes[0].id; renderAll(); fillInfo(); toast(`${c.name.trim() || 'Sınıf'} silindi.`);
 };
 
-// ---------- File import, backup, menu ----------
+// ---------- File import, demo, backup ----------
 function addImported(list, replace) {
   const existing = replace ? [] : students().filter(s => !isBlank(s));
   if (existing.length + list.length > MAX_STUDENTS) throw new Error(`Bir sınıfta en fazla ${MAX_STUDENTS} öğrenci olabilir.`);
   const numbers = new Set(existing.map(s => s.no.trim()).filter(Boolean)), clash = list.find(s => s.no && numbers.has(s.no));
   if (clash) throw new Error(`${clash.no} numaralı öğrenci listede zaten var. “Mevcut listeyi silip bununla değiştir” seçeneğini işaretleyin.`);
   const restore = snapshot();
-  cls().students = [...existing, ...list]; renderAll(); save();
+  cls().students = [...existing, ...list]; renderAll();
   $('import-dialog').close(); $('import-file').value = '';
   const scored = list.filter(s => s.manual1 || s.manual2).length;
   undoable(`${list.length} öğrenci aktarıldı${scored ? `, ${scored} öğrencinin kriter puanları alındı` : ''}.`, restore);
@@ -545,35 +590,26 @@ $('import-file').onchange = async event => {
 };
 function download(blob, name) { const url = URL.createObjectURL(blob), a = document.createElement('a'); a.href = url; a.download = name; a.click(); setTimeout(() => URL.revokeObjectURL(url), 2000); }
 const fileName = ext => `performans-${cls().name.replace(/[^\p{L}\p{N}-]/gu, '-') || 'sinif'}-${ws.profile.date || 'rapor'}.${ext}`;
-const actions = {
-  'print-summary': () => printReport('summary'),
-  'print-scales': () => printReport('scales'),
-  import: () => { $('import-error').textContent = ''; $('import-dialog').showModal(); },
-  backup: () => download(new Blob([JSON.stringify(ws, null, 2)], { type: 'application/json' }), `olcek-yedek-${today()}.json`),
-  restore: () => $('restore-file').click(),
-  demo: () => {
-    const restore = snapshot(), taken = new Set(students().map(s => s.no.trim()));
-    const demo = [['101', 'Örnek Öğrenci A', '80', '85'], ['102', 'Örnek Beyza Nur Kaya', '92', '90'], ['103', 'Örnek Ada Nur Demirtaş', '75', '100'], ['104', 'Örnek Öğrenci D', '64', '70'], ['105', 'Örnek Öğrenci E', '35', '']];
-    cls().students = [...students().filter(s => !isBlank(s)), ...demo.map(([no, name, p1, p2]) => ({ ...blankStudent(), no: taken.has(no) ? '' : no, name, p1, p2 }))];
-    renderAll(); save(); undoable('Örnek öğrenciler eklendi.', restore);
-  },
-  clear: () => {
-    if (!students().some(s => !isBlank(s))) return toast('Liste zaten boş.');
-    const restore = snapshot(); cls().students = []; renderAll(); save(); undoable('Liste temizlendi.', restore);
-  },
+$('import-open').onclick = () => { $('import-error').textContent = ''; $('import-dialog').showModal(); };
+$('demo').onclick = () => {
+  const restore = snapshot(), taken = new Set(students().map(s => s.no.trim()));
+  const demo = [['101', 'Örnek Öğrenci A', '80', '85'], ['102', 'Örnek Beyza Nur Kaya', '92', '90'], ['103', 'Örnek Ada Nur Demirtaş', '75', '100'], ['104', 'Örnek Öğrenci D', '64', '70'], ['105', 'Örnek Öğrenci E', '35', '']];
+  cls().students = [...students().filter(s => !isBlank(s)), ...demo.map(([no, name, p1, p2]) => ({ ...blankStudent(), no: taken.has(no) ? '' : no, name, p1, p2 }))];
+  renderAll(); undoable('Örnek öğrenciler eklendi.', restore);
 };
-function toggleMenu(open = $('menu').hidden) { $('menu').hidden = !open; $('menu-button').setAttribute('aria-expanded', open); if (open) $('menu').querySelector('button').focus(); }
-$('menu-button').onclick = () => toggleMenu();
-$('menu').onclick = event => { const a = event.target.closest('[data-action]')?.dataset.action; if (a) { toggleMenu(false); actions[a](); } };
-document.addEventListener('click', event => { if (!$('menu').hidden && !event.target.closest('.menu-wrap')) toggleMenu(false); });
-document.addEventListener('keydown', event => { if (event.key === 'Escape' && !$('menu').hidden) { toggleMenu(false); $('menu-button').focus(); } });
+$('clear').onclick = () => {
+  if (!students().some(s => !isBlank(s))) return toast('Liste zaten boş.');
+  const restore = snapshot(); cls().students = []; renderAll(); undoable('Liste temizlendi.', restore);
+};
+$('backup').onclick = () => download(new Blob([JSON.stringify(ws, null, 2)], { type: 'application/json' }), `olcek-yedek-${today()}.json`);
+$('restore').onclick = () => $('restore-file').click();
 $('restore-file').onchange = async event => {
   const file = event.target.files[0]; if (!file) return;
   try {
     if (file.size > 5 * 1024 * 1024) throw new Error('Yedek dosyası çok büyük.');
     const restored = parseWorkspace(JSON.parse(await file.text()));
     if (hasWork() && !confirm('Yedek, şu anki tüm sınıfların yerini alacak. Devam edilsin mi?')) return;
-    ws = restored; save(); renderAll(); toast(`Yedek açıldı: ${ws.classes.length} sınıf.`);
+    ws = restored; sheet = 'grades'; renderAll(); fillInfo(); toast(`Yedek açıldı: ${ws.classes.length} sınıf.`);
   } catch (e) { toast(e instanceof SyntaxError ? 'Yedek dosyası okunamadı.' : e.message); } finally { event.target.value = ''; }
 };
 $('help').onclick = () => $('help-dialog').showModal();
@@ -598,23 +634,31 @@ function issueList() {
   });
   return items;
 }
-function checkBeforeOutput() {
-  const items = issueList();
-  if (!reportIssues(reportState(), evaluations).length) return true;
-  $('issues-list').innerHTML = items.length ? items.slice(0, 40).map((it, n) => `<li><button class="btn link" data-issue="${n}">${esc(it.text)}</button></li>`).join('') + (items.length > 40 ? `<li class="muted">… ve ${items.length - 40} uyarı daha</li>` : '') : '<li>Çıktı için en az bir öğrencinin adını ve performans notunu girin.</li>';
-  $('issues-list').onclick = event => { const b = event.target.closest('[data-issue]'); if (b) goTo(items[Number(b.dataset.issue)]); };
-  $('issues-dialog').showModal();
-  return false;
+// ---------- 4. Output ----------
+const blocked = () => reportIssues(reportState(), evaluations).length > 0;
+function renderOutput() {
+  const items = issueList(), stop = blocked();
+  for (const id of ['print', 'export-excel', 'print-summary', 'print-scales']) $(id).disabled = stop;
+  if (stop) {
+    $('out-status').innerHTML = `<div class="card issues"><h2>Yazdırmadan önce kontrol edin</h2>${items.length ? `<p>Aşağıdaki notlar Excel’de girilen değerden farklı çıkacak ya da eksik. Bir maddeye tıklayınca ilgili hücreye gidersiniz.</p><ul>${items.slice(0, 40).map((it, n) => `<li><button class="btn link" data-issue="${n}">${esc(it.text)}</button></li>`).join('')}${items.length > 40 ? `<li class="muted">… ve ${items.length - 40} uyarı daha</li>` : ''}</ul>` : '<p>Çıktı için en az bir öğrencinin adını ve performans notunu girin.</p>'}</div>`;
+    $('out-status').querySelector('ul')?.addEventListener('click', event => { const b = event.target.closest('[data-issue]'); if (b) goTo(items[Number(b.dataset.issue)]); });
+    return;
+  }
+  const models = reportModels(reportState(), evaluations), summary = models.filter(m => !m.spec).length, scales = models.length - summary;
+  const count = students().filter(s => s.name.trim()).length;
+  $('out-status').innerHTML = `<div class="card ready"><b>✓ ${count} öğrencinin çizelgeleri hazır.</b><span>Ortak çizelge ${summary} sayfa · 7 ölçek ${scales} sayfa · toplam ${models.length} sayfa (A4 yatay)</span></div>`;
 }
 let printScope = 'all';
-const fillPrint = () => { $('print-root').innerHTML = reportIssues(reportState(), evaluations).length ? '<p>Yazdırmadan önce uyarıları giderin.</p>' : buildReportHTML(reportState(), evaluations, printScope); };
+const fillPrint = () => { $('print-root').innerHTML = blocked() ? '<p>Yazdırmadan önce uyarıları giderin.</p>' : buildReportHTML(reportState(), evaluations, printScope); };
 function printReport(scope) {
-  if (!checkBeforeOutput()) return;
+  if (blocked()) return showStep(4);
   printScope = scope; fillPrint(); window.print(); printScope = 'all';
 }
 $('print').onclick = () => printReport('all');
+$('print-summary').onclick = () => printReport('summary');
+$('print-scales').onclick = () => printReport('scales');
 $('export-excel').onclick = async () => {
-  if (!checkBeforeOutput()) return;
+  if (blocked()) return showStep(4);
   const button = $('export-excel'), label = button.innerHTML; button.disabled = true; button.textContent = 'Hazırlanıyor…';
   try { download(await createWorkbook(reportState(), evaluations), fileName('xlsx')); toast('Excel dosyası indirildi.'); }
   catch { toast('Excel oluşturulamadı. Tekrar deneyin.'); }
@@ -625,5 +669,4 @@ window.addEventListener('afterprint', () => { $('print-root').innerHTML = ''; })
 // Leaving or reloading the page discards the work; ask first.
 window.addEventListener('beforeunload', event => { if (hasWork()) { event.preventDefault(); event.returnValue = ''; } });
 
-renderAll();
-save();
+evaluateAll(); showStep(1);

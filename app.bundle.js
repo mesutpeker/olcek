@@ -2105,6 +2105,7 @@ ${meta.className} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130
   var sheet2 = "grades";
   var drawerIndex = -1;
   var sortState = null;
+  var step = 1;
   var cls = () => ws.classes.find((c) => c.id === ws.activeId) || ws.classes[0];
   var classLabel = (c = cls()) => c.name.trim() || (ws.classes.filter((x) => !x.name.trim()).length > 1 ? `Ads\u0131z s\u0131n\u0131f ${ws.classes.indexOf(c) + 1}` : "S\u0131n\u0131f ad\u0131 girilmedi");
   var students = () => cls().students;
@@ -2120,7 +2121,7 @@ ${meta.className} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130
   var body = $("sheet-body");
   var hasWork = () => ws.classes.some((c) => c.students.some((s) => !isBlank(s)));
   function save() {
-    $("save-status").textContent = hasWork() ? "Kaydedilmez \xB7 saklamak i\xE7in yedek indirin" : "Sayfa kapan\u0131nca bilgiler silinir";
+    renderSteps();
   }
   function toast(message, action) {
     const el = $("toast");
@@ -2171,42 +2172,59 @@ ${meta.className} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130
     }
   }
   var needsWork = (kind) => ["pending", "error", "incomplete"].includes(kind);
+  var STEPS = ["S\u0131n\u0131f bilgileri", "\xD6\u011Frenci listesi", "Notlar ve kriterler", "Yazd\u0131r / Excel"];
   function renderSteps() {
     const issues = issueList(), p = ws.profile;
     const listed = students().map((s, i) => [s, i]).filter(([s]) => !isBlank(s));
     const missing = [!cls().name.trim() && "s\u0131n\u0131f ad\u0131", !p.school.trim() && "okul ad\u0131", !p.teacher.trim() && "\xF6\u011Fretmen ad\u0131"].filter(Boolean);
-    const graded = listed.filter(([s, i]) => [1, 2].some((q) => evaluations[i][q - 1].data) && ![1, 2].some((q) => needsWork(gradeStatus(s, evaluations[i][q - 1], q).kind))).length;
-    const steps = [
-      { title: "S\u0131n\u0131f bilgileri", text: missing.length ? `Eksik: ${missing.join(", ")}` : `${p.school} \xB7 ${p.teacher}`, state: missing.length ? "todo" : "done", action: "info" },
-      { title: "\xD6\u011Frenci listesi", text: listed.length ? `${listed.length} \xF6\u011Frenci \xB7 e-Okul\u2019dan g\xFCncelle` : "e-Okul\u2019dan yap\u0131\u015Ft\u0131r\u0131n", state: listed.length ? "done" : "todo", action: "eokul" },
-      { title: "Notlar ve kriterler", text: !listed.length ? "\xD6nce \xF6\u011Frenci ekleyin" : issues.length ? `${issues.length} not kontrol bekliyor` : `${graded} \xF6\u011Frencinin notu haz\u0131r`, state: !listed.length ? "idle" : issues.length ? "warn" : graded ? "done" : "todo", action: "notes" },
-      { title: "Yazd\u0131r / Excel", text: !graded ? "Notlar girildikten sonra" : issues.length ? "\xD6nce uyar\u0131lar\u0131 giderin" : "\xC7izelgeler haz\u0131r", state: graded && !issues.length ? "ready" : "idle", action: "print" }
+    const graded = listed.filter(([s, i]) => [1, 2].some((q) => evaluations[i]?.[q - 1]?.data) && ![1, 2].some((q) => needsWork(gradeStatus(s, evaluations[i][q - 1], q).kind))).length;
+    const info = [
+      { text: missing.length ? `Eksik: ${missing.join(", ")}` : `${cls().name.trim()} \xB7 ${p.school}`, state: missing.length ? "todo" : "done" },
+      { text: listed.length ? `${listed.length} \xF6\u011Frenci` : "Liste bo\u015F", state: listed.length ? "done" : "todo" },
+      { text: !listed.length ? "\xD6nce \xF6\u011Frenci ekleyin" : issues.length ? `${issues.length} not kontrol bekliyor` : graded ? `${graded} \xF6\u011Frenci haz\u0131r` : "Notlar\u0131 girin", state: !listed.length ? "idle" : issues.length ? "warn" : graded ? "done" : "todo" },
+      { text: !graded ? "Notlardan sonra" : issues.length ? "\xD6nce uyar\u0131lar\u0131 giderin" : "Haz\u0131r", state: graded && !issues.length ? "done" : "idle" }
     ];
-    $("steps").innerHTML = steps.map((s, i) => `<li><button class="step ${s.state}" data-step="${s.action}"><span class="step-n">${s.state === "done" ? "\u2713" : i + 1}</span><span class="step-t"><b>${s.title}</b><small>${esc(s.text)}</small></span></button></li>`).join("");
+    $("stepper").innerHTML = STEPS.map((title, i) => `<li><button class="step ${info[i].state}${step === i + 1 ? " current" : ""}" data-step="${i + 1}" ${step === i + 1 ? 'aria-current="step"' : ""}><span class="step-n">${info[i].state === "done" && step !== i + 1 ? "\u2713" : i + 1}</span><span class="step-t"><b>${title}</b><small>${esc(info[i].text)}</small></span></button></li>`).join("");
+    $("step-prev").hidden = step === 1;
+    $("step-next").hidden = step === STEPS.length;
+    $("step-next").textContent = step < STEPS.length ? `\u0130leri: ${STEPS[step]} \u2192` : "";
   }
-  $("steps").onclick = (event) => {
-    const action = event.target.closest("[data-step]")?.dataset.step;
-    if (action === "info") openInfo();
-    if (action === "eokul") openEokul();
-    if (action === "notes") {
-      const it = issueList()[0];
-      if (it) goTo(it);
-      else showSheet("grades");
+  function showStep(n) {
+    step = Math.min(STEPS.length, Math.max(1, n));
+    document.querySelectorAll("[data-panel]").forEach((panel) => {
+      panel.hidden = Number(panel.dataset.panel) !== step;
+    });
+    if (step === 1) fillInfo();
+    if (step === 2) renderRoster();
+    if (step === 3) {
+      renderPicks();
+      renderSheet();
     }
-    if (action === "print") printReport("all");
-  };
-  function renderTabs() {
-    const tab = (id, label, kind, sub = "") => `<button role="tab" class="sheet-btn ${kind}" data-sheet="${id}" aria-selected="${sheet2 === id}"><b>${esc(label)}</b>${sub ? `<small>${esc(sub)}</small>` : ""}</button>`;
-    const row = (p, title, weights) => `<span class="nav-label p${p}"><b>${title}</b><small>${weights}</small></span>${rubricsFor(p).map((r) => tab(r.id, r.name, `p${p}`, `${r.criteria.length} kriter`)).join("")}${p === 2 ? '<span class="nav-gap" aria-hidden="true"></span>' : ""}`;
-    $("sheet-tabs").innerHTML = `${tab("grades", "Performans notlar\u0131", "main", "Not giri\u015Fi \xB7 t\xFCm \xF6\u011Frenciler")}<div class="nav-grid">${row(1, "1. Performans", "her \xF6l\xE7ek %25")}${row(2, "2. Performans", "%33 \xB7 %33 \xB7 %34")}</div>`;
+    if (step === 4) renderOutput();
+    renderSteps();
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
-  $("sheet-tabs").onclick = (event) => {
-    const id = event.target.closest("[data-sheet]")?.dataset.sheet;
-    if (id) showSheet(id);
+  $("stepper").onclick = (event) => {
+    const n = event.target.closest("[data-step]")?.dataset.step;
+    if (n) showStep(Number(n));
   };
+  $("step-prev").onclick = () => showStep(step - 1);
+  $("step-next").onclick = () => showStep(step + 1);
+  function renderPicks() {
+    for (const p of [1, 2]) {
+      const select = $(`pick-p${p}`), current = rubricById(sheet2);
+      select.innerHTML = `<option value="">${p}. performans \xE7izelgesi se\xE7in</option>` + rubricsFor(p).map((r) => `<option value="${r.id}">${esc(r.name)} \xB7 ${r.criteria.length} kriter</option>`).join("");
+      select.value = current?.performance === p ? current.id : "";
+      select.closest(".pick").classList.toggle("active", current?.performance === p);
+    }
+    $("view-grades").setAttribute("aria-pressed", sheet2 === "grades");
+    $("add-row").hidden = sheet2 !== "grades";
+  }
+  for (const p of [1, 2]) $(`pick-p${p}`).onchange = (event) => showSheet(event.target.value || "grades");
+  $("view-grades").onclick = () => showSheet("grades");
   function showSheet(id) {
     sheet2 = id;
-    renderTabs();
+    renderPicks();
     renderSheet();
   }
   function renderSheet() {
@@ -2214,7 +2232,7 @@ ${meta.className} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130
     body.classList.toggle("is-rubric", Boolean(r));
     if (!r) {
       $("sheet-title").textContent = `${classLabel()} \xB7 Performans notlar\u0131`;
-      $("sheet-desc").textContent = "Notu yaz\u0131n; kriter puanlar\u0131 \xF6l\xE7eklere otomatik da\u011F\u0131t\u0131l\u0131r. Kriterleri kendiniz girmek i\xE7in yukar\u0131daki \xF6l\xE7ek sekmelerini kullan\u0131n.";
+      $("sheet-desc").textContent = "Her \xF6\u011Frencinin 1. ve 2. performans notunu yaz\u0131n. Sat\u0131rdaki \u201C\xD6l\xE7ekler\u201D ba\u011Flant\u0131s\u0131 \xF6\u011Frencinin b\xFCt\xFCn kriterlerini a\xE7ar.";
       renderGrades();
     } else {
       const part = r.performance === 1 ? "1. performans\u0131n %25\u2019i" : `2. performans\u0131n %${WEIGHT[r.id]}\u2019\xFC (100\u2019l\xFCk kar\u015F\u0131l\u0131\u011F\u0131)`;
@@ -2241,7 +2259,7 @@ ${meta.className} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130
     const input = (k) => `<input data-field="${k}" value="${esc(s[k])}" aria-label="${i + 1}. sat\u0131r ${label[k]}" ${k === "no" ? 'maxlength="30" inputmode="numeric" placeholder="No"' : k === "name" ? 'maxlength="150" placeholder="Ad\u0131 ve soyad\u0131"' : 'maxlength="6" inputmode="decimal" placeholder="\u2014" autocomplete="off"'}>`;
     return `<tr data-id="${esc(s.id)}"><td class="c-idx">${i + 1}</td><td class="c-no">${input("no")}</td><td class="c-name">${input("name")}</td>${[1, 2].map((p) => `<td class="c-grade p${p}" data-label="${p}. Performans"><div class="grade-cell">${input(`p${p}`)}<span class="status" data-status="${p}"></span></div></td>`).join("")}<td class="c-act"><button class="btn link" data-open>\xD6l\xE7ekler</button><button class="btn icon subtle" data-remove aria-label="${i + 1}. sat\u0131r\u0131 sil" title="Sil">\xD7</button></td></tr>`;
   }
-  var emptyState = () => `<div class="empty-state"><h2>${cls().name.trim() ? `${esc(cls().name.trim())} s\u0131n\u0131f\u0131nda hen\xFCz \xF6\u011Frenci yok` : "Hen\xFCz \xF6\u011Frenci yok"}</h2><p>e-Okul\u2019daki \xF6\u011Frenci listesini kopyalay\u0131p buraya aktar\u0131n. Notlar da varsa birlikte al\u0131nabilir.</p><div><button class="btn primary" data-empty="eokul">\u{1F4CB} e-Okul\u2019dan yap\u0131\u015Ft\u0131r</button><button class="btn" data-empty="add">Tek tek ekle</button></div></div>`;
+  var emptyState = () => `<div class="empty-state"><h2>${cls().name.trim() ? `${esc(cls().name.trim())} s\u0131n\u0131f\u0131nda hen\xFCz \xF6\u011Frenci yok` : "Hen\xFCz \xF6\u011Frenci yok"}</h2><p>\xD6nce 2. ad\u0131mda \xF6\u011Frenci listesini e-Okul\u2019dan aktar\u0131n.</p><div><button class="btn primary" data-empty="eokul">\u2190 \xD6\u011Frenci listesine git</button><button class="btn" data-empty="add">Tek tek ekle</button></div></div>`;
   function renderGrades() {
     const list = students();
     body.innerHTML = list.length ? `<table class="grid grades"><thead><tr><th class="c-idx">#</th><th class="c-no"><button class="sort" data-sort="no">No</button></th><th class="c-name"><button class="sort" data-sort="name">Ad\u0131 ve soyad\u0131</button></th><th class="c-grade p1">1. Performans<small>Konu\u015Fma \xB7 Yazma</small></th><th class="c-grade p2">2. Performans<small>Kitap okuma \xB7 G\xF6zlem</small></th><th class="c-act"><span class="sr-only">\u0130\u015Flemler</span></th></tr></thead><tbody id="rows">${list.map(gradeRow).join("")}</tbody></table>` : emptyState();
@@ -2275,14 +2293,22 @@ ${meta.className} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130
     });
   }
   function renderClassSelect() {
-    $("class-select").innerHTML = ws.classes.map((c) => `<option value="${esc(c.id)}">${esc(classLabel(c))} \xB7 ${c.students.filter((s) => s.name.trim()).length} \xF6\u011Frenci</option>`).join("") + (ws.classes.length < MAX_CLASSES ? '<option value="__new">\uFF0B Yeni s\u0131n\u0131f ekle</option>' : "");
+    $("class-select").innerHTML = ws.classes.map((c) => `<option value="${esc(c.id)}">${esc(classLabel(c))} \xB7 ${c.students.filter((s) => s.name.trim()).length} \xF6\u011Frenci</option>`).join("");
     $("class-select").value = cls().id;
+    $("class-picker").hidden = ws.classes.length < 2;
+    $("delete-class").hidden = ws.classes.length < 2;
+    $("new-class").disabled = ws.classes.length >= MAX_CLASSES;
   }
   function renderAll() {
     evaluateAll();
     renderClassSelect();
-    renderTabs();
-    renderSheet();
+    if (step === 1) fillInfo();
+    if (step === 2) renderRoster();
+    if (step === 3) {
+      renderPicks();
+      renderSheet();
+    }
+    if (step === 4) renderOutput();
     renderSteps();
     if ($("student-dialog").open) {
       if (drawerIndex < students().length) renderDrawer();
@@ -2294,9 +2320,8 @@ ${meta.className} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130
     if (rubricById(sheet2)) updateRubricRow(i);
     else updateRow(i);
     renderSteps();
-    renderFoot();
+    if (step === 3) renderFoot();
     renderClassSelect();
-    save();
     if ($("student-dialog").open && drawerIndex === i) renderDrawer();
   }
   function focusCell(i, field) {
@@ -2308,16 +2333,16 @@ ${meta.className} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130
     }
   }
   function goTo(issue) {
-    if ($("issues-dialog").open) $("issues-dialog").close();
-    showSheet(issue.rubric || "grades");
+    sheet2 = issue.rubric || "grades";
+    showStep(3);
     focusCell(issue.i, issue.rubric ? `k${issue.k}` : issue.field);
   }
   function addRow(focusField = "no") {
     if (students().length >= MAX_STUDENTS) return toast(`Bir s\u0131n\u0131fta en fazla ${MAX_STUDENTS} \xF6\u011Frenci olabilir.`);
-    if (sheet2 !== "grades") sheet2 = "grades";
+    sheet2 = "grades";
     students().push(blankStudent());
+    if (step !== 3) showStep(3);
     renderAll();
-    save();
     focusCell(students().length - 1, focusField);
   }
   function setManual(i, p, scores) {
@@ -2433,7 +2458,7 @@ ${meta.className} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130
   });
   body.addEventListener("click", (event) => {
     const empty = event.target.closest("[data-empty]");
-    if (empty) return empty.dataset.empty === "eokul" ? openEokul() : addRow();
+    if (empty) return empty.dataset.empty === "eokul" ? showStep(2) : addRow();
     const sort = event.target.closest("[data-sort]");
     if (sort) return sortBy(sort.dataset.sort);
     const row = event.target.closest("tr[data-id]");
@@ -2623,11 +2648,10 @@ Ge\xE7erli puanlar: ${c.points.join(", ")}`)}"><b>K${k + 1}</b><span>${esc(c.lab
   });
   var eokulParsed = null;
   function openEokul(textValue) {
-    $("eokul-error").textContent = "";
+    showStep(2);
     if (typeof textValue === "string") $("eokul-text").value = textValue;
     previewEokul();
-    if (!$("eokul-dialog").open) $("eokul-dialog").showModal();
-    if (!$("eokul-text").value) $("eokul-text").focus();
+    $("eokul-text").focus();
   }
   var savedColumns = () => {
     try {
@@ -2661,7 +2685,7 @@ Ge\xE7erli puanlar: ${c.points.join(", ")}`)}"><b>K${k + 1}</b><span>${esc(c.lab
     const merge = $("eokul-replace").checked || !known.size ? "" : ` \xB7 ${fresh} yeni \xF6\u011Frenci eklenecek, ${list.length - fresh} \xF6\u011Frenci numaras\u0131yla e\u015Fle\u015Fip g\xFCncellenecek`;
     $("eokul-preview").innerHTML = `<div class="eokul-found"><b>\u2713 ${list.length} \xF6\u011Frenci bulundu</b>${merge}</div>${used.length ? `<div class="eokul-map"><p>Kopyada not s\xFCtunlar\u0131 da var. e-Okul\u2019daki s\xFCtun s\u0131ras\u0131na g\xF6re hangisinin hangi performans oldu\u011Funu se\xE7in; emin de\u011Filseniz <b>Aktarma</b> b\u0131rak\u0131n.</p><div class="form-grid">${select(1)}${select(2)}</div></div>` : ""}<div class="eokul-table"><table><thead><tr><th>No</th><th>Ad\u0131 soyad\u0131</th>${used.map((c) => `<th>${c + 1}. not</th>`).join("")}</tr></thead><tbody>${list.slice(0, 6).map((s) => `<tr><td>${esc(s.no)}</td><td>${esc(s.name)}</td>${used.map((c) => `<td>${esc(s.grades[c] || "")}</td>`).join("")}</tr>`).join("")}${list.length > 6 ? `<tr><td colspan="${2 + used.length}" class="muted">\u2026 ${list.length - 6} \xF6\u011Frenci daha</td></tr>` : ""}</tbody></table></div>`;
     $("eokul-import").disabled = false;
-    $("eokul-import").textContent = `${list.length} \xF6\u011Frenciyi aktar`;
+    $("eokul-import").textContent = `${list.length} \xF6\u011Frenciyi listeye aktar`;
   }
   $("eokul-text").addEventListener("input", previewEokul);
   $("eokul-replace").addEventListener("change", previewEokul);
@@ -2683,7 +2707,10 @@ Ge\xE7erli puanlar: ${c.points.join(", ")}`)}"><b>K${k + 1}</b><span>${esc(c.lab
       $("eokul-error").textContent = "\u0130ki performans i\xE7in ayn\u0131 s\xFCtun se\xE7ilemez.";
       return;
     }
-    localStorage.setItem(EOKUL_KEY, JSON.stringify(map));
+    try {
+      localStorage.setItem(EOKUL_KEY, JSON.stringify(map));
+    } catch {
+    }
     const replace = $("eokul-replace").checked, list = replace ? [] : structuredClone(students().filter((s) => !isBlank(s)));
     const byNo = new Map(list.filter((s) => s.no.trim()).map((s) => [s.no.trim(), s]));
     let added = 0, updated = 0, bad = 0, grades = 0;
@@ -2719,60 +2746,94 @@ Ge\xE7erli puanlar: ${c.points.join(", ")}`)}"><b>K${k + 1}</b><span>${esc(c.lab
     }
     const restore = snapshot();
     cls().students = list;
-    renderAll();
-    save();
-    $("eokul-dialog").close();
     $("eokul-text").value = "";
     $("eokul-replace").checked = false;
+    previewEokul();
+    renderAll();
     undoable(`${added} \xF6\u011Frenci eklendi${updated ? `, ${updated} g\xFCncellendi` : ""}${grades ? `, ${grades} not al\u0131nd\u0131` : ""}${bad ? `, ${bad} ge\xE7ersiz not atland\u0131` : ""}.`, restore);
   };
-  $("eokul-open").onclick = () => openEokul();
+  function renderRoster() {
+    const list = students(), count = list.filter((s) => !isBlank(s)).length;
+    $("roster-title").textContent = count ? `Listedeki \xF6\u011Frenciler (${count})` : "Listedeki \xF6\u011Frenciler";
+    $("roster").innerHTML = list.length ? `<table class="grid roster"><thead><tr><th class="c-idx">#</th><th class="c-no">No</th><th>Ad\u0131 ve soyad\u0131</th><th class="c-act"><span class="sr-only">Sil</span></th></tr></thead><tbody>${list.map((s, i) => `<tr data-id="${esc(s.id)}"><td class="c-idx">${i + 1}</td><td class="c-no"><input data-rfield="no" value="${esc(s.no)}" maxlength="30" inputmode="numeric" placeholder="No" aria-label="${i + 1}. sat\u0131r numara"></td><td><input data-rfield="name" value="${esc(s.name)}" maxlength="150" placeholder="Ad\u0131 ve soyad\u0131" aria-label="${i + 1}. sat\u0131r ad soyad"></td><td class="c-act"><button class="btn icon subtle" data-rremove aria-label="${i + 1}. sat\u0131r\u0131 sil" title="Sil">\xD7</button></td></tr>`).join("")}</tbody></table>` : '<p class="roster-empty">Hen\xFCz \xF6\u011Frenci yok. Yukar\u0131daki kutuya e-Okul listesini yap\u0131\u015Ft\u0131r\u0131n ya da tek tek ekleyin.</p>';
+  }
+  $("roster").addEventListener("input", (event) => {
+    const input = event.target, field = input.dataset.rfield, row = input.closest("tr[data-id]");
+    if (!field || !row) return;
+    students()[indexOf(row.dataset.id)][field] = input.value;
+    renderClassSelect();
+    renderSteps();
+  });
+  $("roster").addEventListener("keydown", (event) => {
+    const input = event.target, field = input.dataset?.rfield;
+    if (!field || event.key !== "Enter") return;
+    event.preventDefault();
+    const row = input.closest("tr"), next = row.nextElementSibling?.querySelector(`[data-rfield="${field}"]`);
+    if (next) next.focus();
+    else $("roster-add").click();
+  });
+  $("roster").addEventListener("click", (event) => {
+    const button = event.target.closest("[data-rremove]");
+    if (!button) return;
+    const i = indexOf(button.closest("tr").dataset.id), s = students()[i], restore = snapshot();
+    students().splice(i, 1);
+    renderAll();
+    if (!isBlank(s)) undoable(`${s.name.trim() || "\xD6\u011Frenci"} silindi.`, restore);
+  });
+  $("roster-add").onclick = () => {
+    if (students().length >= MAX_STUDENTS) return toast(`Bir s\u0131n\u0131fta en fazla ${MAX_STUDENTS} \xF6\u011Frenci olabilir.`);
+    students().push(blankStudent());
+    evaluateAll();
+    renderRoster();
+    renderSteps();
+    $("roster").querySelector('tbody tr:last-child [data-rfield="no"]')?.focus();
+  };
   var INFO = { className: ["class", "name"], book1: ["class", "book1"], book2: ["class", "book2"], school: ["profile", "school"], teacher: ["profile", "teacher"], year: ["profile", "year"], date: ["profile", "date"] };
-  function openInfo() {
-    for (const [id, [where, key]] of Object.entries(INFO)) $(`f-${id}`).value = (where === "class" ? cls() : ws.profile)[key];
-    $("info-dialog").showModal();
+  function fillInfo() {
+    for (const [id, [where, key]] of Object.entries(INFO)) {
+      const input = $(`f-${id}`);
+      if (document.activeElement !== input) input.value = (where === "class" ? cls() : ws.profile)[key];
+    }
   }
   for (const [id, [where, key]] of Object.entries(INFO)) $(`f-${id}`).addEventListener("input", (event) => {
     const value = event.target.value;
     if (where === "class") cls()[key] = value;
     else ws.profile[key] = value;
-    save();
     renderClassSelect();
     renderSteps();
   });
-  $("info-dialog").addEventListener("close", () => renderSheet());
   function nextClassName() {
     const m = cls().name.match(/^(\d+)\s*[\/-]\s*([A-ZÇĞİÖŞÜ])$/u), letters = "ABC\xC7DEFG\u011EHI\u0130JKLMNO\xD6PRS\u015ETU\xDCVYZ";
     const next = m && letters[letters.indexOf(m[2]) + 1], name = next ? `${m[1]}/${next}` : "";
     return name && ws.classes.some((c) => c.name === name) ? "" : name;
   }
-  $("class-select").onchange = (event) => {
-    if (event.target.value === "__new") {
-      const c = newClass(nextClassName());
-      ws.classes.push(c);
-      ws.activeId = c.id;
-      sheet2 = "grades";
-      save();
-      renderAll();
-      openInfo();
-      $("f-className").select();
-    } else {
-      ws.activeId = event.target.value;
-      sortState = null;
-      save();
-      renderAll();
-    }
+  $("new-class").onclick = () => {
+    const c = newClass(nextClassName());
+    ws.classes.push(c);
+    ws.activeId = c.id;
+    sheet2 = "grades";
+    sortState = null;
+    renderAll();
+    fillInfo();
+    $("f-className").focus();
+    $("f-className").select();
+    toast("Yeni s\u0131n\u0131f eklendi. Bilgilerini girip \xF6\u011Frenci listesine ge\xE7in.");
   };
-  $("open-info").onclick = openInfo;
+  $("class-select").onchange = (event) => {
+    ws.activeId = event.target.value;
+    sheet2 = "grades";
+    sortState = null;
+    renderAll();
+    fillInfo();
+  };
   $("delete-class").onclick = () => {
     const c = cls(), count = c.students.filter((s) => !isBlank(s)).length;
     if (!confirm(`${classLabel(c)}${c.name.trim() ? " s\u0131n\u0131f\u0131" : ""}${count ? ` ve ${count} \xF6\u011Frencisi` : ""} silinsin mi? Bu i\u015Flem geri al\u0131namaz.`)) return;
     ws.classes = ws.classes.filter((x) => x.id !== c.id);
     if (!ws.classes.length) ws.classes.push(newClass());
     ws.activeId = ws.classes[0].id;
-    save();
-    $("info-dialog").close();
     renderAll();
+    fillInfo();
     toast(`${c.name.trim() || "S\u0131n\u0131f"} silindi.`);
   };
   function addImported(list, replace) {
@@ -2783,7 +2844,6 @@ Ge\xE7erli puanlar: ${c.points.join(", ")}`)}"><b>K${k + 1}</b><span>${esc(c.lab
     const restore = snapshot();
     cls().students = [...existing, ...list];
     renderAll();
-    save();
     $("import-dialog").close();
     $("import-file").value = "";
     const scored = list.filter((s) => s.manual1 || s.manual2).length;
@@ -2810,54 +2870,26 @@ Ge\xE7erli puanlar: ${c.points.join(", ")}`)}"><b>K${k + 1}</b><span>${esc(c.lab
     setTimeout(() => URL.revokeObjectURL(url), 2e3);
   }
   var fileName = (ext) => `performans-${cls().name.replace(/[^\p{L}\p{N}-]/gu, "-") || "sinif"}-${ws.profile.date || "rapor"}.${ext}`;
-  var actions = {
-    "print-summary": () => printReport("summary"),
-    "print-scales": () => printReport("scales"),
-    import: () => {
-      $("import-error").textContent = "";
-      $("import-dialog").showModal();
-    },
-    backup: () => download(new Blob([JSON.stringify(ws, null, 2)], { type: "application/json" }), `olcek-yedek-${today()}.json`),
-    restore: () => $("restore-file").click(),
-    demo: () => {
-      const restore = snapshot(), taken = new Set(students().map((s) => s.no.trim()));
-      const demo = [["101", "\xD6rnek \xD6\u011Frenci A", "80", "85"], ["102", "\xD6rnek Beyza Nur Kaya", "92", "90"], ["103", "\xD6rnek Ada Nur Demirta\u015F", "75", "100"], ["104", "\xD6rnek \xD6\u011Frenci D", "64", "70"], ["105", "\xD6rnek \xD6\u011Frenci E", "35", ""]];
-      cls().students = [...students().filter((s) => !isBlank(s)), ...demo.map(([no, name, p1, p2]) => ({ ...blankStudent(), no: taken.has(no) ? "" : no, name, p1, p2 }))];
-      renderAll();
-      save();
-      undoable("\xD6rnek \xF6\u011Frenciler eklendi.", restore);
-    },
-    clear: () => {
-      if (!students().some((s) => !isBlank(s))) return toast("Liste zaten bo\u015F.");
-      const restore = snapshot();
-      cls().students = [];
-      renderAll();
-      save();
-      undoable("Liste temizlendi.", restore);
-    }
+  $("import-open").onclick = () => {
+    $("import-error").textContent = "";
+    $("import-dialog").showModal();
   };
-  function toggleMenu(open = $("menu").hidden) {
-    $("menu").hidden = !open;
-    $("menu-button").setAttribute("aria-expanded", open);
-    if (open) $("menu").querySelector("button").focus();
-  }
-  $("menu-button").onclick = () => toggleMenu();
-  $("menu").onclick = (event) => {
-    const a = event.target.closest("[data-action]")?.dataset.action;
-    if (a) {
-      toggleMenu(false);
-      actions[a]();
-    }
+  $("demo").onclick = () => {
+    const restore = snapshot(), taken = new Set(students().map((s) => s.no.trim()));
+    const demo = [["101", "\xD6rnek \xD6\u011Frenci A", "80", "85"], ["102", "\xD6rnek Beyza Nur Kaya", "92", "90"], ["103", "\xD6rnek Ada Nur Demirta\u015F", "75", "100"], ["104", "\xD6rnek \xD6\u011Frenci D", "64", "70"], ["105", "\xD6rnek \xD6\u011Frenci E", "35", ""]];
+    cls().students = [...students().filter((s) => !isBlank(s)), ...demo.map(([no, name, p1, p2]) => ({ ...blankStudent(), no: taken.has(no) ? "" : no, name, p1, p2 }))];
+    renderAll();
+    undoable("\xD6rnek \xF6\u011Frenciler eklendi.", restore);
   };
-  document.addEventListener("click", (event) => {
-    if (!$("menu").hidden && !event.target.closest(".menu-wrap")) toggleMenu(false);
-  });
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && !$("menu").hidden) {
-      toggleMenu(false);
-      $("menu-button").focus();
-    }
-  });
+  $("clear").onclick = () => {
+    if (!students().some((s) => !isBlank(s))) return toast("Liste zaten bo\u015F.");
+    const restore = snapshot();
+    cls().students = [];
+    renderAll();
+    undoable("Liste temizlendi.", restore);
+  };
+  $("backup").onclick = () => download(new Blob([JSON.stringify(ws, null, 2)], { type: "application/json" }), `olcek-yedek-${today()}.json`);
+  $("restore").onclick = () => $("restore-file").click();
   $("restore-file").onchange = async (event) => {
     const file = event.target.files[0];
     if (!file) return;
@@ -2866,8 +2898,9 @@ Ge\xE7erli puanlar: ${c.points.join(", ")}`)}"><b>K${k + 1}</b><span>${esc(c.lab
       const restored = parseWorkspace(JSON.parse(await file.text()));
       if (hasWork() && !confirm("Yedek, \u015Fu anki t\xFCm s\u0131n\u0131flar\u0131n yerini alacak. Devam edilsin mi?")) return;
       ws = restored;
-      save();
+      sheet2 = "grades";
       renderAll();
+      fillInfo();
       toast(`Yedek a\xE7\u0131ld\u0131: ${ws.classes.length} s\u0131n\u0131f.`);
     } catch (e2) {
       toast(e2 instanceof SyntaxError ? "Yedek dosyas\u0131 okunamad\u0131." : e2.message);
@@ -2897,31 +2930,38 @@ Ge\xE7erli puanlar: ${c.points.join(", ")}`)}"><b>K${k + 1}</b><span>${esc(c.lab
     });
     return items;
   }
-  function checkBeforeOutput() {
-    const items = issueList();
-    if (!reportIssues(reportState(), evaluations).length) return true;
-    $("issues-list").innerHTML = items.length ? items.slice(0, 40).map((it, n) => `<li><button class="btn link" data-issue="${n}">${esc(it.text)}</button></li>`).join("") + (items.length > 40 ? `<li class="muted">\u2026 ve ${items.length - 40} uyar\u0131 daha</li>` : "") : "<li>\xC7\u0131kt\u0131 i\xE7in en az bir \xF6\u011Frencinin ad\u0131n\u0131 ve performans notunu girin.</li>";
-    $("issues-list").onclick = (event) => {
-      const b = event.target.closest("[data-issue]");
-      if (b) goTo(items[Number(b.dataset.issue)]);
-    };
-    $("issues-dialog").showModal();
-    return false;
+  var blocked = () => reportIssues(reportState(), evaluations).length > 0;
+  function renderOutput() {
+    const items = issueList(), stop = blocked();
+    for (const id of ["print", "export-excel", "print-summary", "print-scales"]) $(id).disabled = stop;
+    if (stop) {
+      $("out-status").innerHTML = `<div class="card issues"><h2>Yazd\u0131rmadan \xF6nce kontrol edin</h2>${items.length ? `<p>A\u015Fa\u011F\u0131daki notlar Excel\u2019de girilen de\u011Ferden farkl\u0131 \xE7\u0131kacak ya da eksik. Bir maddeye t\u0131klay\u0131nca ilgili h\xFCcreye gidersiniz.</p><ul>${items.slice(0, 40).map((it, n) => `<li><button class="btn link" data-issue="${n}">${esc(it.text)}</button></li>`).join("")}${items.length > 40 ? `<li class="muted">\u2026 ve ${items.length - 40} uyar\u0131 daha</li>` : ""}</ul>` : "<p>\xC7\u0131kt\u0131 i\xE7in en az bir \xF6\u011Frencinin ad\u0131n\u0131 ve performans notunu girin.</p>"}</div>`;
+      $("out-status").querySelector("ul")?.addEventListener("click", (event) => {
+        const b = event.target.closest("[data-issue]");
+        if (b) goTo(items[Number(b.dataset.issue)]);
+      });
+      return;
+    }
+    const models = reportModels(reportState(), evaluations), summary = models.filter((m) => !m.spec).length, scales = models.length - summary;
+    const count = students().filter((s) => s.name.trim()).length;
+    $("out-status").innerHTML = `<div class="card ready"><b>\u2713 ${count} \xF6\u011Frencinin \xE7izelgeleri haz\u0131r.</b><span>Ortak \xE7izelge ${summary} sayfa \xB7 7 \xF6l\xE7ek ${scales} sayfa \xB7 toplam ${models.length} sayfa (A4 yatay)</span></div>`;
   }
   var printScope = "all";
   var fillPrint = () => {
-    $("print-root").innerHTML = reportIssues(reportState(), evaluations).length ? "<p>Yazd\u0131rmadan \xF6nce uyar\u0131lar\u0131 giderin.</p>" : buildReportHTML(reportState(), evaluations, printScope);
+    $("print-root").innerHTML = blocked() ? "<p>Yazd\u0131rmadan \xF6nce uyar\u0131lar\u0131 giderin.</p>" : buildReportHTML(reportState(), evaluations, printScope);
   };
   function printReport(scope) {
-    if (!checkBeforeOutput()) return;
+    if (blocked()) return showStep(4);
     printScope = scope;
     fillPrint();
     window.print();
     printScope = "all";
   }
   $("print").onclick = () => printReport("all");
+  $("print-summary").onclick = () => printReport("summary");
+  $("print-scales").onclick = () => printReport("scales");
   $("export-excel").onclick = async () => {
-    if (!checkBeforeOutput()) return;
+    if (blocked()) return showStep(4);
     const button = $("export-excel"), label = button.innerHTML;
     button.disabled = true;
     button.textContent = "Haz\u0131rlan\u0131yor\u2026";
@@ -2945,6 +2985,6 @@ Ge\xE7erli puanlar: ${c.points.join(", ")}`)}"><b>K${k + 1}</b><span>${esc(c.lab
       event.returnValue = "";
     }
   });
-  renderAll();
-  save();
+  evaluateAll();
+  showStep(1);
 })();
