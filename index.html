@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ölçek · Performans Değerlendirme</title>
+  <meta name="description" content="9. sınıf Türk Dili ve Edebiyatı performans notlarını kaynak Excel ölçeklerine dağıtın; Excel ve PDF çıktısı alın.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%231f4b41'/%3E%3Cpath d='M11 13h18M11 20h12M11 27h18' stroke='%23fff' stroke-width='3.5' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css?v=efeb7f0831">
+  <script defer src="assets/jszip.min.js?v=acc7e41455"></script>
+  <script defer src="app.bundle.js?v=ae7c895ea9"></script>
+</head>
+<body>
+<div class="app">
+  <header class="bar">
+    <div class="brand"><i aria-hidden="true"></i><div><b>Ölçek</b><span>9. sınıf Türk Dili ve Edebiyatı · 1. dönem performans</span></div></div>
+    <div class="class-box">
+      <label class="class-picker"><span>Sınıf</span><select id="class-select"></select></label>
+      <button id="open-info" class="btn on-dark">Sınıf bilgileri</button>
+    </div>
+    <div class="bar-right">
+      <span id="save-status" class="save-status" role="status"></span>
+      <button id="help" class="btn icon on-dark" aria-label="Puanlama nasıl hesaplanır?" title="Puanlama nasıl hesaplanır?">?</button>
+      <div class="menu-wrap">
+        <button id="menu-button" class="btn icon on-dark" aria-haspopup="menu" aria-expanded="false" aria-label="Diğer işlemler" title="Diğer işlemler">⋯</button>
+        <div id="menu" class="menu" role="menu" hidden>
+          <span class="menu-label">Yazdır</span>
+          <button role="menuitem" data-action="print-summary">Yalnızca ortak performans çizelgesi</button>
+          <button role="menuitem" data-action="print-scales">Yalnızca 7 ölçek çizelgesi</button>
+          <hr>
+          <span class="menu-label">Liste ve yedek</span>
+          <button role="menuitem" data-action="import">Excel / CSV dosyasından aktar…</button>
+          <button role="menuitem" data-action="backup">Yedek indir</button>
+          <button role="menuitem" data-action="restore">Yedekten aç…</button>
+          <hr>
+          <button role="menuitem" data-action="demo">Örnek öğrencilerle dene</button>
+          <button role="menuitem" data-action="clear" class="danger">Bu sınıfın listesini temizle</button>
+        </div>
+      </div>
+      <button id="print" class="btn light"><span aria-hidden="true">🖨</span> Tümünü yazdır</button>
+      <button id="export-excel" class="btn excel"><span aria-hidden="true">⬇</span> Excel indir</button>
+    </div>
+  </header>
+
+  <main>
+    <ol id="steps" class="steps" aria-label="Yapılacaklar"></ol>
+
+    <section class="workbook" aria-labelledby="sheet-title">
+      <div class="sheet-tabs" role="tablist" aria-label="Çizelgeler" id="sheet-tabs"></div>
+      <div class="workbook-head">
+        <div><h1 id="sheet-title"></h1><p id="sheet-desc"></p></div>
+        <div class="workbook-actions">
+          <button id="eokul-open" class="btn primary"><span aria-hidden="true">📋</span> e-Okul’dan yapıştır</button>
+          <button id="add-row" class="btn">＋ Öğrenci ekle</button>
+        </div>
+      </div>
+      <div id="sheet-body" class="sheet-body"></div>
+      <div id="sheet-foot" class="sheet-foot"></div>
+    </section>
+  </main>
+</div>
+
+<dialog id="student-dialog" class="drawer" aria-labelledby="drawer-title">
+  <div class="drawer-head">
+    <div><h2 id="drawer-title"></h2><p id="drawer-sub"></p></div>
+    <div class="drawer-nav">
+      <button class="btn icon" id="drawer-prev" aria-label="Önceki öğrenci">‹</button>
+      <button class="btn icon" id="drawer-next" aria-label="Sonraki öğrenci">›</button>
+      <button class="btn icon" id="drawer-close" aria-label="Kapat">×</button>
+    </div>
+  </div>
+  <div id="drawer-body" class="drawer-body"></div>
+</dialog>
+
+<dialog id="eokul-dialog" class="modal wide" aria-labelledby="eokul-title">
+  <form method="dialog" class="modal-head"><h2 id="eokul-title">e-Okul’dan öğrenci listesi</h2><button class="btn icon" aria-label="Kapat">×</button></form>
+  <ol class="howto">
+    <li>e-Okul’da dersin <b>not giriş</b> ekranını açın. Öğrenci listesini fareyle baştan sona seçin ve <kbd>Ctrl</kbd> + <kbd>C</kbd> ile kopyalayın.</li>
+    <li>Aşağıdaki kutuya tıklayıp <kbd>Ctrl</kbd> + <kbd>V</kbd> ile yapıştırın ya da <b>Panodan al</b> düğmesine basın.</li>
+  </ol>
+  <div class="paste-box">
+    <label class="sr-only" for="eokul-text">e-Okul’dan kopyalanan liste</label>
+    <textarea id="eokul-text" rows="5" placeholder="Öğrenci listesini buraya yapıştırın (Ctrl + V)"></textarea>
+    <button id="eokul-clipboard" class="btn">Panodan al</button>
+  </div>
+  <div id="eokul-preview"></div>
+  <p id="eokul-error" class="form-error" role="alert"></p>
+  <div class="modal-actions">
+    <label class="check"><input type="checkbox" id="eokul-replace"> Mevcut listeyi silip bununla değiştir</label>
+    <button id="eokul-import" class="btn primary" disabled>Listeye aktar</button>
+  </div>
+</dialog>
+
+<dialog id="info-dialog" class="modal" aria-labelledby="info-title">
+  <form method="dialog" class="modal-head"><h2 id="info-title">Sınıf bilgileri</h2><button class="btn icon" aria-label="Kapat">×</button></form>
+  <p class="modal-lead">Bu bilgiler çizelgelerin başlık ve imza alanlarına yazılır.</p>
+  <fieldset>
+    <legend>Bu sınıf</legend>
+    <div class="form-grid">
+      <label>Sınıf / Şube<input id="f-className" maxlength="40" placeholder="Örn. 9/A"></label>
+      <label>1. tema kitabı<input id="f-book1" maxlength="200" placeholder="İsteğe bağlı"></label>
+      <label>2. tema kitabı<input id="f-book2" maxlength="200" placeholder="İsteğe bağlı"></label>
+    </div>
+  </fieldset>
+  <fieldset>
+    <legend>Tüm sınıflar için ortak</legend>
+    <div class="form-grid">
+      <label class="wide">Okul adı<input id="f-school" maxlength="200" placeholder="Okulunuzun adı" autocomplete="organization"></label>
+      <label>Öğretmen<input id="f-teacher" maxlength="120" placeholder="Adı ve soyadı"></label>
+      <label>Eğitim öğretim yılı<input id="f-year" maxlength="20" placeholder="2026–2027"></label>
+      <label>Rapor tarihi<input id="f-date" type="date"></label>
+    </div>
+  </fieldset>
+  <div class="modal-actions"><button id="delete-class" class="btn danger-ghost">Bu sınıfı sil</button><form method="dialog"><button class="btn primary">Tamam</button></form></div>
+</dialog>
+
+<dialog id="import-dialog" class="modal" aria-labelledby="import-title">
+  <form method="dialog" class="modal-head"><h2 id="import-title">Dosyadan öğrenci aktar</h2><button class="btn icon" aria-label="Kapat">×</button></form>
+  <p class="modal-lead">Sütun sırası: <b>No · Adı soyadı · 1. Performans · 2. Performans</b>. Özgün ölçek dosyasında <i>Öğrenci Bilgileri</i> sayfası okunur.</p>
+  <label class="drop">Excel veya CSV dosyası seçin<input id="import-file" type="file" accept=".xlsx,.csv,.tsv,.txt"></label>
+  <label class="check"><input type="checkbox" id="import-scores" checked> Özgün Excel’deki kriter puanlarını da aktar</label>
+  <label class="check"><input type="checkbox" id="import-replace"> Mevcut listeyi silip bununla değiştir</label>
+  <p id="import-error" class="form-error" role="alert"></p>
+</dialog>
+
+<dialog id="issues-dialog" class="modal" aria-labelledby="issues-title">
+  <form method="dialog" class="modal-head"><h2 id="issues-title">Yazdırmadan önce kontrol edin</h2><button class="btn icon" aria-label="Kapat">×</button></form>
+  <p class="modal-lead">Aşağıdaki notlar Excel’de girilen değerden farklı çıkacak ya da eksik. Bir satıra tıklayınca ilgili hücreye gidersiniz.</p>
+  <ul id="issues-list" class="issues-list"></ul>
+</dialog>
+
+<dialog id="help-dialog" class="modal" aria-labelledby="help-title">
+  <form method="dialog" class="modal-head"><h2 id="help-title">Puanlama nasıl hesaplanır?</h2><button class="btn icon" aria-label="Kapat">×</button></form>
+  <div class="help">
+    <div class="help-block p1">
+      <h3>1. Performans</h3>
+      <p>1. ve 2. Tema Konuşma, 1. ve 2. Tema Yazma ölçeklerinin her biri 100 üzerinden puanlanır. Her ölçeğin %25’i <b>ayrı ayrı</b> tam sayıya yuvarlanır ve toplanır.</p>
+      <p class="muted">Kriter basamakları 4 · 6 · 8 · 10 (1. Tema Yazma “Özgünlük”: 8 · 12 · 16 · 20). Not aralığı 40–100; bu aralıktaki her tam sayı tam olarak üretilebilir.</p>
+    </div>
+    <div class="help-block p2">
+      <h3>2. Performans</h3>
+      <p>1. ve 2. Tema Kitap Okuma (14 kriter, en çok 42) ile Ders İçi Gözlem (6 kriter, en çok 18) 100’lük sisteme çevrilip yuvarlanır; ardından <b>%33 + %33 + %34</b> alınır.</p>
+      <p class="muted">Sonuç ondalıklı olabilir: 85 için en yakın sonuç 84,98’dir. Excel bu hücreyi tam sayı biçiminde gösterdiği için çizelgede 85 görünür. En düşük not 33’tür.</p>
+    </div>
+    <div class="help-block">
+      <h3>İki çalışma yolu</h3>
+      <p><b>Notu girin:</b> Uygulama, yalnızca izin verilen puan basamaklarını kullanarak bu notu veren dengeli bir kriter dağılımı üretir (çizelgelerde gri görünür).</p>
+      <p><b>Kriterleri girin:</b> Ölçek çizelgesi sekmesinde puanları kendiniz yazın. Not, Excel’deki formüllerle kriterlerden hesaplanır. Yalnızca o kriterin geçerli puanları kabul edilir; boş kriter kalırsa not hesaplanmaz ve yazdırmadan önce uyarılırsınız.</p>
+    </div>
+    <p class="muted small">İndirilen Excel’de kriter hücreleri yalnızca geçerli puanları kabul eder ve formül hücreleri kilitlidir (şifresiz: Gözden Geçir → Sayfa Korumasını Kaldır). Dosya her açılışta yeniden hesaplanır. Bilgiler hiçbir yere gönderilmez ve kaydedilmez: sayfa her açıldığında boş bir çalışmayla başlar. Sonra devam etmek için <b>⋯ → Yedek indir</b> ile yedek alın.</p>
+  </div>
+</dialog>
+
+<input id="restore-file" type="file" accept=".json" hidden>
+<div id="print-root"></div>
+<div id="toast" role="status" hidden></div>
+<noscript>Bu uygulamanın çalışması için JavaScript’i etkinleştirin.</noscript>
+</body>
+</html>
