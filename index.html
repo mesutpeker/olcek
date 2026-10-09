@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Ölçek · Performans Değerlendirme</title>
-  <meta name="description" content="9. sınıf Türk Dili ve Edebiyatı performans notlarını kaynak Excel ölçeklerine dağıtın; Excel ve PDF çıktısı alın.">
+  <meta name="description" content="9, 10 ve 11. sınıf Türk Dili ve Edebiyatı performans notlarını kaynak Excel ölçeklerine dağıtın; Excel ve PDF çıktısı alın.">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%231f4b41'/%3E%3Cpath d='M11 13h18M11 20h12M11 27h18' stroke='%23fff' stroke-width='3.5' stroke-linecap='round'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="styles.css?v=b40ee6925d">
+  <link rel="stylesheet" href="styles.css?v=c30411fee6">
   <script defer src="assets/jszip.min.js?v=acc7e41455"></script>
-  <script defer src="app.bundle.js?v=b55449afdd"></script>
+  <script defer src="app.bundle.js?v=b1a0693389"></script>
 </head>
 <body>
 <div class="app">
@@ -21,13 +21,15 @@
       </header>
       <div class="card">
         <div class="form-grid three">
+          <label>Sınıf düzeyi<select id="f-level" aria-describedby="level-note"></select></label>
           <label>Sınıf / Şube<input id="f-className" maxlength="40" placeholder="Örn. 9/A"></label>
-          <label class="span2">Okul adı<input id="f-school" maxlength="200" placeholder="Okulunuzun adı" autocomplete="organization"></label>
           <label>Öğretmen<input id="f-teacher" maxlength="120" placeholder="Adı ve soyadı"></label>
+          <label class="span2">Okul adı<input id="f-school" maxlength="200" placeholder="Okulunuzun adı" autocomplete="organization"></label>
           <label>Eğitim öğretim yılı<input id="f-year" maxlength="20" placeholder="2026–2027"></label>
           <label>Rapor tarihi<input id="f-date" type="date"></label>
           <label>1. tema kitabı<input id="f-book1" maxlength="200" placeholder="İsteğe bağlı"></label>
-          <label class="span2">2. tema kitabı<input id="f-book2" maxlength="200" placeholder="İsteğe bağlı"></label>
+          <label>2. tema kitabı<input id="f-book2" maxlength="200" placeholder="İsteğe bağlı"></label>
+          <p id="level-note" class="note wide-note">Sınıf düzeyi, çizelgelerin ölçütlerini ve notların hesaplanma biçimini belirler (her düzeyin kendi kaynak Excel dosyası).</p>
         </div>
       </div>
       <div class="card subtle class-card">
@@ -100,7 +102,7 @@
     <!-- 4. Print and Excel -->
     <section class="panel" data-panel="4" aria-labelledby="panel4-title" hidden>
       <header class="panel-head">
-        <div><h1 id="panel4-title"><span class="panel-n">4</span>Yazdır ve Excel indir</h1><p>Ortak performans çizelgesi ve yedi ölçek A4 yatay sayfalara hazırlanır.</p></div>
+        <div><h1 id="panel4-title"><span class="panel-n">4</span>Yazdır ve Excel indir</h1><p id="out-lead">Ortak performans çizelgesi ve yedi ölçek A4 yatay sayfalara hazırlanır.</p></div>
       </header>
       <div id="out-status"></div>
       <div class="card out-card">
@@ -152,14 +154,12 @@
   <form method="dialog" class="modal-head"><h2 id="help-title">Puanlama nasıl hesaplanır?</h2><button class="btn icon" aria-label="Kapat">×</button></form>
   <div class="help">
     <div class="help-block p1">
-      <h3>1. Performans</h3>
-      <p>1. ve 2. Tema Konuşma, 1. ve 2. Tema Yazma ölçeklerinin her biri 100 üzerinden puanlanır. Her ölçeğin %25’i <b>ayrı ayrı</b> tam sayıya yuvarlanır ve toplanır.</p>
-      <p class="muted">Kriter basamakları 4 · 6 · 8 · 10 (1. Tema Yazma “Özgünlük”: 8 · 12 · 16 · 20). Not aralığı 40–100; bu aralıktaki her tam sayı tam olarak üretilebilir.</p>
+      <h3 id="help-p1-title">1. Performans</h3>
+      <div id="help-p1"></div>
     </div>
     <div class="help-block p2">
-      <h3>2. Performans</h3>
-      <p>1. ve 2. Tema Kitap Okuma (14 kriter, en çok 42) ile Ders İçi Gözlem (6 kriter, en çok 18) 100’lük sisteme çevrilip yuvarlanır; ardından <b>%33 + %33 + %34</b> alınır.</p>
-      <p class="muted">Sonuç ondalıklı olabilir: 85 için en yakın sonuç 84,98’dir. Excel bu hücreyi tam sayı biçiminde gösterdiği için çizelgede 85 görünür. En düşük not 33’tür.</p>
+      <h3 id="help-p2-title">2. Performans</h3>
+      <div id="help-p2"></div>
     </div>
     <div class="help-block">
       <h3>İki çalışma yolu</h3>

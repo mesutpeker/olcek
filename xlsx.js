@@ -1,5 +1,5 @@
-import { studentsFromRows, validScores, validShape, calculate, format } from './core.js';
-import { RUBRICS } from './rubrics.js';
+import { studentsFromRows, validScores, validShape, calculate, format, rubricsFor } from './core.js';
+import { DEFAULT_LEVEL } from './levels.js';
 import { TEMPLATE_XLSX } from './template.js';
 import { reportModels, columnName } from './layout.js';
 export const colName=columnName;
@@ -41,12 +41,16 @@ function guardSheet(doc,model){
   for(const [k,v] of Object.entries({sheet:1,objects:1,scenarios:1,formatCells:0,formatColumns:0,formatRows:0}))protection.setAttribute(k,v);
   (child('sheetCalcPr')||child('sheetData')).after(protection);
   if(!model.validations?.length)return;
-  const groups=new Map(model.validations.map(v=>[v.points,[v.sqref]]));
-  const list=doc.createElementNS(NS,'dataValidations');list.setAttribute('count',groups.size);
-  for(const [points,ranges] of groups){
-    const v=doc.createElementNS(NS,'dataValidation');
-    for(const [k,value] of Object.entries({type:'list',allowBlank:1,showInputMessage:1,showErrorMessage:1,errorStyle:'stop',errorTitle:'Geçersiz puan',error:`Bu kriter için yalnızca ${points.replaceAll(',',', ')} girilebilir.`,sqref:ranges.join(' ')}))v.setAttribute(k,value);
-    const f=doc.createElementNS(NS,'formula1');f.textContent=`"${points}"`;v.appendChild(f);list.appendChild(v);
+  const list=doc.createElementNS(NS,'dataValidations');list.setAttribute('count',model.validations.length);
+  for(const rule of model.validations){
+    // Fixed levels become a drop-down list; a range of points accepts any whole number in it.
+    const range=rule.points===undefined,v=doc.createElementNS(NS,'dataValidation');
+    const kind=range?{type:'whole',operator:'between'}:{type:'list'};
+    const error=range?`Bu kriter için yalnızca ${rule.min}–${rule.max} arası tam sayı girilebilir.`:`Bu kriter için yalnızca ${rule.points.replaceAll(',',', ')} girilebilir.`;
+    for(const [k,value] of Object.entries({...kind,allowBlank:1,showInputMessage:1,showErrorMessage:1,errorStyle:'stop',errorTitle:'Geçersiz puan',error,sqref:rule.sqref}))v.setAttribute(k,value);
+    const formulas=range?[rule.min,rule.max]:[`"${rule.points}"`];
+    formulas.forEach((text,i)=>{const f=doc.createElementNS(NS,`formula${i+1}`);f.textContent=text;v.appendChild(f);});
+    list.appendChild(v);
   }
   const before=['hyperlinks','printOptions','pageMargins','pageSetup','headerFooter'].map(child).find(Boolean);
   root.insertBefore(list,before||null);
@@ -164,10 +168,13 @@ export async function createWorkbook(state,evaluations){
   zip.file('xl/styles.xml',serialize(styles));
   return zip.generateAsync({type:'blob',compression:'DEFLATE',mimeType:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
 }
-// Source workbook layout: first student column of each scale sheet.
+// Source workbook layout: sheet and first student column of each scale (9th grade
+// here; the other grades keep theirs with the scale).
 const SCORE_SHEETS={speak1:['1. Tema Konuşma',6],speak2:['2. Tema Konuşma',6],write1:['1. Tema Yazma',6],write2:['2. Tema Yazma',6],book1:['1. Tema Kitap Okuma',4],book2:['2. Tema Kitap Okuma',4],observe:['Ders İçi Gözlem',4]};
+const scoreSheet=r=>r.source?[r.source.sheet,r.source.col]:SCORE_SHEETS[r.id];
+const sameName=(a,b)=>String(a).trim().toLocaleLowerCase('tr-TR')===String(b).trim().toLocaleLowerCase('tr-TR');
 const position=ref=>{const m=ref?.match(/^([A-Z]+)(\d+)$/);return m?[[...m[1]].reduce((n,l)=>n*26+l.charCodeAt(0)-64,0),Number(m[2])]:null;};
-export async function importWorkbook(file,{withScores=false}={}){
+export async function importWorkbook(file,{withScores=false,level=DEFAULT_LEVEL}={}){
   if(file.size>10*1024*1024)throw new Error('Excel dosyası 10 MB sınırını aşıyor.');
   const zip=await window.JSZip.loadAsync(file);
   const read=async path=>{const entry=zip.file(path);if(!entry)throw new Error('Excel dosyasının yapısı okunamadı.');const text=await entry.async('string');if(text.length>15e6)throw new Error('Excel çalışma sayfası çok büyük.');const doc=new DOMParser().parseFromString(text,'application/xml');if(doc.querySelector('parsererror'))throw new Error('Excel XML içeriği geçersiz.');return doc;};
@@ -175,7 +182,7 @@ export async function importWorkbook(file,{withScores=false}={}){
     const rows=JSON.parse(input.textContent);if(!Array.isArray(rows)||rows.some(r=>!Array.isArray(r)))throw new Error('Excel giriş bilgileri okunamadı.');
     const list=studentsFromRows(rows),saved=[...props.getElementsByTagNameNS('*','property')].find(p=>p.getAttribute('name')==='OlcekScores');
     const manual=saved?JSON.parse(saved.textContent):[];
-    if(Array.isArray(manual)&&manual.length===list.length)list.forEach((s,i)=>{for(const p of [1,2])if(validShape(manual[i]?.[p-1],p))s[`manual${p}`]=manual[i][p-1];});
+    if(Array.isArray(manual)&&manual.length===list.length)list.forEach((s,i)=>{for(const p of [1,2])if(validShape(manual[i]?.[p-1],p,level))s[`manual${p}`]=manual[i][p-1];});
     return list;
   }}
   const texts=el=>[...el.getElementsByTagName('t')].map(n=>n.textContent).join('');
@@ -204,17 +211,17 @@ export async function importWorkbook(file,{withScores=false}={}){
   // Student n in the roster (row 4+n) is column start+n on every scale sheet.
   const rosterRows=rows.map((r,i)=>({name:String(r[3]??'').trim(),row:i+1})).filter(r=>r.row>=4&&r.name);
   const scale={};
-  for(const [id,[name]] of Object.entries(SCORE_SHEETS)){const sheet=sheets.find(s=>s.getAttribute('name')===name);if(sheet)scale[id]=await sheetCells(sheet);}
+  for(const r of [...rubricsFor(1,level),...rubricsFor(2,level)]){const sheet=sheets.find(s=>sameName(s.getAttribute('name'),scoreSheet(r)[0]));if(sheet)scale[r.id]=await sheetCells(sheet);}
   return students.map(student=>{
     const roster=rosterRows.find(r=>r.name===student.name);if(!roster)return student;
     const offset=roster.row-4,result={...student};
     for(const p of [1,2]){
       const scores={};
-      for(const r of RUBRICS.filter(r=>r.performance===p)){
-        const col=SCORE_SHEETS[r.id][1]+offset,sheet=scale[r.id];
+      for(const r of rubricsFor(p,level)){
+        const col=scoreSheet(r)[1]+offset,sheet=scale[r.id];
         scores[r.id]=r.criteria.map(c=>sheet?Number(sheet.get(`${col},${c.sourceRow}`)):NaN);
       }
-      if(validScores(scores,p)){result[`manual${p}`]=scores;result[`p${p}`]=format(calculate(scores,p).result);}
+      if(validScores(scores,p,level)){result[`manual${p}`]=scores;result[`p${p}`]=format(calculate(scores,p,level).result);}
     }
     return result;
   });

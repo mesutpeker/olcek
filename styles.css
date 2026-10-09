@@ -81,6 +81,7 @@ main.wizard{max-width:1240px;margin:0 auto;padding:22px 20px 40px}
 .card .check{flex-direction:row;align-items:center;gap:8px;font-weight:500;color:var(--ink)}
 .form-grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
 .form-grid .span2{grid-column:span 2}
+.form-grid .wide-note{grid-column:1/-1;margin:0;font-size:12px}
 .class-switch{display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap}
 .inline-label{min-width:240px}
 .note{font-size:13px;color:var(--muted);margin-top:10px}
@@ -296,6 +297,11 @@ textarea{resize:vertical;font-family:ui-monospace,SFMono-Regular,Menlo,monospace
 .lvl{width:34px;height:30px;border:1px solid var(--line-strong);background:#fff;border-radius:7px;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;font-variant-numeric:tabular-nums}
 .lvl:hover{border-color:var(--brand-2);color:var(--brand-2)}
 .lvl.on{background:var(--brand-2);border-color:var(--brand-2);color:#fff}
+/* Criteria scored within point ranges (11th grade): a number and its level */
+.levels.ranged{align-items:center;gap:8px}
+.lvl-level{font-size:12px;color:var(--muted);text-align:right;max-width:170px}
+.lvl-input{width:48px;height:30px;border:1px solid var(--line-strong);border-radius:7px;text-align:center;font-size:13px;font-weight:700;font-variant-numeric:tabular-nums}
+.lvl-input:focus{outline:none;border-color:var(--brand-2);box-shadow:0 0 0 3px #2c6a5b26}
 .drawer-note{font-size:12px;color:var(--faint);margin-top:4px}
 
 /* Toast */
