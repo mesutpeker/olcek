@@ -1077,6 +1077,2518 @@
     }
   ];
 
+  // rubrics-10-11.js
+  var RUBRICS_10 = [
+    {
+      "id": "speak1-10",
+      "name": "1. Tema Konu\u015Fma",
+      "performance": 1,
+      "layout": "described",
+      "description": "",
+      "levels": [
+        "Geli\u015Ftirilebilir",
+        "Orta",
+        "\u0130yi"
+      ],
+      "criteria": [
+        {
+          "label": "Beden Dili",
+          "note": "Jest ve mimiklerini \u015Fiirdeki duygular\u0131n t\xFCm\xFCne yans\u0131tacak bi\xE7imde kullanabildi.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 4
+        },
+        {
+          "label": "\u0130leti\u015Fim Kurma",
+          "note": "\u015Eiir okurken dinleyicilerle s\xFCrekli g\xF6z temas\u0131 kurabildi.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 5
+        },
+        {
+          "label": "Ses Kontrol\xFC",
+          "note": "Sahneye \xE7\u0131kt\u0131\u011F\u0131 andan sahneden indi\u011Fi ana kadar sesini kontrol alt\u0131nda tutabildi.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 6
+        },
+        {
+          "label": "T\xFCrk\xE7eyi Do\u011Fru ve Etkili Kullanma",
+          "note": "Sunum s\xFCresince T\xFCrk\xE7eyi tamamen do\u011Fru ve etkili kullanabildi.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 7
+        },
+        {
+          "label": "Durak, Vurgu ve Tonlama",
+          "note": "\u015Eiirdeki t\xFCm durak, vurgu ve tonlamalar\u0131 do\u011Fru yerde yapabildi.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 8
+        },
+        {
+          "label": "Zaman Kullan\u0131m\u0131",
+          "note": "\u015Eiiri, planlad\u0131\u011F\u0131 s\xFCrede tamamlayabildi.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 9
+        },
+        {
+          "label": "Sahne Hakimiyeti",
+          "note": "Sahnenin her taraf\u0131n\u0131 kullanabildi.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 10
+        },
+        {
+          "label": "\u015Eiirin G\xF6rsellerle Desteklenmesi",
+          "note": "G\xF6rsellerin t\xFCm\xFC \u015Fiirin temas\u0131na uygundur.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 11
+        },
+        {
+          "label": "Fon M\xFCzi\u011Fi Se\xE7imi",
+          "note": "Fon m\xFCzi\u011Fi \u015Fiirin temas\u0131na tamamen uygundur.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 12
+        },
+        {
+          "label": "Se\xE7ilen \u015Eiirin Temaya Uygunlu\u011Fu",
+          "note": "Se\xE7ilen \u015Fiir temaya tamamen uygundur.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 13
+        },
+        {
+          "label": "K\u0131yafet Se\xE7imi",
+          "note": "K\u0131yafeti, se\xE7ti\u011Fi \u015Fiire ve dinletiye tamamen uygundu.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 14
+        }
+      ],
+      "title": "{{school}} {{className}} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130 1. D\xD6NEM 1. TEMA KONU\u015EMA PERFORMANS G\xD6REV\u0130 DE\u011EERLEND\u0130RME \xD6L\xC7E\u011E\u0130",
+      "note": "NOT: \xD6l\xE7\xFCtleri kar\u015F\u0131lama de\u011Ferleri 3 puan iyi, 2 puan orta, 1 puan geli\u015Ftirilebilir derecesini g\xF6stermektedir.",
+      "source": {
+        "sheet": "1. Tema Konu\u015Fma",
+        "col": 4
+      },
+      "max": 33,
+      "min": 11
+    },
+    {
+      "id": "speak2-10",
+      "name": "2. Tema Konu\u015Fma",
+      "performance": 1,
+      "layout": "described",
+      "description": "",
+      "levels": [
+        "Geli\u015Ftirilebilir",
+        "Orta",
+        "\u0130yi"
+      ],
+      "criteria": [
+        {
+          "label": "Anlam",
+          "note": "Podcastte kullan\u0131lan ifadeler anlaml\u0131 ve anla\u015F\u0131l\u0131rd\u0131r.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 4
+        },
+        {
+          "label": "\u0130\u015Fitsel \xD6gelerin Kullan\u0131m\u0131",
+          "note": "Podcaste uygun i\u015Fitsel \xF6geler kullan\u0131lm\u0131\u015Ft\u0131r.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 5
+        },
+        {
+          "label": "Dil ve Anlat\u0131m\u0131n \xD6zellikleri",
+          "note": "Podcastte T\xFCrk\xE7e dil yap\u0131s\u0131na, ba\u011Fda\u015F\u0131kl\u0131k ve ba\u011Fla\u015F\u0131kl\u0131\u011Fa uygun ifadeler kullan\u0131lm\u0131\u015Ft\u0131r.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 6
+        },
+        {
+          "label": "Do\u011Fruluk, Ge\xE7erlilik, Tutarl\u0131l\u0131k",
+          "note": "Podcastteki bilgiler do\u011Fru, ge\xE7erli ve tutarl\u0131d\u0131r.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 7
+        },
+        {
+          "label": "\xD6zg\xFCnl\xFCk",
+          "note": "Podcast \xF6zg\xFCn bir \xFCslupla haz\u0131rlanm\u0131\u015Ft\u0131r.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 8
+        },
+        {
+          "label": "Vurgu ve Tonlama",
+          "note": "Podcastin i\xE7eri\u011Fine uygun olarak gerekli yerlerde vurgu ve tonlama yap\u0131lm\u0131\u015Ft\u0131r.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 9
+        }
+      ],
+      "title": "{{school}} {{className}} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130 1. D\xD6NEM 2. TEMA KONU\u015EMA PERFORMANS G\xD6REV\u0130 DE\u011EERLEND\u0130RME \xD6L\xC7E\u011E\u0130",
+      "note": "NOT: \xD6l\xE7\xFCtleri kar\u015F\u0131lama de\u011Ferleri 3 puan iyi, 2 puan orta, 1 puan geli\u015Ftirilebilir derecesini g\xF6stermektedir.",
+      "source": {
+        "sheet": "2. Tema Konu\u015Fma",
+        "col": 4
+      },
+      "max": 18,
+      "min": 6
+    },
+    {
+      "id": "write1-10",
+      "name": "1. Tema Yazma",
+      "performance": 1,
+      "layout": "described",
+      "description": "B\u0130R MASAL F\u0130LM \u015EER\u0130D\u0130 HAL\u0130NE GET\u0130R\u0130LECEK VE DERECELEND\u0130R\u0130LM\u0130\u015E PUANLAMA \xD6L\xC7E\u011E\u0130NE G\xD6RE DE\u011EERLEND\u0130R\u0130LECEKT\u0130R. (3-2-1)",
+      "levels": [
+        "Geli\u015Ftirilebilir",
+        "Orta",
+        "\u0130yi"
+      ],
+      "criteria": [
+        {
+          "label": "Ak\u0131c\u0131l\u0131k",
+          "note": "Metin ve g\xF6rsel ak\u0131\u015F\u0131 aras\u0131nda tam bir uyum vard\u0131r",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 4
+        },
+        {
+          "label": "G\xF6rsel \xD6gelerin Kullan\u0131m\u0131",
+          "note": "Metnin i\xE7eri\u011Fine uygun g\xF6rseller se\xE7ilmi\u015F/ \xE7izilmi\u015Ftir",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 5
+        },
+        {
+          "label": "Karakter Tasar\u0131m\u0131",
+          "note": "Metnin i\xE7eri\u011Fine uygun \xF6zg\xFCn karakterler olu\u015Fturulmu\u015Ftur.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 6
+        },
+        {
+          "label": "Senaryo",
+          "note": "Metnin temas\u0131 ve ana fikriyle tamamen uyumlu bir senaryo haz\u0131rlanm\u0131\u015Ft\u0131r.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 7
+        },
+        {
+          "label": "Olay Ak\u0131\u015F\u0131",
+          "note": "Film \u015Feridinde ifadeler aras\u0131ndaki ge\xE7i\u015F ba\u011Flant\u0131lar\u0131 tutarl\u0131d\u0131r.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 8
+        },
+        {
+          "label": "Estetik",
+          "note": "Film \u015Feridi estetik a\xE7\u0131dan olduk\xE7a iyidir",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 9
+        },
+        {
+          "label": "Dil ve Anlat\u0131m",
+          "note": "Film \u015Feridinde T\xFCrk\xE7enin dil kurallar\u0131na uyulmu\u015F, anlat\u0131m bozuklu\u011Fu yap\u0131lmam\u0131\u015Ft\u0131r",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 10
+        },
+        {
+          "label": "\xC7al\u0131\u015Fmay\u0131 Zenginle\u015Ftirme",
+          "note": "Film \u015Feridi farkl\u0131 anlat\u0131m bi\xE7imleri ve teknikleri, ba\u011Flama uygun s\xF6z varl\u0131klar\u0131 (deyim, atas\xF6z\xFC, mecaz vb.) ile zenginle\u015Ftirilmi\u015Ftir.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 11
+        },
+        {
+          "label": "Yaz\u0131m ve Noktalama",
+          "note": "Film \u015Feridinde yaz\u0131m ve noktalama kurallar\u0131na tamamen uyulmu\u015Ftur.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 12
+        },
+        {
+          "label": "Olumlu Tutum ve De\u011Ferleri Vurgulama",
+          "note": "Film \u015Feridinde olumlu tutum ve de\u011Ferler belirgin bi\xE7imde \xF6ne \xE7\u0131kar\u0131lm\u0131\u015Ft\u0131r.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 13
+        }
+      ],
+      "title": "{{school}} {{className}} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130 1. D\xD6NEM 1. TEMA YAZMA PERFORMANS G\xD6REV\u0130 DE\u011EERLEND\u0130RME \xD6L\xC7E\u011E\u0130",
+      "note": "B\u0130R MASAL F\u0130LM \u015EER\u0130D\u0130 HAL\u0130NE GET\u0130R\u0130LECEK VE DERECELEND\u0130R\u0130LM\u0130\u015E PUANLAMA \xD6L\xC7E\u011E\u0130NE G\xD6RE DE\u011EERLEND\u0130R\u0130LECEKT\u0130R. (3-2-1)",
+      "source": {
+        "sheet": "1. Tema Yazma",
+        "col": 4
+      },
+      "max": 30,
+      "min": 10
+    },
+    {
+      "id": "write2-10",
+      "name": "2. Tema Yazma",
+      "performance": 1,
+      "layout": "described",
+      "description": "BEL\u0130RLENEN B\u0130R \u015EA\u0130R \u0130LE \u0130LG\u0130L\u0130 POTCAST HAZIRLANACAK VE DERECELEND\u0130R\u0130LM\u0130\u015E PUANLAMA \xD6L\xC7E\u011E\u0130NE G\xD6RE DE\u011EERLEND\u0130R\u0130LECEKT\u0130R. (3-2-1)",
+      "levels": [
+        "Geli\u015Ftirilebilir",
+        "Orta",
+        "\u0130yi"
+      ],
+      "criteria": [
+        {
+          "label": "Anlam",
+          "note": "Se\xE7ti\u011Fi \xF6\u011Fretici metnin anlam\u0131n\u0131 d\xF6n\xFC\u015Ft\xFCrd\xFC\u011F\xFC edeb\xEE metne tam olarak yans\u0131tm\u0131\u015Ft\u0131r",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 4
+        },
+        {
+          "label": "G\xF6rsel ve \u0130\u015Fitsel \xD6gelerin Kullan\u0131m\u0131",
+          "note": "Metnin i\xE7eri\u011Fine uygun g\xF6rsel/i\u015Fitsel \xF6geler kullan\u0131lm\u0131\u015Ft\u0131r.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 5
+        },
+        {
+          "label": "Dil \u0130\u015Flevi",
+          "note": "Metnin dili, i\u015Flevine uygun olarak kullan\u0131lm\u0131\u015Ft\u0131r.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 6
+        },
+        {
+          "label": "\xD6zg\xFCnl\xFCk",
+          "note": "Metindeki dil ve anlat\u0131m unsurlar\u0131 \xF6zg\xFCn bir \xFCslup olu\u015Fturacak \u015Fekilde kullan\u0131lm\u0131\u015Ft\u0131r.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 7
+        },
+        {
+          "label": "Etkileyicilik",
+          "note": "S\xF6z sanatlar\u0131n\u0131 metnin etkileyicili\u011Fini artt\u0131racak \u015Fekilde kullanm\u0131\u015Ft\u0131r.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 8
+        },
+        {
+          "label": "Estetik",
+          "note": "D\xF6n\xFC\u015Ft\xFCr\xFClen metin estetik a\xE7\u0131dan olduk\xE7a iyidir.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 9
+        },
+        {
+          "label": "Yaz\u0131m ve Noktalama",
+          "note": "Metninde yaz\u0131m ve noktalama kurallar\u0131na tamamen uymu\u015Ftur.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 10
+        }
+      ],
+      "title": "{{school}} {{className}} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130 1. D\xD6NEM 2. TEMA YAZMA PERFORMANS G\xD6REV\u0130 DE\u011EERLEND\u0130RME \xD6L\xC7E\u011E\u0130",
+      "note": "BEL\u0130RLENEN B\u0130R \u015EA\u0130R \u0130LE \u0130LG\u0130L\u0130 POTCAST HAZIRLANACAK VE DERECELEND\u0130R\u0130LM\u0130\u015E PUANLAMA \xD6L\xC7E\u011E\u0130NE G\xD6RE DE\u011EERLEND\u0130R\u0130LECEKT\u0130R. (3-2-1)",
+      "source": {
+        "sheet": "2. Tema Yazma",
+        "col": 4
+      },
+      "max": 21,
+      "min": 7
+    },
+    {
+      "id": "book1-10",
+      "name": "1. Tema Kitap Okuma",
+      "performance": 2,
+      "layout": "statements",
+      "description": "",
+      "levels": [
+        "Geli\u015Ftirilebilir",
+        "Orta",
+        "\u0130yi"
+      ],
+      "criteria": [
+        {
+          "label": "Okuma \xF6ncesinde metnin ba\u015Fl\u0131\u011F\u0131n\u0131, g\xF6rsellerini ve afi\u015Fini inceler.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 4
+        },
+        {
+          "label": "Eseri / Roman\u0131 okuma amac\u0131n\u0131, belirler.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 5
+        },
+        {
+          "label": "Okudu\u011Fu metni \xF6zetler.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 6
+        },
+        {
+          "label": "Okudu\u011Fu metnin iletisini belirler",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 7
+        },
+        {
+          "label": "Okudu\u011Fu metindeki kurgu ve ger\xE7ek unsurlar\u0131 belirleyerek metne katk\u0131s\u0131n\u0131 tart\u0131\u015F\u0131r\u0131r.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 8
+        },
+        {
+          "label": "Okudu\u011Fu metinde ilk defa kar\u015F\u0131la\u015Ft\u0131\u011F\u0131 bilgilerin do\u011Frulu\u011Funu ara\u015Ft\u0131r\u0131r.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 9
+        },
+        {
+          "label": "Metindeki imge, sembol, metafor, \xE7a\u011Fr\u0131\u015F\u0131m ve g\xF6ndermeleri tespit eder.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 10
+        },
+        {
+          "label": "Okudu\u011Fu metnin i\xE7eri\u011Fi ile daha \xF6nce kar\u015F\u0131la\u015Ft\u0131\u011F\u0131 metinleri \xE7e\u015Fitli a\xE7\u0131lardan kar\u015F\u0131la\u015Ft\u0131r\u0131r.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 11
+        },
+        {
+          "label": "Metnin yazar\u0131n\u0131n yerine kendimi koyarak bu metnin daha iyi nas\u0131l olabilece\u011Fini d\xFC\u015F\xFCn\xFCr",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 12
+        },
+        {
+          "label": "Okudu\u011Fum metni arkada\u015Flar\u0131mla tart\u0131\u015Fmak i\xE7in arg\xFCmanlar (\xE7\u0131kar\u0131m, kan\u0131t) \xFCretirir.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 13
+        },
+        {
+          "label": "Okudu\u011Fu metnin entelekt\xFCel merak\u0131na ve ara\u015Ft\u0131rmac\u0131 ki\u015Fili\u011Fine katk\u0131s\u0131n\u0131 de\u011Ferlendirir.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 14
+        },
+        {
+          "label": "Okudu\u011Fu metin hakk\u0131nda \xF6\u011Fretmenin ve arkada\u015Flar\u0131n\u0131n fikirlerini \xF6\u011Frendikten sonra kendi g\xF6r\xFC\u015Fleriyle kar\u015F\u0131la\u015Ft\u0131r\u0131r.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 15
+        },
+        {
+          "label": "Okudu\u011Fu metinde ge\xE7en \xE7at\u0131\u015Fmalara alternatif \xE7\xF6z\xFCmler \xFCretir./ Okudu\u011Fu metin \xF6\u011Fretici metinse \xF6rnek metin olu\u015Fturur.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 16
+        },
+        {
+          "label": "Okudu\u011Fu metnin farkl\u0131 disiplinlerle(psikoloji, tarih, felsefe, co\u011Frafya vb.) ili\u015Fkilerini tespit eder.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 17
+        }
+      ],
+      "title": "{{school}} {{className}} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130 1. D\xD6NEM 1. TEMA K\u0130TAP OKUMA PERFORMANS G\xD6REV\u0130 DE\u011EERLEND\u0130RME \xD6L\xC7E\u011E\u0130 (2. PERFORMANS PUANI \u0130\xC7\u0130N) Z\xDCMRE KARARI \u0130LE OKUTULMAK \xDCZERE SE\xC7\u0130LEN K\u0130TABIN ADI: {{book1}}",
+      "note": "NOT: \xD6l\xE7\xFCtleri kar\u015F\u0131lama de\u011Ferleri 3 puan iyi, 2 puan orta, 1 puan geli\u015Ftirilebilir derecesini g\xF6stermektedir.",
+      "source": {
+        "sheet": "1. Tema Kitap Okuma",
+        "col": 4
+      },
+      "max": 42,
+      "min": 14
+    },
+    {
+      "id": "book2-10",
+      "name": "2. Tema Kitap Okuma",
+      "performance": 2,
+      "layout": "statements",
+      "description": "",
+      "levels": [
+        "Geli\u015Ftirilebilir",
+        "Orta",
+        "\u0130yi"
+      ],
+      "criteria": [
+        {
+          "label": "Okuma \xF6ncesinde metnin ba\u015Fl\u0131\u011F\u0131n\u0131, g\xF6rsellerini ve afi\u015Fini inceler.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 4
+        },
+        {
+          "label": "Roman\u0131 / eseri okuma amac\u0131n\u0131, belirler.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 5
+        },
+        {
+          "label": "Okudu\u011Fu metni \xF6zetler.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 6
+        },
+        {
+          "label": "Okudu\u011Fu metnin iletisini belirler",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 7
+        },
+        {
+          "label": "Okudu\u011Fu metindeki kurgu ve ger\xE7ek unsurlar\u0131 belirleyerek metne katk\u0131s\u0131n\u0131 tart\u0131\u015F\u0131r\u0131r.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 8
+        },
+        {
+          "label": "Okudu\u011Fu metinde ilk defa kar\u015F\u0131la\u015Ft\u0131\u011F\u0131 bilgilerin do\u011Frulu\u011Funu ara\u015Ft\u0131r\u0131r.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 9
+        },
+        {
+          "label": "Metindeki imge, sembol, metafor, \xE7a\u011Fr\u0131\u015F\u0131m ve g\xF6ndermeleri tespit eder.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 10
+        },
+        {
+          "label": "Okudu\u011Fu metnin i\xE7eri\u011Fi ile daha \xF6nce kar\u015F\u0131la\u015Ft\u0131\u011F\u0131 metinleri \xE7e\u015Fitli a\xE7\u0131lardan kar\u015F\u0131la\u015Ft\u0131r\u0131r.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 11
+        },
+        {
+          "label": "Metnin yazar\u0131n\u0131n yerine kendimi koyarak bu metnin daha iyi nas\u0131l olabilece\u011Fini d\xFC\u015F\xFCn\xFCr",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 12
+        },
+        {
+          "label": "Okudu\u011Fum metni arkada\u015Flar\u0131mla tart\u0131\u015Fmak i\xE7in arg\xFCmanlar (\xE7\u0131kar\u0131m, kan\u0131t) \xFCretirir.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 13
+        },
+        {
+          "label": "Okudu\u011Fu metnin entelekt\xFCel merak\u0131na ve ara\u015Ft\u0131rmac\u0131 ki\u015Fili\u011Fine katk\u0131s\u0131n\u0131 de\u011Ferlendirir.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 14
+        },
+        {
+          "label": "Okudu\u011Fu metin hakk\u0131nda \xF6\u011Fretmenin ve arkada\u015Flar\u0131n\u0131n fikirlerini \xF6\u011Frendikten sonra kendi g\xF6r\xFC\u015Fleriyle kar\u015F\u0131la\u015Ft\u0131r\u0131r.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 15
+        },
+        {
+          "label": "Okudu\u011Fu metinde ge\xE7en \xE7at\u0131\u015Fmalara alternatif \xE7\xF6z\xFCmler \xFCretir./ Okudu\u011Fu metin \xF6\u011Fretici metinse \xF6rnek metin olu\u015Fturur.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 16
+        },
+        {
+          "label": "Okudu\u011Fu metnin farkl\u0131 disiplinlerle(psikoloji, tarih, felsefe, co\u011Frafya vb.) ili\u015Fkilerini tespit eder.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 17
+        }
+      ],
+      "title": "{{school}} {{className}} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130 1. D\xD6NEM 2. TEMA K\u0130TAP OKUMA PERFORMANS G\xD6REV\u0130 DE\u011EERLEND\u0130RME \xD6L\xC7E\u011E\u0130 (2. PERFORMANS PUANI \u0130\xC7\u0130N) Z\xDCMRE KARARI \u0130LE OKUTULMAK \xDCZERE SE\xC7\u0130LEN K\u0130TABIN ADI: {{book2}}",
+      "note": "NOT: \xD6l\xE7\xFCtleri kar\u015F\u0131lama de\u011Ferleri 3 puan iyi, 2 puan orta, 1 puan geli\u015Ftirilebilir derecesini g\xF6stermektedir.",
+      "source": {
+        "sheet": "2. Tema Kitap okuma",
+        "col": 4
+      },
+      "max": 42,
+      "min": 14
+    },
+    {
+      "id": "observe-10",
+      "name": "Ders \u0130\xE7i G\xF6zlem",
+      "performance": 2,
+      "layout": "statements",
+      "description": "",
+      "levels": [
+        "Geli\u015Ftirilebilir",
+        "Orta",
+        "\u0130yi"
+      ],
+      "criteria": [
+        {
+          "label": "Derse haz\u0131rl\u0131kl\u0131 ve planl\u0131 gelme, ders d\u0131\u015F\u0131 etkinliklerini ger\xE7ekle\u015Ftirme",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 4
+        },
+        {
+          "label": "Ders i\xE7in gerekli ara\xE7 gere\xE7leri getirerek, d\xFCzenli ve temiz kullanma",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 5
+        },
+        {
+          "label": "T\xFCrk\xE7e'yi do\u011Fru ve d\xFCzg\xFCn konu\u015Fma ve yazma",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 6
+        },
+        {
+          "label": "Derse kar\u015F\u0131 olumlu davran\u0131\u015F geli\u015Ftirme ve aktif kat\u0131lma",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 7
+        },
+        {
+          "label": "Arkada\u015Flar\u0131yla i\u015Fbirli\u011Fi yapma (Grup \xE7al\u0131\u015Fmalar\u0131na kat\u0131lma)",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 8
+        },
+        {
+          "label": "Verilen \xF6devleri (g\xF6revleri) zaman\u0131nda yapma",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 9
+        }
+      ],
+      "title": "{{school}} {{className}} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130 1. D\xD6NEM 2. PERFORMANS PUANI \u0130\xC7\u0130N DERS \u0130\xC7\u0130 G\xD6ZLEM VE DAVRANI\u015ELAR DE\u011EERLEND\u0130RME \xD6L\xC7E\u011E\u0130",
+      "note": "NOT: \xD6l\xE7\xFCtleri kar\u015F\u0131lama de\u011Ferleri 3 puan iyi, 2 puan orta, 1 puan geli\u015Ftirilebilir derecesini g\xF6stermektedir.",
+      "source": {
+        "sheet": "Ders \u0130\xE7i G\xF6zlem",
+        "col": 4
+      },
+      "max": 18,
+      "min": 6
+    }
+  ];
+  var RUBRICS_11 = [
+    {
+      "id": "speak1-11",
+      "name": "1. Tema Konu\u015Fma",
+      "performance": 1,
+      "layout": "levels",
+      "description": "Bu form, \xF6\u011Frencinin Bir Diyece\u011Fim Var! temas\u0131ndaki s\xF6zl\xFC ileti\u015Fim engellerini konu alan bir canland\u0131rma yapmas\u0131na y\xF6nelik performans g\xF6revi \xE7al\u0131\u015Fmas\u0131n\u0131 \xF6l\xE7meniz amac\u0131yla haz\u0131rlanm\u0131\u015Ft\u0131r. \xD6\u011Frencinin belirtilen \xF6l\xE7\xFCtleri kar\u015F\u0131lama d\xFCzeyini en do\u011Fru bi\xE7imde yans\u0131tan se\xE7ene\u011Fi puanlay\u0131n\u0131z.",
+      "levels": [
+        "Ba\u015Flang\u0131\xE7 D\xFCzeyinde",
+        "Kabul Edilebilir",
+        "\u0130yi",
+        "\xC7ok \u0130yi"
+      ],
+      "criteria": [
+        {
+          "label": "Konu Se\xE7imi (16 puan)",
+          "descriptions": [
+            "Konu se\xE7imi canland\u0131rman\u0131n amac\u0131na uygun de\u011Fildir. (1-4 puan)",
+            "Konu se\xE7imi, canland\u0131rman\u0131n amac\u0131na k\u0131smen uygundur. (5-8 puan)",
+            "Konu se\xE7imi, canland\u0131rman\u0131n amac\u0131na uygundur. (9-12 puan)",
+            "Canland\u0131rman\u0131n amac\u0131na uygun, olduk\xE7a ba\u015Far\u0131l\u0131 bir konu se\xE7imi yap\u0131lm\u0131\u015Ft\u0131r. (13-16 puan)"
+          ],
+          "points": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          "ranges": [
+            [
+              1,
+              4
+            ],
+            [
+              5,
+              8
+            ],
+            [
+              9,
+              12
+            ],
+            [
+              13,
+              16
+            ]
+          ],
+          "sourceRow": 4
+        },
+        {
+          "label": "\u0130\xE7eri\u011Fin Uygunlu\u011Fu (16 puan)",
+          "descriptions": [
+            "Performans g\xF6revinin amac\u0131na uygun bir i\xE7erik belirlenmemi\u015Ftir. (1-4 puan)",
+            "Performans g\xF6revinin amac\u0131na k\u0131smen uygun bir i\xE7erik belirlenmi\u015Ftir. (5-8 puan)",
+            "\u0130\xE7erik, performans g\xF6revinin amac\u0131na uygundur. (9-12 puan)",
+            "Performans g\xF6revinin amac\u0131na uygun, olduk\xE7a ba\u015Far\u0131l\u0131 bir i\xE7erik belirlenmi\u015Ftir. (13-16 puan)"
+          ],
+          "points": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          "ranges": [
+            [
+              1,
+              4
+            ],
+            [
+              5,
+              8
+            ],
+            [
+              9,
+              12
+            ],
+            [
+              13,
+              16
+            ]
+          ],
+          "sourceRow": 5
+        },
+        {
+          "label": "\xD6zg\xFCnl\xFCk (18 puan)",
+          "descriptions": [
+            "Canland\u0131rmada duygu, d\xFC\u015F\xFCnce ve istekler \xF6zg\xFCn bi\xE7imde iletilmemi\u015Ftir. (1-4 puan)",
+            "Canland\u0131rma, \xF6zg\xFCnl\xFCk a\xE7\u0131s\u0131ndan k\u0131smen ba\u015Far\u0131l\u0131d\u0131r. (5-9 puan)",
+            "Canland\u0131rmada duygu, d\xFC\u015F\xFCnce ve istekler \xF6zg\xFCn bi\xE7imde ifade edilmi\u015Ftir. (10-14 puan)",
+            "Canland\u0131rmada duygu, d\xFC\u015F\xFCnce ve istekler olduk\xE7a \xF6zg\xFCn bi\xE7imde ifade edilmi\u015Ftir. (15-18 puan)"
+          ],
+          "points": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18
+          ],
+          "ranges": [
+            [
+              1,
+              4
+            ],
+            [
+              5,
+              9
+            ],
+            [
+              10,
+              14
+            ],
+            [
+              15,
+              18
+            ]
+          ],
+          "sourceRow": 6
+        },
+        {
+          "label": "Dil ve \xDCslup (16 puan)",
+          "descriptions": [
+            "Canland\u0131rmada kullan\u0131lan dil ve \xFCslup, i\xE7eri\u011Fe ve hedef kitleye uygun de\u011Fildir. (1-4 puan)",
+            "Canland\u0131rmada kullan\u0131lan dil ve \xFCslup, i\xE7eri\u011Fe ve hedef kitleye k\u0131smen uygundur. (5-8 puan)",
+            "Canland\u0131rmada kullan\u0131lan dil ve \xFCslup, i\xE7eri\u011Fe ve hedef kitleye g\xF6re belirlenmi\u015Ftir. (9-12 puan)",
+            "Canland\u0131rmada i\xE7eri\u011Fe ve hedef kitleye uygun, olduk\xE7a ba\u015Far\u0131l\u0131 bir dil ve \xFCslup kullan\u0131lm\u0131\u015Ft\u0131r. (13-16 puan)"
+          ],
+          "points": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          "ranges": [
+            [
+              1,
+              4
+            ],
+            [
+              5,
+              8
+            ],
+            [
+              9,
+              12
+            ],
+            [
+              13,
+              16
+            ]
+          ],
+          "sourceRow": 7
+        },
+        {
+          "label": "Plan Olu\u015Fturma (16 puan)",
+          "descriptions": [
+            "Canland\u0131rma performans g\xF6revi i\xE7in olu\u015Fturulan plan yetersizdir. (1-4 puan)",
+            "Canland\u0131rma performans g\xF6revi i\xE7in olu\u015Fturulan plan k\u0131smen yeterlidir. (5-8 puan)",
+            "Canland\u0131rma performans g\xF6revi i\xE7in olu\u015Fturulan plan ba\u015Far\u0131l\u0131d\u0131r. (9-12 puan)",
+            "Canland\u0131rma performans g\xF6revi i\xE7in olu\u015Fturulan plan olduk\xE7a ba\u015Far\u0131l\u0131d\u0131r. (13-16 puan)"
+          ],
+          "points": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          "ranges": [
+            [
+              1,
+              4
+            ],
+            [
+              5,
+              8
+            ],
+            [
+              9,
+              12
+            ],
+            [
+              13,
+              16
+            ]
+          ],
+          "sourceRow": 8
+        },
+        {
+          "label": "Canland\u0131rma Becerisi (18 puan)",
+          "descriptions": [
+            "Performans g\xF6revinin amac\u0131na uygun bir canland\u0131rma becerisi sergilenmemi\u015Ftir. (1-4 puan)",
+            "Canland\u0131rma becerisi performans g\xF6revinin amac\u0131 i\xE7in k\u0131smen yeterlidir. (5-9 puan)",
+            "Performans g\xF6revinin amac\u0131na uygun bir canland\u0131rma becerisi sergilenmi\u015Ftir. (10-14 puan)",
+            "Canland\u0131rma becerisi performans g\xF6revinin amac\u0131 a\xE7\u0131s\u0131ndan olduk\xE7a ba\u015Far\u0131l\u0131d\u0131r. (15-18 puan)"
+          ],
+          "points": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18
+          ],
+          "ranges": [
+            [
+              1,
+              4
+            ],
+            [
+              5,
+              9
+            ],
+            [
+              10,
+              14
+            ],
+            [
+              15,
+              18
+            ]
+          ],
+          "sourceRow": 9
+        }
+      ],
+      "title": "{{school}} {{className}} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130 1. D\xD6NEM 1. TEMA KONU\u015EMA PERFORMANS G\xD6REV\u0130 DE\u011EERLEND\u0130RME \xD6L\xC7E\u011E\u0130",
+      "note": "Bu form, \xF6\u011Frencinin Bir Diyece\u011Fim Var! temas\u0131ndaki s\xF6zl\xFC ileti\u015Fim engellerini konu alan bir canland\u0131rma yapmas\u0131na y\xF6nelik performans g\xF6revi \xE7al\u0131\u015Fmas\u0131n\u0131 \xF6l\xE7meniz amac\u0131yla haz\u0131rlanm\u0131\u015Ft\u0131r. \xD6\u011Frencinin belirtilen \xF6l\xE7\xFCtleri kar\u015F\u0131lama d\xFCzeyini en do\u011Fru bi\xE7imde yans\u0131tan se\xE7ene\u011Fi puanlay\u0131n\u0131z.",
+      "evaluation": "De\u011Ferlendirme: \xD6\u011Frenci bu formdan en az 6, en fazla 100 puan alabilir. \xD6\u011Frencinin puan\u0131 her \xF6l\xE7\xFCtten ald\u0131\u011F\u0131 puanlar\u0131n toplam\u0131d\u0131r.",
+      "source": {
+        "sheet": "1. Tema Konu\u015Fma",
+        "col": 7
+      },
+      "max": 100,
+      "min": 6
+    },
+    {
+      "id": "speak2-11",
+      "name": "2. Tema Konu\u015Fma",
+      "performance": 1,
+      "layout": "levels",
+      "description": "Bu form, \xF6\u011Frencinin K\xFClt\xFCr Yolculu\u011Fu temas\u0131ndaki T\xFCrk d\xFCnyas\u0131na ait g\xF6rsellerden hareketle T\xFCrk k\xFClt\xFCr\xFCn\xFCn \xF6zelliklerini yans\u0131tan bir konu\u015Fma yapma performans g\xF6revi \xE7al\u0131\u015Fmas\u0131n\u0131 \xF6l\xE7meniz amac\u0131yla haz\u0131rlanm\u0131\u015Ft\u0131r. \xD6\u011Frencinin belirtilen \xF6l\xE7\xFCtleri kar\u015F\u0131lama d\xFCzeyini en do\u011Fru bi\xE7imde yans\u0131tan se\xE7ene\u011Fi puanlay\u0131n\u0131z.",
+      "levels": [
+        "Ba\u015Flang\u0131\xE7 D\xFCzeyinde",
+        "Kabul Edilebilir",
+        "\u0130yi",
+        "\xC7ok \u0130yi"
+      ],
+      "criteria": [
+        {
+          "label": "Konuya h\xE2kimiyet (20 puan)",
+          "descriptions": [
+            "Konu\u015Fmada konuya h\xE2kimiyet zay\u0131ft\u0131r. (1-5 puan)",
+            "Konu\u015Fmada konuya h\xE2kimiyet k\u0131smen yeterlidir. (6-10 puan)",
+            "Konu\u015Fma, konuya h\xE2kimiyet a\xE7\u0131s\u0131ndan ba\u015Far\u0131l\u0131d\u0131r. (11-15 puan)",
+            "Konu\u015Fma, konuya h\xE2kimiyet a\xE7\u0131s\u0131ndan olduk\xE7a g\xFC\xE7l\xFCd\xFCr. (16-20 puan)"
+          ],
+          "points": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "ranges": [
+            [
+              1,
+              5
+            ],
+            [
+              6,
+              10
+            ],
+            [
+              11,
+              15
+            ],
+            [
+              16,
+              20
+            ]
+          ],
+          "sourceRow": 4
+        },
+        {
+          "label": "S\xF6z varl\u0131\u011F\u0131n\u0131 etkili ve g\xFCzel kullanma (20 puan)",
+          "descriptions": [
+            "Konu\u015Fmada s\xF6z varl\u0131\u011F\u0131 etkili ve g\xFCzel kullan\u0131lmam\u0131\u015Ft\u0131r. (1-5 puan)",
+            "Konu\u015Fma i\xE7eri\u011Fini yans\u0131tan s\xF6z varl\u0131\u011F\u0131 k\u0131smen etkili ve g\xFCzel kullan\u0131lm\u0131\u015Ft\u0131r. (6-10 puan)",
+            "Konu\u015Fma i\xE7in se\xE7ilen s\xF6z varl\u0131\u011F\u0131 etkili ve g\xFCzeldir. (11-15 puan)",
+            "Konu\u015Fmada olduk\xE7a zengin ve etkili bir s\xF6z varl\u0131\u011F\u0131 kullan\u0131lm\u0131\u015Ft\u0131r. (16-20 puan)"
+          ],
+          "points": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "ranges": [
+            [
+              1,
+              5
+            ],
+            [
+              6,
+              10
+            ],
+            [
+              11,
+              15
+            ],
+            [
+              16,
+              20
+            ]
+          ],
+          "sourceRow": 5
+        },
+        {
+          "label": "Beden dili ve sesle anlam olu\u015Fturma (20 puan)",
+          "descriptions": [
+            "Konu\u015Fmada kullan\u0131lan beden dili ve ses, anlam olu\u015Fturmaya hizmet etmemi\u015Ftir. (1-5 puan)",
+            "Konu\u015Fmada kullan\u0131lan beden dili ve ses, anlam olu\u015Fturmaya k\u0131smen katk\u0131 sa\u011Flam\u0131\u015Ft\u0131r. (6-10 puan)",
+            "Konu\u015Fmada kullan\u0131lan beden dili ve ses, anlam olu\u015Fturmay\u0131 desteklemi\u015Ftir. (11-15 puan)",
+            "Beden dili ve sesle anlam olu\u015Fturulan ba\u015Far\u0131l\u0131 bir konu\u015Fma ger\xE7ekle\u015Ftirilmi\u015Ftir. (16-20 puan)"
+          ],
+          "points": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "ranges": [
+            [
+              1,
+              5
+            ],
+            [
+              6,
+              10
+            ],
+            [
+              11,
+              15
+            ],
+            [
+              16,
+              20
+            ]
+          ],
+          "sourceRow": 6
+        },
+        {
+          "label": "Zaman\u0131 ve mek\xE2n\u0131 konu\u015Fmaya uygun \u015Fekilde y\xF6netme (20 puan)",
+          "descriptions": [
+            "Mek\xE2n ve zaman\u0131 konu\u015Fmaya uygun \u015Fekilde kullanma fark\u0131ndal\u0131\u011F\u0131 zay\u0131ft\u0131r. (1-5 puan)",
+            "Mek\xE2n ve zaman\u0131, konu\u015Fma i\xE7eri\u011Fine uygun \u015Fekilde kullanma fark\u0131ndal\u0131\u011F\u0131 k\u0131smen yeterlidir. (6-10 puan)",
+            "Mek\xE2n ve zaman, konu\u015Fma i\xE7eri\u011Fine uygun \u015Fekilde y\xF6netilebilmi\u015Ftir. (11-15 puan)",
+            "Mek\xE2n ve zaman, konu\u015Fma i\xE7eri\u011Fine uygun bi\xE7imde olduk\xE7a verimli kullan\u0131lm\u0131\u015Ft\u0131r. (16-20 puan)"
+          ],
+          "points": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "ranges": [
+            [
+              1,
+              5
+            ],
+            [
+              6,
+              10
+            ],
+            [
+              11,
+              15
+            ],
+            [
+              16,
+              20
+            ]
+          ],
+          "sourceRow": 7
+        },
+        {
+          "label": "Seyircinin ilgisini \xE7ekme (20 puan)",
+          "descriptions": [
+            "Hedef kitlenin ilgisini \xE7ekecek bir konu\u015Fma ger\xE7ekle\u015Ftirilmemi\u015Ftir. (1-5 puan)",
+            "Konu\u015Fma, hedef kitlenin ilgisini \xE7ekme konusunda k\u0131smen yeterlidir. (6-10 puan)",
+            "Hedef kitlenin ilgisini \xE7ekecek nitelikte bir konu\u015Fma ger\xE7ekle\u015Ftirilmi\u015Ftir. (11-15 puan)",
+            "Hedef kitlenin ilgi ve dikkatini canl\u0131 tutacak ba\u015Far\u0131l\u0131 bir konu\u015Fma ger\xE7ekle\u015Ftirilmi\u015Ftir. (16-20 puan)"
+          ],
+          "points": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "ranges": [
+            [
+              1,
+              5
+            ],
+            [
+              6,
+              10
+            ],
+            [
+              11,
+              15
+            ],
+            [
+              16,
+              20
+            ]
+          ],
+          "sourceRow": 8
+        }
+      ],
+      "title": "{{school}} {{className}} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130 1. D\xD6NEM 2. TEMA KONU\u015EMA PERFORMANS G\xD6REV\u0130 DE\u011EERLEND\u0130RME \xD6L\xC7E\u011E\u0130",
+      "note": "Bu form, \xF6\u011Frencinin K\xFClt\xFCr Yolculu\u011Fu temas\u0131ndaki T\xFCrk d\xFCnyas\u0131na ait g\xF6rsellerden hareketle T\xFCrk k\xFClt\xFCr\xFCn\xFCn \xF6zelliklerini yans\u0131tan bir konu\u015Fma yapma performans g\xF6revi \xE7al\u0131\u015Fmas\u0131n\u0131 \xF6l\xE7meniz amac\u0131yla haz\u0131rlanm\u0131\u015Ft\u0131r. \xD6\u011Frencinin belirtilen \xF6l\xE7\xFCtleri kar\u015F\u0131lama d\xFCzeyini en do\u011Fru bi\xE7imde yans\u0131tan se\xE7ene\u011Fi puanlay\u0131n\u0131z.",
+      "evaluation": "De\u011Ferlendirme: \xD6\u011Frenci bu formdan en az 5, en fazla 100 puan alabilir. \xD6\u011Frencinin puan\u0131 her \xF6l\xE7\xFCtten ald\u0131\u011F\u0131 puanlar\u0131n toplam\u0131d\u0131r.",
+      "source": {
+        "sheet": "2. Tema Konu\u015Fma",
+        "col": 7
+      },
+      "max": 100,
+      "min": 5
+    },
+    {
+      "id": "write1-11",
+      "name": "1. Tema Yazma",
+      "performance": 1,
+      "layout": "levels",
+      "description": "Bu form, \xF6\u011Frencinin Bir Diyece\u011Fim Var! temas\u0131ndaki bir e-posta yazma performans g\xF6revi \xE7al\u0131\u015Fmas\u0131n\u0131 \xF6l\xE7meniz amac\u0131yla haz\u0131rlanm\u0131\u015Ft\u0131r. \xD6\u011Frencinin belirtilen \xF6l\xE7\xFCtleri kar\u015F\u0131lama d\xFCzeyini en do\u011Fru bi\xE7imde yans\u0131tan se\xE7ene\u011Fi puanlay\u0131n\u0131z.",
+      "levels": [
+        "Ba\u015Flang\u0131\xE7 D\xFCzeyinde",
+        "Kabul Edilebilir",
+        "\u0130yi",
+        "\xC7ok \u0130yi"
+      ],
+      "criteria": [
+        {
+          "label": "T\xFCrk\xE7enin do\u011Fru kullan\u0131m\u0131 (16 puan)",
+          "descriptions": [
+            "Metin, T\xFCrk\xE7enin do\u011Fru kullan\u0131m\u0131 a\xE7\u0131s\u0131ndan yetersizdir. (1-4 puan)",
+            "Metin, T\xFCrk\xE7enin do\u011Fru kullan\u0131m\u0131 a\xE7\u0131s\u0131ndan k\u0131smen yeterlidir. (5-8 puan)",
+            "Metin, T\xFCrk\xE7enin do\u011Fru kullan\u0131m\u0131 a\xE7\u0131s\u0131ndan yeterlidir. (9-12 puan)",
+            "Metin, T\xFCrk\xE7enin do\u011Fru kullan\u0131m\u0131 a\xE7\u0131s\u0131ndan olduk\xE7a ba\u015Far\u0131l\u0131d\u0131r. (13-16 puan)"
+          ],
+          "points": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          "ranges": [
+            [
+              1,
+              4
+            ],
+            [
+              5,
+              8
+            ],
+            [
+              9,
+              12
+            ],
+            [
+              13,
+              16
+            ]
+          ],
+          "sourceRow": 5
+        },
+        {
+          "label": "Dil ve \xFCslup (18 puan)",
+          "descriptions": [
+            "Metinde dil ve \xFCslup do\u011Fru ve yerinde kullan\u0131lmam\u0131\u015Ft\u0131r. (1-5 puan)",
+            "Metinde dil ve \xFCslup k\u0131smen do\u011Fru ve yerinde kullan\u0131lm\u0131\u015Ft\u0131r. (6-10 puan)",
+            "Metinde dil ve \xFCslup do\u011Fru ve yerinde kullan\u0131lm\u0131\u015Ft\u0131r. (11-14 puan)",
+            "Metinde kullan\u0131lan \xFCslup olduk\xE7a ba\u015Far\u0131l\u0131r. (15-18 puan)"
+          ],
+          "points": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18
+          ],
+          "ranges": [
+            [
+              1,
+              5
+            ],
+            [
+              6,
+              10
+            ],
+            [
+              11,
+              14
+            ],
+            [
+              15,
+              18
+            ]
+          ],
+          "sourceRow": 6
+        },
+        {
+          "label": "\xD6zg\xFCnl\xFCk (16 puan)",
+          "descriptions": [
+            "Metin \xF6zg\xFCnl\xFCk a\xE7\u0131s\u0131ndan alt d\xFCzeydedir. (1-4 puan)",
+            "Metin \xF6zg\xFCnl\xFCk a\xE7\u0131s\u0131ndan k\u0131smen yeterlidir. (5-8 puan)",
+            "Metin \xF6zg\xFCnl\xFCk a\xE7\u0131s\u0131ndan ba\u015Far\u0131l\u0131d\u0131r. (9-12 puan)",
+            "Metin \xF6zg\xFCnl\xFCk a\xE7\u0131s\u0131ndan olduk\xE7a ba\u015Far\u0131l\u0131d\u0131r. (13-16 puan)"
+          ],
+          "points": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          "ranges": [
+            [
+              1,
+              4
+            ],
+            [
+              5,
+              8
+            ],
+            [
+              9,
+              12
+            ],
+            [
+              13,
+              16
+            ]
+          ],
+          "sourceRow": 7
+        },
+        {
+          "label": "Gerekli durumlarda \xF6znel ve nesnel ifadelere yer verme (16 puan)",
+          "descriptions": [
+            "Metinde \xF6znel ve nesnel ifadeler, do\u011Fru ve yerinde kullan\u0131lmam\u0131\u015Ft\u0131r. (1-4 puan)",
+            "Metinde \xF6znel ve nesnel ifadeler, k\u0131smen do\u011Fru ve yerinde kullan\u0131lm\u0131\u015Ft\u0131r. (5-8 puan)",
+            "Metinde \xF6znel ve nesnel ifadeler, do\u011Fru ve yerinde kullan\u0131lm\u0131\u015Ft\u0131r. (9-12 puan)",
+            "Metinde \xF6znel ve nesnel ifadeler; do\u011Fru, yerinde ve ba\u015Far\u0131l\u0131 bir bi\xE7imde kullan\u0131lm\u0131\u015Ft\u0131r. (13-16 puan)"
+          ],
+          "points": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          "ranges": [
+            [
+              1,
+              4
+            ],
+            [
+              5,
+              8
+            ],
+            [
+              9,
+              12
+            ],
+            [
+              13,
+              16
+            ]
+          ],
+          "sourceRow": 8
+        },
+        {
+          "label": "Ba\u015Fl\u0131k ve hitap kullan\u0131m\u0131 (18 puan)",
+          "descriptions": [
+            "Metinde ama\xE7 ve i\xE7eri\u011Fe uygun bir ba\u015Fl\u0131k ve hitap kullan\u0131lmam\u0131\u015Ft\u0131r. (1-5 puan)",
+            "Metinde ama\xE7 ve i\xE7eri\u011Fe k\u0131smen uygun bir ba\u015Fl\u0131k ve hitap kullan\u0131lm\u0131\u015Ft\u0131r. (6-10 puan)",
+            "Metinde ama\xE7 ve i\xE7eri\u011Fe uygun bir ba\u015Fl\u0131k ve hitap kullan\u0131lm\u0131\u015Ft\u0131r. (11-14 puan)",
+            "Metinde ama\xE7 ve i\xE7eri\u011Fe olduk\xE7a uygun bir ba\u015Fl\u0131k ve hitap kullan\u0131lm\u0131\u015Ft\u0131r. (15-18 puan)"
+          ],
+          "points": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18
+          ],
+          "ranges": [
+            [
+              1,
+              5
+            ],
+            [
+              6,
+              10
+            ],
+            [
+              11,
+              14
+            ],
+            [
+              15,
+              18
+            ]
+          ],
+          "sourceRow": 9
+        },
+        {
+          "label": "Yaz\u0131m ve noktalama (16 puan)",
+          "descriptions": [
+            "Metinde yaz\u0131m ve noktalama kurallar\u0131na uygunluk alt d\xFCzeydedir. (1-4 puan)",
+            "Metin yaz\u0131m ve noktalama kurallar\u0131na k\u0131smen uygun yaz\u0131lm\u0131\u015Ft\u0131r. (5-8 puan)",
+            "Metin yaz\u0131m ve noktalama kurallar\u0131na uygun yaz\u0131lm\u0131\u015Ft\u0131r. (9-12 puan)",
+            "Metin yaz\u0131m ve noktalama kurallar\u0131na olduk\xE7a uygun yaz\u0131lm\u0131\u015Ft\u0131r. (13-16 puan)"
+          ],
+          "points": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          "ranges": [
+            [
+              1,
+              4
+            ],
+            [
+              5,
+              8
+            ],
+            [
+              9,
+              12
+            ],
+            [
+              13,
+              16
+            ]
+          ],
+          "sourceRow": 10
+        }
+      ],
+      "title": "{{school}} {{className}} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130 1. D\xD6NEM 1. TEMA YAZMA PERFORMANS G\xD6REV\u0130 DE\u011EERLEND\u0130RME \xD6L\xC7E\u011E\u0130",
+      "subtitle": "E-POSTA YAZMA PERFORMANS G\xD6REV\u0130 DERECEL\u0130 PUANLAMA ANAHTARI",
+      "note": "Bu form, \xF6\u011Frencinin Bir Diyece\u011Fim Var! temas\u0131ndaki bir e-posta yazma performans g\xF6revi \xE7al\u0131\u015Fmas\u0131n\u0131 \xF6l\xE7meniz amac\u0131yla haz\u0131rlanm\u0131\u015Ft\u0131r. \xD6\u011Frencinin belirtilen \xF6l\xE7\xFCtleri kar\u015F\u0131lama d\xFCzeyini en do\u011Fru bi\xE7imde yans\u0131tan se\xE7ene\u011Fi puanlay\u0131n\u0131z.",
+      "evaluation": "De\u011Ferlendirme: \xD6\u011Frenci bu formdan en az 6, en fazla 100 puan alabilir. \xD6\u011Frencinin puan\u0131 her \xF6l\xE7\xFCtten ald\u0131\u011F\u0131 puanlar\u0131n toplam\u0131d\u0131r.",
+      "source": {
+        "sheet": "1. Tema Yazma",
+        "col": 7
+      },
+      "max": 100,
+      "min": 6
+    },
+    {
+      "id": "write2-11",
+      "name": "2. Tema Yazma",
+      "performance": 1,
+      "layout": "levels",
+      "description": "Bu form, \xF6\u011Frencinin K\xFClt\xFCr Yolculu\u011Fu temas\u0131ndaki \xE7evrim i\xE7i m\xFCze gezisi yap\u0131p izlenimlerini yazmas\u0131na y\xF6nelik olan performans g\xF6revi \xE7al\u0131\u015Fmas\u0131n\u0131 \xF6l\xE7meniz amac\u0131yla haz\u0131rlanm\u0131\u015Ft\u0131r. \xD6\u011Frencinin belirtilen \xF6l\xE7\xFCtleri kar\u015F\u0131lama d\xFCzeyini en do\u011Fru bi\xE7imde yans\u0131tan se\xE7ene\u011Fi puanlay\u0131n\u0131z.",
+      "levels": [
+        "Ba\u015Flang\u0131\xE7 D\xFCzeyinde",
+        "Kabul Edilebilir",
+        "\u0130yi",
+        "\xC7ok \u0130yi"
+      ],
+      "criteria": [
+        {
+          "label": "Dil ve \xFCslup (20 puan)",
+          "descriptions": [
+            "Metinde kullan\u0131lan dil ve \xFCslup, i\xE7eri\u011Fe ve hedef kitleye uygun de\u011Fildir. (1-5 puan)",
+            "Metinde kullan\u0131lan dil ve \xFCslup, i\xE7eri\u011Fe ve hedef kitleye k\u0131smen uygundur. (6-10 puan)",
+            "Metinde kullan\u0131lan dil ve \xFCslup, i\xE7eri\u011Fe ve hedef kitleye g\xF6re belirlenmi\u015Ftir. (11-15 puan)",
+            "Metinde i\xE7eri\u011Fe ve hedef kitleye uygun, olduk\xE7a ba\u015Far\u0131l\u0131 bir dil ve \xFCslup kullan\u0131lm\u0131\u015Ft\u0131r. (16-20 puan)"
+          ],
+          "points": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "ranges": [
+            [
+              1,
+              5
+            ],
+            [
+              6,
+              10
+            ],
+            [
+              11,
+              15
+            ],
+            [
+              16,
+              20
+            ]
+          ],
+          "sourceRow": 5
+        },
+        {
+          "label": "\xD6zg\xFCnl\xFCk (20 puan)",
+          "descriptions": [
+            "Metinde duygu, d\xFC\u015F\xFCnce ve istekler \xF6zg\xFCn bi\xE7imde iletilmemi\u015Ftir. (1-5 puan)",
+            "Metin, \xF6zg\xFCnl\xFCk a\xE7\u0131s\u0131ndan k\u0131smen ba\u015Far\u0131l\u0131d\u0131r. (6-10 puan)",
+            "Metinde duygu, d\xFC\u015F\xFCnce ve istekler \xF6zg\xFCn bi\xE7imde ifade edilmi\u015Ftir. (11-15 puan)",
+            "Metinde duygu, d\xFC\u015F\xFCnce ve istekler olduk\xE7a \xF6zg\xFCn bi\xE7imde ifade edilmi\u015Ftir. (16-20 puan)"
+          ],
+          "points": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "ranges": [
+            [
+              1,
+              5
+            ],
+            [
+              6,
+              10
+            ],
+            [
+              11,
+              15
+            ],
+            [
+              16,
+              20
+            ]
+          ],
+          "sourceRow": 6
+        },
+        {
+          "label": "\xD6znel ve nesnel ifadelere yer verme (20 puan)",
+          "descriptions": [
+            "Metinde \xF6znel ve nesnel ifadelere yer verilmemi\u015Ftir. (1-5 puan)",
+            "Metinde \xF6znel ve nesnel ifadelere k\u0131smen yer verilmi\u015Ftir. (6-10 puan)",
+            "Metinde \xF6znel ve nesnel ifadeler yeterli d\xFCzeydedir. (11-15 puan)",
+            "Metin, \xF6znel ve nesnel ifadelere yer verilmesi a\xE7\u0131s\u0131ndan olduk\xE7a ba\u015Far\u0131l\u0131d\u0131r. (16-20 puan)"
+          ],
+          "points": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "ranges": [
+            [
+              1,
+              5
+            ],
+            [
+              6,
+              10
+            ],
+            [
+              11,
+              15
+            ],
+            [
+              16,
+              20
+            ]
+          ],
+          "sourceRow": 7
+        },
+        {
+          "label": "G\xF6rsellerden yararlanma (20 puan)",
+          "descriptions": [
+            "Metinde g\xF6rsel \xF6gelere yer verilmemi\u015Ftir. (1-5 puan)",
+            "Metinde g\xF6rsel \xF6gelere k\u0131smen yer verilmi\u015Ftir. (6-10 puan)",
+            "Metin g\xF6rsel \xF6gelerle desteklenmi\u015Ftir. (11-15 puan)",
+            "Metin g\xF6rsel \xF6gelerle ba\u015Far\u0131l\u0131 bi\xE7imde desteklenmi\u015Ftir. (16-20 puan)"
+          ],
+          "points": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "ranges": [
+            [
+              1,
+              5
+            ],
+            [
+              6,
+              10
+            ],
+            [
+              11,
+              15
+            ],
+            [
+              16,
+              20
+            ]
+          ],
+          "sourceRow": 8
+        },
+        {
+          "label": "Yaz\u0131m ve noktalama (20 puan)",
+          "descriptions": [
+            "Metin yaz\u0131m ve noktalama kurallar\u0131n\u0131n uygulanmas\u0131 a\xE7\u0131s\u0131ndan olduk\xE7a zay\u0131ft\u0131r. (1-5 puan)",
+            "Metin yaz\u0131m ve noktalama kurallar\u0131n\u0131n uygulanmas\u0131 a\xE7\u0131s\u0131ndan k\u0131smen yeterlidir. (6-10 puan)",
+            "Metin yaz\u0131m ve noktalama kurallar\u0131n\u0131n uygulanmas\u0131 a\xE7\u0131s\u0131ndan iyi d\xFCzeydedir. (11-15 puan)",
+            "Metin yaz\u0131m ve noktalama kurallar\u0131n\u0131n uygulanmas\u0131 a\xE7\u0131s\u0131ndan olduk\xE7a ba\u015Far\u0131l\u0131d\u0131r. (16-20 puan)"
+          ],
+          "points": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "ranges": [
+            [
+              1,
+              5
+            ],
+            [
+              6,
+              10
+            ],
+            [
+              11,
+              15
+            ],
+            [
+              16,
+              20
+            ]
+          ],
+          "sourceRow": 9
+        }
+      ],
+      "title": "{{school}} {{className}} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130 1. D\xD6NEM 2. TEMA YAZMA PERFORMANS G\xD6REV\u0130 DE\u011EERLEND\u0130RME \xD6L\xC7E\u011E\u0130",
+      "subtitle": "\xC7EVR\u0130M \u0130\xC7\u0130 M\xDCZE GEZ\u0130S\u0130YLE \u0130LG\u0130L\u0130 \u0130ZLEN\u0130MLER\u0130 YAZAB\u0130LME PERFORMANS G\xD6REV\u0130 \xC7ALI\u015EMASI DERECEL\u0130 PUANLAMA ANAHTARI",
+      "note": "Bu form, \xF6\u011Frencinin K\xFClt\xFCr Yolculu\u011Fu temas\u0131ndaki \xE7evrim i\xE7i m\xFCze gezisi yap\u0131p izlenimlerini yazmas\u0131na y\xF6nelik olan performans g\xF6revi \xE7al\u0131\u015Fmas\u0131n\u0131 \xF6l\xE7meniz amac\u0131yla haz\u0131rlanm\u0131\u015Ft\u0131r. \xD6\u011Frencinin belirtilen \xF6l\xE7\xFCtleri kar\u015F\u0131lama d\xFCzeyini en do\u011Fru bi\xE7imde yans\u0131tan se\xE7ene\u011Fi puanlay\u0131n\u0131z.",
+      "evaluation": "De\u011Ferlendirme: \xD6\u011Frenci bu formdan en az 5, en fazla 100 puan alabilir. \xD6\u011Frencinin puan\u0131 her \xF6l\xE7\xFCtten ald\u0131\u011F\u0131 puanlar\u0131n toplam\u0131d\u0131r.",
+      "source": {
+        "sheet": "2. Tema Yazma",
+        "col": 7
+      },
+      "max": 100,
+      "min": 5
+    },
+    {
+      "id": "observe-11",
+      "name": "Ders \u0130\xE7i G\xF6zlem",
+      "performance": 2,
+      "layout": "statements",
+      "description": "",
+      "levels": [
+        "Geli\u015Ftirilebilir",
+        "Orta",
+        "\u0130yi"
+      ],
+      "criteria": [
+        {
+          "label": "Derse haz\u0131rl\u0131kl\u0131 ve planl\u0131 gelme, ders d\u0131\u015F\u0131 etkinliklerini ger\xE7ekle\u015Ftirme",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 4
+        },
+        {
+          "label": "Ders i\xE7in gerekli ara\xE7 gere\xE7leri getirerek, d\xFCzenli ve temiz kullanma",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 5
+        },
+        {
+          "label": "T\xFCrk\xE7e'yi do\u011Fru ve d\xFCzg\xFCn konu\u015Fma ve yazma",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 6
+        },
+        {
+          "label": "Derse kar\u015F\u0131 olumlu davran\u0131\u015F geli\u015Ftirme ve aktif kat\u0131lma",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 7
+        },
+        {
+          "label": "Arkada\u015Flar\u0131yla i\u015Fbirli\u011Fi yapma (Grup \xE7al\u0131\u015Fmalar\u0131na kat\u0131lma)",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 8
+        },
+        {
+          "label": "Verilen \xF6devleri (g\xF6revleri) zaman\u0131nda yapma",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 9
+        }
+      ],
+      "title": "{{school}} {{className}} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130 1. D\xD6NEM 2. PERFORMANS PUANI \u0130\xC7\u0130N DERS \u0130\xC7\u0130 G\xD6ZLEM VE DAVRANI\u015ELAR DE\u011EERLEND\u0130RME \xD6L\xC7E\u011E\u0130",
+      "note": "NOT: \xD6l\xE7\xFCtleri kar\u015F\u0131lama de\u011Ferleri 3 puan iyi, 2 puan orta, 1 puan geli\u015Ftirilebilir derecesini g\xF6stermektedir.",
+      "source": {
+        "sheet": "Ders \u0130\xE7i G\xF6zlem",
+        "col": 4
+      },
+      "max": 18,
+      "min": 6
+    },
+    {
+      "id": "book1-11",
+      "name": "1. Tema Kitap Okuma",
+      "performance": 2,
+      "layout": "statements",
+      "description": "",
+      "levels": [
+        "Geli\u015Ftirilebilir",
+        "Orta",
+        "\u0130yi"
+      ],
+      "criteria": [
+        {
+          "label": "Okuma \xF6ncesinde metnin ba\u015Fl\u0131\u011F\u0131n\u0131, g\xF6rsellerini ve afi\u015Fini inceler.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 4
+        },
+        {
+          "label": "Eseri / Roman\u0131 okuma amac\u0131n\u0131, belirler.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 5
+        },
+        {
+          "label": "Okudu\u011Fu metni \xF6zetler.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 6
+        },
+        {
+          "label": "Okudu\u011Fu metnin iletisini belirler",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 7
+        },
+        {
+          "label": "Okudu\u011Fu metindeki kurgu ve ger\xE7ek unsurlar\u0131 belirleyerek metne katk\u0131s\u0131n\u0131 tart\u0131\u015F\u0131r\u0131r.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 8
+        },
+        {
+          "label": "Okudu\u011Fu metinde ilk defa kar\u015F\u0131la\u015Ft\u0131\u011F\u0131 bilgilerin do\u011Frulu\u011Funu ara\u015Ft\u0131r\u0131r.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 9
+        },
+        {
+          "label": "Metindeki imge, sembol, metafor, \xE7a\u011Fr\u0131\u015F\u0131m ve g\xF6ndermeleri tespit eder.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 10
+        },
+        {
+          "label": "Okudu\u011Fu metnin i\xE7eri\u011Fi ile daha \xF6nce kar\u015F\u0131la\u015Ft\u0131\u011F\u0131 metinleri \xE7e\u015Fitli a\xE7\u0131lardan kar\u015F\u0131la\u015Ft\u0131r\u0131r.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 11
+        },
+        {
+          "label": "Metnin yazar\u0131n\u0131n yerine kendimi koyarak bu metnin daha iyi nas\u0131l olabilece\u011Fini d\xFC\u015F\xFCn\xFCr",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 12
+        },
+        {
+          "label": "Okudu\u011Fum metni arkada\u015Flar\u0131mla tart\u0131\u015Fmak i\xE7in arg\xFCmanlar(\xE7\u0131kar\u0131m, kan\u0131t) \xFCretirir.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 13
+        },
+        {
+          "label": "Okudu\u011Fu metnin entelekt\xFCel merak\u0131na ve ara\u015Ft\u0131rmac\u0131 ki\u015Fili\u011Fine katk\u0131s\u0131n\u0131 de\u011Ferlendirir.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 14
+        },
+        {
+          "label": "Okudu\u011Fu metin hakk\u0131nda \xF6\u011Fretmenin ve arkada\u015Flar\u0131n\u0131n fikirlerini \xF6\u011Frendikten sonra kendi g\xF6r\xFC\u015Fleriyle kar\u015F\u0131la\u015Ft\u0131r\u0131r.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 15
+        },
+        {
+          "label": "Okudu\u011Fu metinde ge\xE7en \xE7at\u0131\u015Fmalara alternatif \xE7\xF6z\xFCmler \xFCretir./ Okudu\u011Fu metin \xF6\u011Fretici metinse \xF6rnek metin olu\u015Fturur.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 16
+        },
+        {
+          "label": "Okudu\u011Fu metnin farkl\u0131 disiplinlerle(psikoloji, tarih, felsefe, co\u011Frafya vb.) ili\u015Fkilerini tespit eder.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 17
+        }
+      ],
+      "title": "{{school}} {{className}} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130 1. D\xD6NEM 1. TEMA K\u0130TAP OKUMA PERFORMANS G\xD6REV\u0130 DE\u011EERLEND\u0130RME \xD6L\xC7E\u011E\u0130 (2. PERFORMANS PUANI \u0130\xC7\u0130N) Z\xDCMRE KARARI \u0130LE OKUTULMAK \xDCZERE SE\xC7\u0130LEN K\u0130TABIN ADI: {{book1}}",
+      "note": "NOT: \xD6l\xE7\xFCtleri kar\u015F\u0131lama de\u011Ferleri 3 puan iyi, 2 puan orta, 1 puan geli\u015Ftirilebilir derecesini g\xF6stermektedir.",
+      "source": {
+        "sheet": "1. Tema Kitap Okuma",
+        "col": 4
+      },
+      "max": 42,
+      "min": 14
+    },
+    {
+      "id": "book2-11",
+      "name": "2. Tema Kitap Okuma",
+      "performance": 2,
+      "layout": "statements",
+      "description": "",
+      "levels": [
+        "Geli\u015Ftirilebilir",
+        "Orta",
+        "\u0130yi"
+      ],
+      "criteria": [
+        {
+          "label": "Okuma \xF6ncesinde metnin ba\u015Fl\u0131\u011F\u0131n\u0131, g\xF6rsellerini ve afi\u015Fini inceler.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 4
+        },
+        {
+          "label": "Eseri / Roman\u0131 okuma amac\u0131n\u0131, belirler.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 5
+        },
+        {
+          "label": "Okudu\u011Fu metni \xF6zetler.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 6
+        },
+        {
+          "label": "Okudu\u011Fu metnin iletisini belirler",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 7
+        },
+        {
+          "label": "Okudu\u011Fu metindeki kurgu ve ger\xE7ek unsurlar\u0131 belirleyerek metne katk\u0131s\u0131n\u0131 tart\u0131\u015F\u0131r\u0131r.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 8
+        },
+        {
+          "label": "Okudu\u011Fu metinde ilk defa kar\u015F\u0131la\u015Ft\u0131\u011F\u0131 bilgilerin do\u011Frulu\u011Funu ara\u015Ft\u0131r\u0131r.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 9
+        },
+        {
+          "label": "Metindeki imge, sembol, metafor, \xE7a\u011Fr\u0131\u015F\u0131m ve g\xF6ndermeleri tespit eder.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 10
+        },
+        {
+          "label": "Okudu\u011Fu metnin i\xE7eri\u011Fi ile daha \xF6nce kar\u015F\u0131la\u015Ft\u0131\u011F\u0131 metinleri \xE7e\u015Fitli a\xE7\u0131lardan kar\u015F\u0131la\u015Ft\u0131r\u0131r.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 11
+        },
+        {
+          "label": "Metnin yazar\u0131n\u0131n yerine kendimi koyarak bu metnin daha iyi nas\u0131l olabilece\u011Fini d\xFC\u015F\xFCn\xFCr",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 12
+        },
+        {
+          "label": "Okudu\u011Fum metni arkada\u015Flar\u0131mla tart\u0131\u015Fmak i\xE7in arg\xFCmanlar(\xE7\u0131kar\u0131m, kan\u0131t) \xFCretirir.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 13
+        },
+        {
+          "label": "Okudu\u011Fu metnin entelekt\xFCel merak\u0131na ve ara\u015Ft\u0131rmac\u0131 ki\u015Fili\u011Fine katk\u0131s\u0131n\u0131 de\u011Ferlendirir.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 14
+        },
+        {
+          "label": "Okudu\u011Fu metin hakk\u0131nda \xF6\u011Fretmenin ve arkada\u015Flar\u0131n\u0131n fikirlerini \xF6\u011Frendikten sonra kendi g\xF6r\xFC\u015Fleriyle kar\u015F\u0131la\u015Ft\u0131r\u0131r.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 15
+        },
+        {
+          "label": "Okudu\u011Fu metinde ge\xE7en \xE7at\u0131\u015Fmalara alternatif \xE7\xF6z\xFCmler \xFCretir./ Okudu\u011Fu metin \xF6\u011Fretici metinse \xF6rnek metin olu\u015Fturur.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 16
+        },
+        {
+          "label": "Okudu\u011Fu metnin farkl\u0131 disiplinlerle(psikoloji, tarih, felsefe, co\u011Frafya vb.) ili\u015Fkilerini tespit eder.",
+          "descriptions": [],
+          "points": [
+            1,
+            2,
+            3
+          ],
+          "sourceRow": 17
+        }
+      ],
+      "title": "{{school}} {{className}} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130 1. D\xD6NEM 2. TEMA K\u0130TAP OKUMA PERFORMANS G\xD6REV\u0130 DE\u011EERLEND\u0130RME \xD6L\xC7E\u011E\u0130 (2. PERFORMANS PUANI \u0130\xC7\u0130N) Z\xDCMRE KARARI \u0130LE OKUTULMAK \xDCZERE SE\xC7\u0130LEN K\u0130TABIN ADI: {{book2}}",
+      "note": "NOT: \xD6l\xE7\xFCtleri kar\u015F\u0131lama de\u011Ferleri 3 puan iyi, 2 puan orta, 1 puan geli\u015Ftirilebilir derecesini g\xF6stermektedir.",
+      "source": {
+        "sheet": "2. Tema Kitap Okuma",
+        "col": 4
+      },
+      "max": 42,
+      "min": 14
+    }
+  ];
+
+  // levels.js
+  var COLUMNS = {
+    speak1: ["I. Tema Konu\u015Fma (%25)", 25],
+    speak2: ["II. Tema Konu\u015Fma (%25)", 25],
+    write1: ["I. Tema Yazma (%25)", 25],
+    write2: ["II. Tema Yazma (%25)", 25],
+    book1: ["I. Tema Kitap Okuma (%33)", 33],
+    book2: ["II. Tema Kitap Okuma (%33)", 33],
+    observe: ["Ders \u0130\xE7i G\xF6zlem (%34)", 34]
+  };
+  var roleOf = (rubric) => rubric.id.split("-")[0];
+  var withColumns = (list) => list.map((r) => ({ ...r, layout: r.layout || (r.performance === 1 ? "levels" : "statements"), column: COLUMNS[roleOf(r)][0], weight: COLUMNS[roleOf(r)][1] }));
+  var SECOND = {
+    formula: "weighted",
+    column: "normalized",
+    subtitle: "Kitap okuma %33 + %33 \xB7 Ders i\xE7i g\xF6zlem %34",
+    help: '<p>1. ve 2. Tema Kitap Okuma (14 kriter, en \xE7ok 42) ile Ders \u0130\xE7i G\xF6zlem (6 kriter, en \xE7ok 18) 100\u2019l\xFCk sisteme \xE7evrilip yuvarlan\u0131r; ard\u0131ndan <b>%33 + %33 + %34</b> al\u0131n\u0131r.</p><p class="muted">Sonu\xE7 ondal\u0131kl\u0131 olabilir: 85 i\xE7in en yak\u0131n sonu\xE7 84,98\u2019dir. Excel bu h\xFCcreyi tam say\u0131 bi\xE7iminde g\xF6sterdi\u011Fi i\xE7in \xE7izelgede 85 g\xF6r\xFCn\xFCr. En d\xFC\u015F\xFCk not 33\u2019t\xFCr.</p>'
+  };
+  var LEVELS = {
+    9: {
+      level: 9,
+      name: "9. s\u0131n\u0131f",
+      rubrics: withColumns(RUBRICS),
+      performances: {
+        1: {
+          formula: "roundedQuarter",
+          column: "contributions",
+          subtitle: "Konu\u015Fma ve yazma \xB7 her \xF6l\xE7ek %25",
+          help: '<p>1. ve 2. Tema Konu\u015Fma, 1. ve 2. Tema Yazma \xF6l\xE7eklerinin her biri 100 \xFCzerinden puanlan\u0131r. Her \xF6l\xE7e\u011Fin %25\u2019i <b>ayr\u0131 ayr\u0131</b> tam say\u0131ya yuvarlan\u0131r ve toplan\u0131r.</p><p class="muted">Kriter basamaklar\u0131 4 \xB7 6 \xB7 8 \xB7 10 (1. Tema Yazma \u201C\xD6zg\xFCnl\xFCk\u201D: 8 \xB7 12 \xB7 16 \xB7 20). Not aral\u0131\u011F\u0131 40\u2013100; bu aral\u0131ktaki her tam say\u0131 tam olarak \xFCretilebilir.</p>'
+        },
+        2: SECOND
+      }
+    },
+    10: {
+      level: 10,
+      name: "10. s\u0131n\u0131f",
+      rubrics: withColumns(RUBRICS_10),
+      performances: {
+        1: {
+          formula: "average",
+          column: "normalized",
+          subtitle: "Konu\u015Fma ve yazma \xB7 d\xF6rt \xF6l\xE7e\u011Fin 100\u2019l\xFCk ortalamas\u0131",
+          help: '<p>1. Tema Konu\u015Fma (11 kriter, en \xE7ok 33), 2. Tema Konu\u015Fma (6 kriter, en \xE7ok 18), 1. Tema Yazma (10 kriter, en \xE7ok 30) ve 2. Tema Yazma (7 kriter, en \xE7ok 21) 100\u2019l\xFCk sisteme \xE7evrilip <b>ayr\u0131 ayr\u0131</b> tam say\u0131ya yuvarlan\u0131r. 1. performans bu d\xF6rt puan\u0131n ortalamas\u0131d\u0131r.</p><p class="muted">Kriter basamaklar\u0131 1 \xB7 2 \xB7 3 (3 iyi, 2 orta, 1 geli\u015Ftirilebilir). En d\xFC\u015F\xFCk not 33\u2019t\xFCr. 33\u2013100 aras\u0131ndaki her tam not tam olarak \xFCretilebilir; yaln\u0131zca 99 i\xE7in en yak\u0131n sonu\xE7 99,25\u2019tir ve Excel bu h\xFCcreyi tam say\u0131 bi\xE7iminde g\xF6sterdi\u011Fi i\xE7in \xE7izelgede 99 g\xF6r\xFCn\xFCr.</p>'
+        },
+        2: SECOND
+      }
+    },
+    11: {
+      level: 11,
+      name: "11. s\u0131n\u0131f",
+      rubrics: withColumns(RUBRICS_11),
+      performances: {
+        1: {
+          formula: "quarter",
+          column: "contributions",
+          subtitle: "Konu\u015Fma ve yazma \xB7 her \xF6l\xE7ek %25",
+          help: '<p>1. ve 2. Tema Konu\u015Fma, 1. ve 2. Tema Yazma \xF6l\xE7eklerinin her biri 100 \xFCzerinden puanlan\u0131r. Her \xF6l\xE7e\u011Fin %25\u2019i al\u0131n\u0131p toplan\u0131r; kaynak Excel bu katk\u0131lar\u0131 yuvarlamaz (\xF6r. 21,5).</p><p class="muted">Her \xF6l\xE7\xFCt d\xF6rt d\xFCzeyde bir puan aral\u0131\u011F\u0131yla puanlan\u0131r (\xF6r. 1\u20134 \xB7 5\u20138 \xB7 9\u201312 \xB7 13\u201316); aral\u0131ktaki her tam puan verilebilir. 6\u2013100 aras\u0131ndaki her tam not tam olarak \xFCretilebilir.</p>'
+        },
+        2: {
+          ...SECOND,
+          subtitle: "Ders i\xE7i g\xF6zlem %34 \xB7 Kitap okuma %33 + %33",
+          help: '<p>Ders \u0130\xE7i G\xF6zlem (6 kriter, en \xE7ok 18) ile 1. ve 2. Tema Kitap Okuma (14 kriter, en \xE7ok 42) 100\u2019l\xFCk sisteme \xE7evrilip yuvarlan\u0131r; ard\u0131ndan <b>%34 + %33 + %33</b> al\u0131n\u0131r.</p><p class="muted">Sonu\xE7 ondal\u0131kl\u0131 olabilir: 85 i\xE7in en yak\u0131n sonu\xE7 84,98\u2019dir. Excel bu h\xFCcreyi tam say\u0131 bi\xE7iminde g\xF6sterdi\u011Fi i\xE7in \xE7izelgede 85 g\xF6r\xFCn\xFCr. En d\xFC\u015F\xFCk not 33\u2019t\xFCr.</p>'
+        }
+      }
+    }
+  };
+  var LEVEL_IDS = Object.keys(LEVELS).map(Number);
+  var DEFAULT_LEVEL = 9;
+  var levelOf = (level2) => LEVELS[level2] || LEVELS[DEFAULT_LEVEL];
+  var isLevel = (level2) => Object.hasOwn(LEVELS, level2);
+  var levelIndex = (criterion, value) => criterion.ranges ? criterion.ranges.findIndex(([a, b]) => value >= a && value <= b) : criterion.points.indexOf(value);
+  var levelPoints = (criterion, j) => criterion.ranges ? `${criterion.ranges[j][0]}-${criterion.ranges[j][1]}` : String(criterion.points[j]);
+  var pointsText = (criterion, separator = "\xB7") => criterion.ranges ? `${criterion.points[0]}\u2013${criterion.points.at(-1)}` : criterion.points.join(separator);
+
   // core.js
   var sum = (values) => values.reduce((a, b) => a + b, 0);
   var round = (n) => Math.floor(n + 0.5 + 1e-9);
@@ -1110,87 +3622,85 @@
     });
     return values;
   }
-  function calculate(scores, performance) {
-    const rubrics = RUBRICS.filter((r) => r.performance === performance);
-    const totals = rubrics.map((r) => sum(scores[r.id]));
-    if (performance === 1) {
-      const contributions2 = totals.map((t) => round(t * 0.25));
-      return { totals, normalized: totals, contributions: contributions2, result: sum(contributions2) };
-    }
-    const normalized = totals.map((t, i) => round(t / rubrics[i].max * 100));
-    const contributions = normalized.map((n, i) => n * [33, 33, 34][i] / 100);
-    return { totals, normalized, contributions, result: round(sum(contributions) * 100) / 100 };
+  var rubricsFor = (performance, level2 = DEFAULT_LEVEL) => levelOf(level2).rubrics.filter((r) => r.performance === performance);
+  var scaled = (total, rubric) => round(total / rubric.max * 100);
+  function share(formula, rubric, total) {
+    if (formula === "roundedQuarter") return round(total * 0.25) * 100;
+    if (formula === "quarter") return total * 25;
+    if (formula === "average") return scaled(total, rubric) * 25;
+    return scaled(total, rubric) * rubric.weight;
   }
+  function calculate(scores, performance, level2 = DEFAULT_LEVEL) {
+    const rubrics = rubricsFor(performance, level2), { formula } = levelOf(level2).performances[performance];
+    const totals = rubrics.map((r) => sum(scores[r.id]));
+    const normalized = formula === "roundedQuarter" || formula === "quarter" ? totals : totals.map((t, i) => scaled(t, rubrics[i]));
+    const contributions = totals.map((t, i) => share(formula, rubrics[i], t) / 100);
+    return { totals, normalized, contributions, result: sum(totals.map((t, i) => share(formula, rubrics[i], t))) / 100 };
+  }
+  var reachable = (rubric) => {
+    let totals = /* @__PURE__ */ new Set([0]);
+    for (const c of rubric.criteria) totals = new Set([...totals].flatMap((t) => c.points.map((p) => t + p)));
+    return [...totals].sort((a, b) => a - b);
+  };
   var totalCache = /* @__PURE__ */ new Map();
-  function chooseTotals(target, performance) {
-    const key = `${performance}:${target}`;
+  function chooseTotals(target, performance, level2) {
+    const key = `${level2}:${performance}:${target}`;
     if (totalCache.has(key)) return totalCache.get(key);
-    let selected;
-    if (performance === 1) {
-      let states = /* @__PURE__ */ new Map([[0, { cost: 0, totals: [] }]]);
-      for (let i = 0; i < 4; i++) {
-        const next = /* @__PURE__ */ new Map();
-        for (const [score, entry] of states) for (let total = 40; total <= 100; total += 2) {
-          const value = score + round(total / 4);
-          const cost = entry.cost + (total - target) ** 2;
-          if (!next.has(value) || cost < next.get(value).cost) next.set(value, { cost, totals: [...entry.totals, total] });
-        }
-        states = next;
+    const rubrics = rubricsFor(performance, level2), { formula } = levelOf(level2).performances[performance];
+    let states = /* @__PURE__ */ new Map([[0, { cost: 0, totals: [] }]]);
+    for (const r of rubrics) {
+      const next = /* @__PURE__ */ new Map(), options = reachable(r);
+      for (const [score, entry] of states) for (const total of options) {
+        const value = score + share(formula, r, total), cost = entry.cost + (scaled(total, r) - target) ** 2;
+        if (!next.has(value) || cost < next.get(value).cost) next.set(value, { cost, totals: [...entry.totals, total] });
       }
-      selected = [...states].sort((a, b) => Math.abs(a[0] - target) - Math.abs(b[0] - target) || a[1].cost - b[1].cost || a[0] - b[0])[0][1].totals;
-    } else {
-      let bestDiff = Infinity, bestCost = Infinity;
-      for (let a = 14; a <= 42; a++) for (let b = 14; b <= 42; b++) for (let c = 6; c <= 18; c++) {
-        const n = [round(a / 42 * 100), round(b / 42 * 100), round(c / 18 * 100)];
-        const actual = n[0] * 33 + n[1] * 33 + n[2] * 34;
-        const diff = Math.abs(actual - round(target * 100));
-        const cost = sum(n.map((x) => (x - target) ** 2));
-        if (diff < bestDiff || diff === bestDiff && cost < bestCost) {
-          bestDiff = diff;
-          bestCost = cost;
-          selected = [a, b, c];
-        }
-      }
+      states = next;
     }
+    const goal = round(target * 100);
+    const firstTotals = (x, y) => {
+      const i = x.findIndex((t, k) => t !== y[k]);
+      return i < 0 ? 0 : x[i] - y[i];
+    };
+    const order = (a, b) => formula === "weighted" ? firstTotals(a[1].totals, b[1].totals) : a[0] - b[0];
+    const selected = [...states].sort((a, b) => Math.abs(a[0] - goal) - Math.abs(b[0] - goal) || a[1].cost - b[1].cost || order(a, b))[0][1].totals;
     totalCache.set(key, selected);
     return selected;
   }
-  function distribute(value, performance, seed = "") {
+  function distribute(value, performance, seed = "", level2 = DEFAULT_LEVEL) {
     const target = parseGrade(value);
     if (target === null) return null;
-    const totals = chooseTotals(target, performance);
-    const rubrics = RUBRICS.filter((r) => r.performance === performance);
+    const totals = chooseTotals(target, performance, level2);
+    const rubrics = rubricsFor(performance, level2);
     const scores = Object.fromEntries(rubrics.map((r, i) => [r.id, allocate(r, totals[i], seed)]));
-    const computed = calculate(scores, performance);
+    const computed = calculate(scores, performance, level2);
     return { ...computed, scores, target, exact: Math.abs(computed.result - target) < 1e-3 };
   }
-  var rubricsFor = (performance) => RUBRICS.filter((r) => r.performance === performance);
-  function validShape(scores, performance) {
-    return Boolean(scores) && rubricsFor(performance).every((r) => Array.isArray(scores[r.id]) && scores[r.id].length === r.criteria.length && scores[r.id].every((v, i) => v === null || r.criteria[i].points.includes(v)));
+  function validShape(scores, performance, level2 = DEFAULT_LEVEL) {
+    return Boolean(scores) && rubricsFor(performance, level2).every((r) => Array.isArray(scores[r.id]) && scores[r.id].length === r.criteria.length && scores[r.id].every((v, i) => v === null || r.criteria[i].points.includes(v)));
   }
-  var validScores = (scores, performance) => validShape(scores, performance) && rubricsFor(performance).every((r) => scores[r.id].every((v) => v !== null));
-  var emptyScores = (performance) => Object.fromEntries(rubricsFor(performance).map((r) => [r.id, r.criteria.map(() => null)]));
+  var validScores = (scores, performance, level2 = DEFAULT_LEVEL) => validShape(scores, performance, level2) && rubricsFor(performance, level2).every((r) => scores[r.id].every((v) => v !== null));
+  var emptyScores = (performance, level2 = DEFAULT_LEVEL) => Object.fromEntries(rubricsFor(performance, level2).map((r) => [r.id, r.criteria.map(() => null)]));
   function criterionValue(rubric, index, text2) {
     const value = String(text2 ?? "").trim();
     if (!value) return { value: null };
     const points = rubric.criteria[index].points;
-    if (!/^\d{1,2}$/.test(value) || !points.includes(Number(value))) return { error: `Bu kriter i\xE7in yaln\u0131zca ${points.join(", ")} girilebilir.` };
+    if (!/^\d{1,2}$/.test(value) || !points.includes(Number(value))) return { error: `Bu kriter i\xE7in yaln\u0131zca ${rubric.criteria[index].ranges ? `${points[0]}\u2013${points.at(-1)} aras\u0131 tam say\u0131` : points.join(", ")} girilebilir.` };
     return { value: Number(value) };
   }
-  function evaluateStudent(student) {
+  function evaluateStudent(student, level2 = DEFAULT_LEVEL) {
     return [1, 2].map((p) => {
       const manual = student[`manual${p}`];
-      if (manual && validShape(manual, p)) {
-        const scores = Object.fromEntries(rubricsFor(p).map((r) => [r.id, [...manual[r.id]]]));
-        if (!validScores(scores, p)) {
-          const missing = rubricsFor(p).map((r) => ({ name: r.name, count: scores[r.id].filter((v) => v === null).length })).filter((m) => m.count);
+      if (manual && validShape(manual, p, level2)) {
+        const scores = Object.fromEntries(rubricsFor(p, level2).map((r) => [r.id, [...manual[r.id]]]));
+        if (!validScores(scores, p, level2)) {
+          const missing = rubricsFor(p, level2).map((r) => ({ name: r.name, count: scores[r.id].filter((v) => v === null).length })).filter((m) => m.count);
           return { data: null, error: null, incomplete: { missing, count: missing.reduce((a, m) => a + m.count, 0) }, scores };
         }
-        const computed = calculate(scores, p);
+        const computed = calculate(scores, p, level2);
         return { data: { ...computed, scores, target: computed.result, exact: true, manual: true }, error: null };
       }
       try {
-        return { data: distribute(student[`p${p}`], p, student.id), error: null };
+        return { data: distribute(student[`p${p}`], p, student.id, level2), error: null };
       } catch (e2) {
         return { data: null, error: e2.message };
       }
@@ -1200,7 +3710,8 @@
   function isAccepted(student, result, performance, policy = "rounded") {
     return Boolean(result && (result.exact || policy === "rounded" && displayed(result.result) === result.target || student[`accepted${performance}`] === result.result));
   }
-  function gradeStatus(student, entry, performance) {
+  var minimumGrade = (performance, level2 = DEFAULT_LEVEL) => calculate(Object.fromEntries(rubricsFor(performance, level2).map((r) => [r.id, r.criteria.map((c) => c.points[0])])), performance, level2).result;
+  function gradeStatus(student, entry, performance, level2 = DEFAULT_LEVEL) {
     if (entry.error) return { kind: "error", message: entry.error };
     if (entry.incomplete) return { kind: "incomplete", ...entry.incomplete };
     const d = entry.data;
@@ -1209,7 +3720,7 @@
     if (d.exact) return { kind: "exact", result: d.result };
     if (displayed(d.result) === d.target) return { kind: "rounded", result: d.result };
     if (student[`accepted${performance}`] === d.result) return { kind: "accepted", result: d.result, target: d.target };
-    const min = performance === 1 ? 40 : 33;
+    const min = minimumGrade(performance, level2);
     return { kind: "pending", result: d.result, target: d.target, belowMin: d.target < min, min };
   }
   function parseDelimited(text2) {
@@ -1366,6 +3877,7 @@
     const note = at(2).replace(/\s+/g, " ").trim();
     return [s.spec[0], { index: s.index, title: at(1), note: s.spec[1] === 6 ? note : note.split(new RegExp("(?<=\\.)\\s"))[0], evaluation: s.spec[1] === 6 ? at(s.spec[2] + 1) : "" }];
   }));
+  var texts = (r) => SOURCE[r.id] || { index: SOURCE[roleOf(r)].index, title: r.title, note: r.note, evaluation: r.evaluation || "" };
   var SUMMARY_INDEX = 5;
   var SUMMARY_NAME = "1. D\xD6NEM PERFORMANS PUANLARI";
   var thin = { left: ["thin", BLACK], right: ["thin", BLACK], top: ["thin", BLACK], bottom: ["thin", BLACK] };
@@ -1392,21 +3904,26 @@
   var footerHeight = (f) => footerHeights(f).reduce((a, b) => a + b, 0);
   function footer(m, widths, heights, row, note, meta, f) {
     const last = widths.length, sig = signatureStart(widths), size = 7.5 * f;
+    const apart = Boolean(note) && textWidth(note, size) + 8 > widths.slice(0, sig - 1).reduce((a, b) => a + b, 0);
     if (note) {
       m.put(1, row, note, { fontSize: size, wrap: false });
-      if (sig > 2) m.merges.push(`${ref(1, row)}:${ref(sig - 1, row)}`);
+      const end = apart ? last : sig - 1;
+      if (end > 1) m.merges.push(`${ref(1, row)}:${ref(end, row)}`);
     }
-    m.put(sig, row, meta.date, { fontSize: size, align: "center", wrap: false });
+    m.put(sig, row + (apart ? 1 : 0), meta.date, { fontSize: size, align: "center", wrap: false });
     m.put(sig, row + 2, meta.teacher, { fontSize: size, bold: true, align: "center", wrap: false });
     m.put(sig, row + 3, "T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI \xD6\u011ERETMEN\u0130", { fontSize: size, align: "center", wrap: false });
-    for (const r of [row, row + 2, row + 3]) if (last > sig) m.merges.push(`${ref(sig, r)}:${ref(last, r)}`);
+    for (const r of [row + (apart ? 1 : 0), row + 2, row + 3]) if (last > sig) m.merges.push(`${ref(sig, r)}:${ref(last, r)}`);
     heights.push(...footerHeights(f));
   }
-  var POINT_NOTE = /\s*\(?\s*(\d+)\s*puan\s*\)?\.?\s*$/i;
-  var sharedPoints = (r) => r.levels.map((_, j) => {
-    const set = new Set(r.criteria.map((c) => c.points[j]));
-    return set.size === 1 ? [...set][0] : null;
-  });
+  var POINT_NOTE = /\s*\(?\s*(\d+(?:\s*-\s*\d+)?)\s*puan\s*\)?\.?\s*$/i;
+  function sharedPoints(r) {
+    const shared = r.levels.map((_, j) => {
+      const set = new Set(r.criteria.map((c) => levelPoints(c, j)));
+      return set.size === 1 ? [...set][0] : null;
+    });
+    return shared.every((pts) => pts != null) ? shared : shared.map(() => null);
+  }
   var levelHeader = (r, j) => {
     const pts = sharedPoints(r)[j];
     return pts == null ? r.levels[j] : `${r.levels[j]}
@@ -1414,27 +3931,30 @@
   };
   function levelText(r, k, j) {
     const text2 = r.criteria[k].descriptions[j].replace(/\s+/g, " ").trim(), pts = sharedPoints(r)[j], m = text2.match(POINT_NOTE);
-    return pts != null && m && Number(m[1]) === pts ? text2.replace(POINT_NOTE, "").trim() : text2;
+    return pts != null && m && m[1].replace(/\s/g, "") === pts ? text2.replace(POINT_NOTE, "").trim() : text2;
   }
   var scaleTitle = (r, meta) => {
-    const t = fill(SOURCE[r.id].title, meta);
-    return /ÖLÇEĞİ/.test(t) ? t : `${t} DE\u011EERLEND\u0130RME \xD6L\xC7E\u011E\u0130`;
+    const t = fill(texts(r).title, meta);
+    return `${/ÖLÇEĞİ/.test(t) ? t : `${t} DE\u011EERLEND\u0130RME \xD6L\xC7E\u011E\u0130`}${r.subtitle ? `
+${r.subtitle}` : ""}`;
   };
+  var textColumns = (r) => ({ levels: 5, statements: 1, described: 2 })[r.layout];
   function scaleSizes(r, names, f, meta, pageLabel, force = false) {
-    const n = names.length, p = r.performance, W = PAGE.width;
+    const n = names.length, W = PAGE.width, layout = r.layout;
     const sz = { title: 10 * f, note: 7.5 * f, head: 7.5 * f, label: 7.5 * f, desc: 7 * f, stmt: 7.5 * f, score: 8 * f, name: 7 * f };
     const lines = Math.max(1, ...names.map((l) => l.length));
     const minStudent = Math.max(lines * lineHeight(sz.name) * metric.rotated + 6, textWidth("100", sz.score, true) + 7, 16);
-    const ideal = p === 1 ? 700 : 560;
+    const ideal = layout === "levels" ? 700 : 560;
     const student = Math.min(38, Math.max(minStudent, (W - ideal) / Math.max(1, n)));
     const description = W - student * n;
-    if (!force && description < (p === 1 ? 380 : 260)) return null;
-    const label = p === 1 ? Math.min(120, Math.max(86, description * 0.15)) : description, level = p === 1 ? (description - label) / 4 : 0;
-    const widths = p === 1 ? [label, level, level, level, level, ...Array(n).fill(student)] : [description, ...Array(n).fill(student)];
+    if (!force && description < { levels: 380, statements: 260, described: 300 }[layout]) return null;
+    const label = layout === "levels" ? Math.min(120, Math.max(86, description * 0.15)) : layout === "described" ? Math.min(170, Math.max(96, description * 0.3)) : description;
+    const level2 = layout === "levels" ? (description - label) / 4 : description - label;
+    const widths = [label, ...Array(textColumns(r) - 1).fill(level2), ...Array(n).fill(student)];
     const nameLength = Math.max(0, ...names.flat().map((l) => textWidth(l, sz.name, true)));
-    const header = Math.max(36, nameLength + 14, ...p === 1 ? r.levels.map((_, j) => blockHeight(levelHeader(r, j), level, sz.head, true)) : []);
-    const rows = r.criteria.map((c, k) => p === 1 ? Math.max(22, ...c.descriptions.map((_, j) => blockHeight(levelText(r, k, j), level, sz.desc)), r.criteria[k - 1]?.label === c.label || r.criteria[k + 1]?.label === c.label ? 0 : blockHeight(c.label, label, sz.label, true)) : Math.max(18, blockHeight(c.label, description, sz.stmt)));
-    const heights = [blockHeight(`${scaleTitle(r, meta)}${pageLabel}`, W, sz.title, true), blockHeight(SOURCE[r.id].note, W, sz.note), header, ...rows, 20];
+    const header = Math.max(36, nameLength + 14, ...layout === "levels" ? r.levels.map((_, j) => blockHeight(levelHeader(r, j), level2, sz.head, true)) : []);
+    const rows = r.criteria.map((c, k) => layout === "levels" ? Math.max(22, ...c.descriptions.map((_, j) => blockHeight(levelText(r, k, j), level2, sz.desc)), r.criteria[k - 1]?.label === c.label || r.criteria[k + 1]?.label === c.label ? 0 : blockHeight(c.label, label, sz.label, true)) : layout === "described" ? Math.max(20, blockHeight(c.label, label, sz.label, true), blockHeight(c.note, level2, sz.stmt)) : Math.max(18, blockHeight(c.label, description, sz.stmt)));
+    const heights = [blockHeight(`${scaleTitle(r, meta)}${pageLabel}`, W, sz.title, true), blockHeight(texts(r).note, W, sz.note), header, ...rows, 20];
     const used = heights.reduce((a, b) => a + b, 0) + footerHeight(f);
     return { widths, heights, sz, student, used };
   }
@@ -1446,28 +3966,30 @@
     return null;
   }
   function scalePage(r, page, meta, names, pageNo, pages, sheetName2) {
-    const p = r.performance, pageLabel = pages > 1 ? ` (${pageNo}/${pages})` : "";
+    const levels = r.layout === "levels", pageLabel = pages > 1 ? ` (${pageNo}/${pages})` : "";
     const size = fitScale(r, names, meta, pageLabel) || { ...scaleSizes(r, names, MIN_FONT, meta, pageLabel, true), f: MIN_FONT };
-    const { widths, heights, sz, f } = size, m = sheet(sheetName2, SOURCE[r.id].index, { spec: [r.id], rubric: r.id, page: pageNo });
-    const start = p === 1 ? 6 : 2, last = widths.length, totalRow = 4 + r.criteria.length;
+    const { widths, heights, sz, f } = size, m = sheet(sheetName2, texts(r).index, { spec: [r.id], rubric: r.id, page: pageNo });
+    const start = 1 + textColumns(r), last = widths.length, totalRow = 4 + r.criteria.length;
     m.put(1, 1, `${scaleTitle(r, meta)}${pageLabel}`, { fontSize: sz.title, bold: true, align: "center" });
     m.merges.push(`A1:${ref(last, 1)}`);
-    m.put(1, 2, SOURCE[r.id].note, { fontSize: sz.note });
+    m.put(1, 2, texts(r).note, { fontSize: sz.note });
     m.merges.push(`A2:${ref(last, 2)}`);
     const head = { fontSize: sz.head, bold: true, align: "center", fill: HEAD_FILL, borders: thin };
     m.put(1, 3, "\xD6L\xC7\xDCTLER", head);
-    if (p === 1) r.levels.forEach((_, j) => m.put(2 + j, 3, levelHeader(r, j), head));
+    if (levels) r.levels.forEach((_, j) => m.put(2 + j, 3, levelHeader(r, j), head));
+    if (r.layout === "described") m.put(2, 3, "A\xC7IKLAMALAR", head);
     page.forEach(({ student }, i) => m.put(start + i, 3, names[i].join("\n"), { ...head, fontSize: sz.name, rotate: 90, vertical: "bottom", wrap: names[i].length > 1 }));
     r.criteria.forEach((c, k) => {
       const row = 4 + k;
-      const merged = r.criteria[k - 1]?.label === c.label;
-      m.put(1, row, merged ? null : c.label, { fontSize: p === 1 ? sz.label : sz.stmt, bold: p === 1, borders: thin, align: p === 1 ? "center" : "left" });
-      if (p === 1 && !merged) {
+      const merged = levels && r.criteria[k - 1]?.label === c.label, statement = r.layout === "statements";
+      m.put(1, row, merged ? null : c.label, { fontSize: statement ? sz.stmt : sz.label, bold: !statement, borders: thin, align: levels ? "center" : "left" });
+      if (levels && !merged) {
         let end = k;
         while (r.criteria[end + 1]?.label === c.label) end++;
         if (end > k) m.merges.push(`${ref(1, row)}:${ref(1, 4 + end)}`);
       }
-      if (p === 1) c.descriptions.forEach((_, j) => m.put(2 + j, row, levelText(r, k, j), { fontSize: sz.desc, borders: thin }));
+      if (levels) c.descriptions.forEach((_, j) => m.put(2 + j, row, levelText(r, k, j), { fontSize: sz.desc, borders: thin }));
+      if (r.layout === "described") m.put(2, row, c.note, { fontSize: sz.stmt, borders: thin });
       page.forEach(({ result }, i) => m.put(start + i, row, result?.scores[r.id]?.[k], { fontSize: sz.score, align: "center", borders: thin, wrap: false, shrink: true }, { unlocked: true, padding: 0 }));
     });
     const total = { fontSize: sz.score, bold: true, align: "center", fill: TOTAL_FILL, borders: thin, wrap: false };
@@ -1478,14 +4000,14 @@
       const col = start + i, sum2 = result ? result.scores[r.id].reduce((a, b) => a + b, 0) : null;
       m.put(col, totalRow, sum2, { ...total, shrink: true }, { formula: sum2 === null ? null : `SUM(${ref(col, 4)}:${ref(col, totalRow - 1)})`, padding: 0 });
     });
-    const evaluation = SOURCE[r.id].evaluation || `De\u011Ferlendirme: Bu \xF6l\xE7ekten en d\xFC\u015F\xFCk ${r.min} puan, en y\xFCksek ${r.max} puan al\u0131nabilir.`;
+    const evaluation = texts(r).evaluation || `De\u011Ferlendirme: Bu \xF6l\xE7ekten en d\xFC\u015F\xFCk ${r.min} puan, en y\xFCksek ${r.max} puan al\u0131nabilir.`;
     footer(m, widths, heights, totalRow + 1, evaluation.replace(/\s+/g, " ").trim(), meta, f);
     const groups = /* @__PURE__ */ new Map();
     r.criteria.forEach((c, k) => {
-      const key = c.points.join(",");
+      const key = c.ranges ? `${c.points[0]}-${c.points.at(-1)}` : c.points.join(",");
       groups.set(key, [...groups.get(key) || [], `${ref(start, 4 + k)}:${ref(last, 4 + k)}`]);
     });
-    m.validations = [...groups].map(([points, ranges]) => ({ points, sqref: ranges.join(" ") }));
+    m.validations = [...groups].map(([key, ranges]) => key.includes("-") ? { min: Number(key.split("-")[0]), max: Number(key.split("-")[1]), sqref: ranges.join(" ") } : { points: key, sqref: ranges.join(" ") });
     m.totalRow = totalRow;
     m.start = start;
     m.autoRows = r.criteria.map((_, k) => 4 + k);
@@ -1505,44 +4027,60 @@
     });
   }
   var sheetName = (base, page, pages) => pages > 1 ? `${base} (${page})`.slice(0, 31) : base.slice(0, 31);
-  var SUMMARY_HEADERS = ["SIRA NO", "\xD6\u011ER. NO", "\xD6\u011ERENC\u0130N\u0130N ADI VE SOYADI", "I. Tema Konu\u015Fma (%25)", "II. Tema Konu\u015Fma (%25)", "I. Tema Yazma (%25)", "II. Tema Yazma (%25)", "1. Performans Puan\u0131", "I. Tema Kitap Okuma (%33)", "II. Tema Kitap Okuma (%33)", "Ders \u0130\xE7i G\xF6zlem (%34)", "2. Performans Puan\u0131"];
-  function summaryGeometry(names, f = 1) {
+  var summaryHeaders = (level2) => {
+    const rubrics = levelOf(level2).rubrics, of = (p) => rubrics.filter((r) => r.performance === p).map((r) => r.column);
+    return ["SIRA NO", "\xD6\u011ER. NO", "\xD6\u011ERENC\u0130N\u0130N ADI VE SOYADI", ...of(1), "1. Performans Puan\u0131", ...of(2), "2. Performans Puan\u0131"];
+  };
+  function summaryGeometry(names, f = 1, headers = summaryHeaders(DEFAULT_LEVEL)) {
     const W = PAGE.width, nameWidth = Math.min(320, Math.max(210, ...names.flat().map((l) => textWidth(l, 8 * f) + 16)));
     const number = (W - 36 - 56 - nameWidth) / 9, widths = [36, 56, nameWidth, ...Array(9).fill(number)];
-    const header = Math.max(...SUMMARY_HEADERS.map((h, i) => blockHeight(h, widths[i], 7.5 * f, true)));
+    const header = Math.max(...headers.map((h, i) => blockHeight(h, widths[i], 7.5 * f, true)));
     const rowHeight = (lines) => Math.ceil(lines * px(8 * f) * 1.15 + 4);
     return { widths, header, rowHeight };
   }
   var summaryLines = (names) => Math.max(1, ...names.map((l) => l.length));
-  function summaryPerPage(names, f = 1) {
-    const { header, rowHeight } = summaryGeometry(names, f), title = Math.ceil(3 * lineHeight(10) + 12), foot = footerHeight(f);
+  function summaryPerPage(names, f = 1, headers) {
+    const { header, rowHeight } = summaryGeometry(names, f, headers), title = Math.ceil(3 * lineHeight(10) + 12), foot = footerHeight(f);
     return Math.max(1, Math.floor((PAGE.height - title - header - foot) / rowHeight(summaryLines(names))));
   }
+  var SHARE = {
+    roundedQuarter: (at) => `ROUND('${at.sheet}'!${at.ref}*25/100,0)`,
+    quarter: (at) => `'${at.sheet}'!${at.ref}*25/100`,
+    average: (at, r) => `ROUND('${at.sheet}'!${at.ref}/${r.max}*100,0)`,
+    weighted: (at, r) => `ROUND('${at.sheet}'!${at.ref}/${r.max}*100,0)`
+  };
+  function performanceTotal(formula, rubrics, cols, row) {
+    if (formula === "average") return `AVERAGE(${ref(cols[0], row)}:${ref(cols.at(-1), row)})`;
+    if (formula === "weighted") return rubrics.map((r, j) => `${ref(cols[j], row)}*${r.weight}/100`).join("+");
+    return `SUM(${ref(cols[0], row)}:${ref(cols.at(-1), row)})`;
+  }
   function summaryPage(rows, meta, pageNo, pages, name, locate, twoLines, f, lines) {
-    const names = rows.map((r) => twoLines ? nameLines(r.student.name) : [r.student.name.trim()]), { widths, header, rowHeight } = summaryGeometry(names, f);
+    const level2 = levelOf(meta.level), headers = summaryHeaders(level2.level);
+    const names = rows.map((r) => twoLines ? nameLines(r.student.name) : [r.student.name.trim()]), { widths, header, rowHeight } = summaryGeometry(names, f, headers);
     const m = sheet(name, SUMMARY_INDEX, { page: pageNo }), last = widths.length;
     const title = `${meta.year} E\u011E\u0130T\u0130M \xD6\u011ERET\u0130M YILI ${meta.school}
 ${meta.className} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130
 1. D\xD6NEM 1. VE 2. PERFORMANS PUANLARI${pages > 1 ? ` (${pageNo}/${pages})` : ""}`;
     m.put(1, 1, title, { fontSize: 10, bold: true, align: "center" });
     m.merges.push(`A1:${ref(last, 1)}`);
-    SUMMARY_HEADERS.forEach((h, i) => m.put(1 + i, 2, h, { fontSize: 7.5 * f, bold: true, align: "center", fill: HEAD_FILL, borders: thin }));
+    headers.forEach((h, i) => m.put(1 + i, 2, h, { fontSize: 7.5 * f, bold: true, align: "center", fill: HEAD_FILL, borders: thin }));
     const heights = [Math.ceil(3 * lineHeight(10) + 12), header];
     rows.forEach((record, k) => {
       const row = 3 + k, r = record.results, cell = { fontSize: 8 * f, align: "center", borders: thin, wrap: false };
       m.put(1, row, record.number, cell);
       m.put(2, row, record.student.no, cell);
       m.put(3, row, names[k].join("\n"), { ...cell, align: "left", wrap: names[k].length > 1 });
-      RUBRICS.filter((x) => x.performance === 1).forEach((rubric, j) => {
-        const at = locate(rubric.id, record.index), value = r?.[0]?.contributions[j];
-        m.put(4 + j, row, value, cell, { formula: value == null ? null : `ROUND('${at.sheet}'!${at.ref}*25/100,0)` });
-      });
-      m.put(8, row, r?.[0]?.result, { ...cell, bold: true, fill: RESULT_FILL }, { formula: r?.[0] ? `SUM(D${row}:G${row})` : null });
-      RUBRICS.filter((x) => x.performance === 2).forEach((rubric, j) => {
-        const at = locate(rubric.id, record.index), value = r?.[1]?.normalized[j];
-        m.put(9 + j, row, value, cell, { formula: value == null ? null : `ROUND('${at.sheet}'!${at.ref}/${rubric.max}*100,0)` });
-      });
-      m.put(12, row, r?.[1]?.result, { ...cell, bold: true, fill: RESULT_FILL }, { formula: r?.[1] ? `I${row}*33/100+J${row}*33/100+K${row}*34/100` : null, numberFormat: "0" });
+      let col = 4;
+      for (const p of [1, 2]) {
+        const { formula, column } = level2.performances[p], rubrics = level2.rubrics.filter((x) => x.performance === p), result = r?.[p - 1], cols = rubrics.map((_, j) => col + j);
+        rubrics.forEach((rubric, j) => {
+          const at = locate(rubric.id, record.index), value = result?.[column][j];
+          m.put(cols[j], row, value, cell, { formula: value == null ? null : SHARE[formula](at, rubric) });
+        });
+        col += rubrics.length;
+        m.put(col, row, result?.result, { ...cell, bold: true, fill: RESULT_FILL }, { formula: result ? performanceTotal(formula, rubrics, cols, row) : null, ...formula === "roundedQuarter" ? {} : { numberFormat: "0" } });
+        col++;
+      }
       heights.push(rowHeight(lines));
     });
     footer(m, widths, heights, 3 + rows.length, "", meta, f);
@@ -1550,13 +4088,14 @@ ${meta.className} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130
   }
   function reportModels(state, evaluations2, { target = "print" } = {}) {
     metric = METRICS[target] || METRICS.print;
-    const meta = { ...state.meta, className: (state.meta.className || "").trim() || "\u2026\u2026", school: state.meta.school || "\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 ANADOLU L\u0130SES\u0130", teacher: state.meta.teacher || "\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026", date: dateText(state.meta.date) };
+    const level2 = levelOf(state.level);
+    const meta = { ...state.meta, level: level2.level, className: (state.meta.className || "").trim() || "\u2026\u2026", school: state.meta.school || "\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 ANADOLU L\u0130SES\u0130", teacher: state.meta.teacher || "\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026", date: dateText(state.meta.date) };
     const records = state.students.map((student, i) => ({ student, results: evaluations2[i].map((e2) => e2.data) })).filter((r) => r.student.name.trim()).map((r, index) => ({ ...r, index, number: index + 1 }));
     if (!records.length) return [];
     const names = records.map((r) => nameLines(r.student.name));
     const scalePages = balanced(records, studentsPerPage(names));
     const located = /* @__PURE__ */ new Map(), scales = [];
-    for (const r of RUBRICS) {
+    for (const r of level2.rubrics) {
       const p = r.performance;
       scalePages.forEach((page, g) => {
         const name = sheetName(r.name, g + 1, scalePages.length);
@@ -1565,11 +4104,11 @@ ${meta.className} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130
         scales.push(model);
       });
     }
-    const single = records.map((r) => [r.student.name.trim()]), N = records.length;
+    const single = records.map((r) => [r.student.name.trim()]), N = records.length, headers = summaryHeaders(level2.level);
     const options = [1, 0.95, 0.9, 0.85, 0.8].flatMap((f) => [{ twoLines: true, f }, { twoLines: false, f }]);
-    const choice = options.find((o) => summaryPerPage(o.twoLines ? names : single, o.f) >= N) || { twoLines: false, f: 1 };
+    const choice = options.find((o) => summaryPerPage(o.twoLines ? names : single, o.f, headers) >= N) || { twoLines: false, f: 1 };
     const listed = choice.twoLines ? names : single, lines = summaryLines(listed);
-    const summaryPages = balanced(records, summaryPerPage(listed, choice.f));
+    const summaryPages = balanced(records, summaryPerPage(listed, choice.f, headers));
     const summaries = summaryPages.map((rows, g) => summaryPage(rows, meta, g + 1, summaryPages.length, summaryPages.length > 1 ? `1. D\xD6NEM PERF. PUANLARI (${g + 1})` : SUMMARY_NAME, (id, index) => located.get(`${id}:${index}`), choice.twoLines, choice.f, lines));
     return [...summaries, ...scales];
   }
@@ -1716,15 +4255,19 @@ ${meta.className} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130
     for (const [k, v] of Object.entries({ sheet: 1, objects: 1, scenarios: 1, formatCells: 0, formatColumns: 0, formatRows: 0 })) protection.setAttribute(k, v);
     (child("sheetCalcPr") || child("sheetData")).after(protection);
     if (!model.validations?.length) return;
-    const groups = new Map(model.validations.map((v) => [v.points, [v.sqref]]));
     const list = doc.createElementNS(NS, "dataValidations");
-    list.setAttribute("count", groups.size);
-    for (const [points, ranges] of groups) {
-      const v = doc.createElementNS(NS, "dataValidation");
-      for (const [k, value] of Object.entries({ type: "list", allowBlank: 1, showInputMessage: 1, showErrorMessage: 1, errorStyle: "stop", errorTitle: "Ge\xE7ersiz puan", error: `Bu kriter i\xE7in yaln\u0131zca ${points.replaceAll(",", ", ")} girilebilir.`, sqref: ranges.join(" ") })) v.setAttribute(k, value);
-      const f = doc.createElementNS(NS, "formula1");
-      f.textContent = `"${points}"`;
-      v.appendChild(f);
+    list.setAttribute("count", model.validations.length);
+    for (const rule of model.validations) {
+      const range = rule.points === void 0, v = doc.createElementNS(NS, "dataValidation");
+      const kind = range ? { type: "whole", operator: "between" } : { type: "list" };
+      const error = range ? `Bu kriter i\xE7in yaln\u0131zca ${rule.min}\u2013${rule.max} aras\u0131 tam say\u0131 girilebilir.` : `Bu kriter i\xE7in yaln\u0131zca ${rule.points.replaceAll(",", ", ")} girilebilir.`;
+      for (const [k, value] of Object.entries({ ...kind, allowBlank: 1, showInputMessage: 1, showErrorMessage: 1, errorStyle: "stop", errorTitle: "Ge\xE7ersiz puan", error, sqref: rule.sqref })) v.setAttribute(k, value);
+      const formulas = range ? [rule.min, rule.max] : [`"${rule.points}"`];
+      formulas.forEach((text2, i) => {
+        const f = doc.createElementNS(NS, `formula${i + 1}`);
+        f.textContent = text2;
+        v.appendChild(f);
+      });
       list.appendChild(v);
     }
     const before = ["hyperlinks", "printOptions", "pageMargins", "pageSetup", "headerFooter"].map(child).find(Boolean);
@@ -1953,11 +4496,13 @@ ${meta.className} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130
     return zip.generateAsync({ type: "blob", compression: "DEFLATE", mimeType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
   }
   var SCORE_SHEETS = { speak1: ["1. Tema Konu\u015Fma", 6], speak2: ["2. Tema Konu\u015Fma", 6], write1: ["1. Tema Yazma", 6], write2: ["2. Tema Yazma", 6], book1: ["1. Tema Kitap Okuma", 4], book2: ["2. Tema Kitap Okuma", 4], observe: ["Ders \u0130\xE7i G\xF6zlem", 4] };
+  var scoreSheet = (r) => r.source ? [r.source.sheet, r.source.col] : SCORE_SHEETS[r.id];
+  var sameName = (a, b) => String(a).trim().toLocaleLowerCase("tr-TR") === String(b).trim().toLocaleLowerCase("tr-TR");
   var position = (ref2) => {
     const m = ref2?.match(/^([A-Z]+)(\d+)$/);
     return m ? [[...m[1]].reduce((n, l) => n * 26 + l.charCodeAt(0) - 64, 0), Number(m[2])] : null;
   };
-  async function importWorkbook(file, { withScores = false } = {}) {
+  async function importWorkbook(file, { withScores = false, level: level2 = DEFAULT_LEVEL } = {}) {
     if (file.size > 10 * 1024 * 1024) throw new Error("Excel dosyas\u0131 10 MB s\u0131n\u0131r\u0131n\u0131 a\u015F\u0131yor.");
     const zip = await window.JSZip.loadAsync(file);
     const read = async (path) => {
@@ -1978,13 +4523,13 @@ ${meta.className} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130
         const list = studentsFromRows(rows2), saved = [...props.getElementsByTagNameNS("*", "property")].find((p) => p.getAttribute("name") === "OlcekScores");
         const manual = saved ? JSON.parse(saved.textContent) : [];
         if (Array.isArray(manual) && manual.length === list.length) list.forEach((s, i) => {
-          for (const p of [1, 2]) if (validShape(manual[i]?.[p - 1], p)) s[`manual${p}`] = manual[i][p - 1];
+          for (const p of [1, 2]) if (validShape(manual[i]?.[p - 1], p, level2)) s[`manual${p}`] = manual[i][p - 1];
         });
         return list;
       }
     }
-    const texts = (el) => [...el.getElementsByTagName("t")].map((n) => n.textContent).join("");
-    const strings = zip.file("xl/sharedStrings.xml") ? [...(await read("xl/sharedStrings.xml")).getElementsByTagName("si")].map(texts) : [];
+    const texts2 = (el) => [...el.getElementsByTagName("t")].map((n) => n.textContent).join("");
+    const strings = zip.file("xl/sharedStrings.xml") ? [...(await read("xl/sharedStrings.xml")).getElementsByTagName("si")].map(texts2) : [];
     const workbook = await read("xl/workbook.xml"), rels = await read("xl/_rels/workbook.xml.rels");
     const sheets = [...workbook.getElementsByTagName("sheet")];
     const sheetCells = async (sheet3) => {
@@ -1996,7 +4541,7 @@ ${meta.className} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130
         const at = position(c.getAttribute("r"));
         if (!at || at[0] > 101) continue;
         const value = c.getElementsByTagName("v")[0]?.textContent || "";
-        cells2.set(`${at[0]},${at[1]}`, c.getAttribute("t") === "s" ? strings[Number(value)] || "" : c.getAttribute("t") === "inlineStr" ? texts(c) : value);
+        cells2.set(`${at[0]},${at[1]}`, c.getAttribute("t") === "s" ? strings[Number(value)] || "" : c.getAttribute("t") === "inlineStr" ? texts2(c) : value);
       }
       return cells2;
     };
@@ -2012,9 +4557,9 @@ ${meta.className} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130
     if (!withScores || chosen.getAttribute("name") !== "\xD6\u011Frenci Bilgileri") return students2;
     const rosterRows = rows.map((r, i) => ({ name: String(r[3] ?? "").trim(), row: i + 1 })).filter((r) => r.row >= 4 && r.name);
     const scale = {};
-    for (const [id, [name]] of Object.entries(SCORE_SHEETS)) {
-      const sheet3 = sheets.find((s) => s.getAttribute("name") === name);
-      if (sheet3) scale[id] = await sheetCells(sheet3);
+    for (const r of [...rubricsFor(1, level2), ...rubricsFor(2, level2)]) {
+      const sheet3 = sheets.find((s) => sameName(s.getAttribute("name"), scoreSheet(r)[0]));
+      if (sheet3) scale[r.id] = await sheetCells(sheet3);
     }
     return students2.map((student) => {
       const roster = rosterRows.find((r) => r.name === student.name);
@@ -2022,13 +4567,13 @@ ${meta.className} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130
       const offset = roster.row - 4, result = { ...student };
       for (const p of [1, 2]) {
         const scores = {};
-        for (const r of RUBRICS.filter((r2) => r2.performance === p)) {
-          const col = SCORE_SHEETS[r.id][1] + offset, sheet3 = scale[r.id];
+        for (const r of rubricsFor(p, level2)) {
+          const col = scoreSheet(r)[1] + offset, sheet3 = scale[r.id];
           scores[r.id] = r.criteria.map((c) => sheet3 ? Number(sheet3.get(`${col},${c.sourceRow}`)) : NaN);
         }
-        if (validScores(scores, p)) {
+        if (validScores(scores, p, level2)) {
           result[`manual${p}`] = scores;
-          result[`p${p}`] = format(calculate(scores, p).result);
+          result[`p${p}`] = format(calculate(scores, p, level2).result);
         }
       }
       return result;
@@ -2051,24 +4596,23 @@ ${meta.className} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130
     return d.getMonth() >= 7 ? `${y}\u2013${y + 1}` : `${y - 1}\u2013${y}`;
   };
   var blankStudent = () => ({ id: uid(), no: "", name: "", p1: "", p2: "" });
-  var newClass = (name = "") => ({ id: uid(), name, book1: "", book2: "", students: [] });
+  var newClass = (name = "", level2 = DEFAULT_LEVEL) => ({ id: uid(), name, level: level2, book1: "", book2: "", students: [] });
   var isBlank = (s) => ![s.no, s.name, s.p1, s.p2].some((v) => String(v).trim()) && !s.manual1 && !s.manual2;
   var FIELDS = ["no", "name", "p1", "p2"];
-  var WEIGHT = { book1: 33, book2: 33, observe: 34 };
   var text = (v, max, fallback = "") => typeof v === "string" && v.length <= max ? v : fallback;
-  function cleanStudent(s) {
+  function cleanStudent(s, level2) {
     if (!s || FIELDS.some((k) => typeof s[k] !== "string")) throw new Error("Yedekteki \xF6\u011Frenci alanlar\u0131 ge\xE7ersiz.");
     if (s.no.length > 30 || s.name.length > 150 || s.p1.length > 6 || s.p2.length > 6) throw new Error("Yedekteki \xF6\u011Frenci alanlar\u0131 \xE7ok uzun.");
     const student = { id: text(s.id, 100) || uid(), no: s.no, name: s.name, p1: s.p1, p2: s.p2 };
     for (const p of [1, 2]) {
       if (typeof s[`accepted${p}`] === "number") student[`accepted${p}`] = s[`accepted${p}`];
-      if (validShape(s[`manual${p}`], p)) student[`manual${p}`] = Object.fromEntries(rubricsFor(p).map((r) => [r.id, [...s[`manual${p}`][r.id]]]));
+      if (validShape(s[`manual${p}`], p, level2)) student[`manual${p}`] = Object.fromEntries(rubricsFor(p, level2).map((r) => [r.id, [...s[`manual${p}`][r.id]]]));
     }
     return student;
   }
-  function cleanStudents(list) {
+  function cleanStudents(list, level2) {
     if (!Array.isArray(list) || list.length > MAX_STUDENTS) throw new Error("Yedekteki \xF6\u011Frenci listesi ge\xE7ersiz.");
-    const students2 = list.map(cleanStudent).filter((s) => !isBlank(s));
+    const students2 = list.map((s) => cleanStudent(s, level2)).filter((s) => !isBlank(s));
     if (new Set(students2.map((s) => s.id)).size !== students2.length) throw new Error("Yedekte yinelenen \xF6\u011Frenci kay\u0131tlar\u0131 var.");
     return students2;
   }
@@ -2076,11 +4620,14 @@ ${meta.className} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130
   function parseWorkspace(saved) {
     if (saved?.version === 1 && saved.meta && Array.isArray(saved.students)) {
       const m = saved.meta, c = newClass(text(m.className, 40));
-      Object.assign(c, { book1: text(m.book1, 200), book2: text(m.book2, 200), students: cleanStudents(saved.students) });
+      Object.assign(c, { book1: text(m.book1, 200), book2: text(m.book2, 200), students: cleanStudents(saved.students, DEFAULT_LEVEL) });
       return { version: 2, profile: cleanProfile(m), activeId: c.id, classes: [c] };
     }
     if (saved?.version !== 2 || !Array.isArray(saved.classes) || !saved.classes.length || saved.classes.length > MAX_CLASSES) throw new Error("Bu dosya ge\xE7erli bir \xD6l\xE7ek yede\u011Fi de\u011Fil.");
-    const classes = saved.classes.map((c) => ({ id: text(c?.id, 100) || uid(), name: text(c?.name, 40), book1: text(c?.book1, 200), book2: text(c?.book2, 200), students: cleanStudents(c?.students) }));
+    const classes = saved.classes.map((c) => {
+      const level2 = isLevel(c?.level) ? Number(c.level) : DEFAULT_LEVEL;
+      return { id: text(c?.id, 100) || uid(), name: text(c?.name, 40), level: level2, book1: text(c?.book1, 200), book2: text(c?.book2, 200), students: cleanStudents(c?.students, level2) };
+    });
     if (new Set(classes.map((c) => c.id)).size !== classes.length) throw new Error("Yedekte yinelenen s\u0131n\u0131f kay\u0131tlar\u0131 var.");
     return { version: 2, profile: cleanProfile(saved.profile || {}), activeId: classes.some((c) => c.id === saved.activeId) ? saved.activeId : classes[0].id, classes };
   }
@@ -2104,15 +4651,23 @@ ${meta.className} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130
   var cls = () => ws.classes.find((c) => c.id === ws.activeId) || ws.classes[0];
   var classLabel = (c = cls()) => c.name.trim() || (ws.classes.filter((x) => !x.name.trim()).length > 1 ? `Ads\u0131z s\u0131n\u0131f ${ws.classes.indexOf(c) + 1}` : "S\u0131n\u0131f ad\u0131 girilmedi");
   var students = () => cls().students;
+  var lvl = () => cls().level;
+  var level = () => levelOf(lvl());
+  var rubricsFor2 = (p) => rubricsFor(p, lvl());
+  var emptyScores2 = (p) => emptyScores(p, lvl());
+  var evaluateStudent2 = (s) => evaluateStudent(s, lvl());
+  var gradeStatus2 = (s, entry, p) => gradeStatus(s, entry, p, lvl());
+  var partOf = (d, p, j) => format(d[level().performances[p].column][j]);
+  var partHead = (r) => level().performances[r.performance].column === "contributions" ? `Katk\u0131<small>%${r.weight}</small>` : `100\u2019l\xFCk<small>%${r.weight}</small>`;
   var reportState = () => {
     const c = cls();
-    return { meta: { ...ws.profile, className: c.name.trim(), book1: c.book1, book2: c.book2 }, students: c.students, policy: "rounded" };
+    return { meta: { ...ws.profile, className: c.name.trim(), book1: c.book1, book2: c.book2 }, level: c.level, students: c.students, policy: "rounded" };
   };
   var evaluateAll = () => {
-    evaluations = students().map(evaluateStudent);
+    evaluations = students().map(evaluateStudent2);
   };
   var indexOf = (id) => students().findIndex((s) => s.id === id);
-  var rubricById = (id) => RUBRICS.find((r) => r.id === id);
+  var rubricById = (id) => level().rubrics.find((r) => r.id === id);
   var body = $("sheet-body");
   var hasWork = () => ws.classes.some((c) => c.students.some((s) => !isBlank(s)));
   function save() {
@@ -2146,7 +4701,7 @@ ${meta.className} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130
   };
   var undoable = (message, restore) => toast(message, { label: "Geri al", run: restore });
   function statusHTML(s, entry, p) {
-    const st = gradeStatus(s, entry, p);
+    const st = gradeStatus2(s, entry, p);
     switch (st.kind) {
       case "error":
         return `<span class="chip bad" title="${esc(st.message)}">Ge\xE7ersiz not</span>`;
@@ -2161,7 +4716,7 @@ ${meta.className} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130
       case "accepted":
         return `<span class="chip soft" title="Girilen ${format(st.target)}; Excel sonucu ${format(st.result)} onayland\u0131">Excel ${format(st.result)} \u2713</span>`;
       case "pending":
-        return `<button class="chip warn" data-accept="${p}" title="${esc(st.belowMin ? `\xD6l\xE7eklerle en d\xFC\u015F\xFCk ${st.min} \xFCretilebilir. G\xF6revi yapmayan \xF6\u011Frencinin notunu bo\u015F b\u0131rak\u0131n.` : `Girilen ${format(st.target)} tam \xFCretilemiyor.`)} Onaylamak i\xE7in t\u0131klay\u0131n.">Excel ${format(st.result)} \xB7 Onayla</button>`;
+        return `<button class="chip warn" data-accept="${p}" title="${esc(st.belowMin ? `\xD6l\xE7eklerle en d\xFC\u015F\xFCk ${format(st.min)} \xFCretilebilir. G\xF6revi yapmayan \xF6\u011Frencinin notunu bo\u015F b\u0131rak\u0131n.` : `Girilen ${format(st.target)} tam \xFCretilemiyor.`)} Onaylamak i\xE7in t\u0131klay\u0131n.">Excel ${format(st.result)} \xB7 Onayla</button>`;
       default:
         return "";
     }
@@ -2172,9 +4727,9 @@ ${meta.className} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130
     const issues = issueList(), p = ws.profile;
     const listed = students().map((s, i) => [s, i]).filter(([s]) => !isBlank(s));
     const missing = [!cls().name.trim() && "s\u0131n\u0131f ad\u0131", !p.school.trim() && "okul ad\u0131", !p.teacher.trim() && "\xF6\u011Fretmen ad\u0131"].filter(Boolean);
-    const graded = listed.filter(([s, i]) => [1, 2].some((q) => evaluations[i]?.[q - 1]?.data) && ![1, 2].some((q) => needsWork(gradeStatus(s, evaluations[i][q - 1], q).kind))).length;
+    const graded = listed.filter(([s, i]) => [1, 2].some((q) => evaluations[i]?.[q - 1]?.data) && ![1, 2].some((q) => needsWork(gradeStatus2(s, evaluations[i][q - 1], q).kind))).length;
     const info = [
-      { text: missing.length ? `Eksik: ${missing.join(", ")}` : `${cls().name.trim()} \xB7 ${p.school}`, state: missing.length ? "todo" : "done" },
+      { text: missing.length ? `Eksik: ${missing.join(", ")}` : `${level().name} \xB7 ${cls().name.trim()} \xB7 ${p.school}`, state: missing.length ? "todo" : "done" },
       { text: listed.length ? `${listed.length} \xF6\u011Frenci` : "Liste bo\u015F", state: listed.length ? "done" : "todo" },
       { text: !listed.length ? "\xD6nce \xF6\u011Frenci ekleyin" : issues.length ? `${issues.length} not kontrol bekliyor` : graded ? `${graded} \xF6\u011Frenci haz\u0131r` : "Notlar\u0131 girin", state: !listed.length ? "idle" : issues.length ? "warn" : graded ? "done" : "todo" },
       { text: !graded ? "Notlardan sonra" : issues.length ? "\xD6nce uyar\u0131lar\u0131 giderin" : "Haz\u0131r", state: graded && !issues.length ? "done" : "idle" }
@@ -2208,7 +4763,7 @@ ${meta.className} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130
   function renderPicks() {
     for (const p of [1, 2]) {
       const select = $(`pick-p${p}`), current = rubricById(sheet2);
-      select.innerHTML = `<option value="">${p}. performans \xE7izelgesi se\xE7in</option>` + rubricsFor(p).map((r) => `<option value="${r.id}">${esc(r.name)} \xB7 ${r.criteria.length} kriter</option>`).join("");
+      select.innerHTML = `<option value="">${p}. performans \xE7izelgesi se\xE7in</option>` + rubricsFor2(p).map((r) => `<option value="${r.id}">${esc(r.name)} \xB7 ${r.criteria.length} kriter</option>`).join("");
       select.value = current?.performance === p ? current.id : "";
       select.closest(".pick").classList.toggle("active", current?.performance === p);
     }
@@ -2230,9 +4785,10 @@ ${meta.className} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130
       $("sheet-desc").textContent = "Her \xF6\u011Frencinin 1. ve 2. performans notunu yaz\u0131n. Sat\u0131rdaki \u201C\xD6l\xE7ekler\u201D ba\u011Flant\u0131s\u0131 \xF6\u011Frencinin b\xFCt\xFCn kriterlerini a\xE7ar.";
       renderGrades();
     } else {
-      const part = r.performance === 1 ? "1. performans\u0131n %25\u2019i" : `2. performans\u0131n %${WEIGHT[r.id]}\u2019\xFC (100\u2019l\xFCk kar\u015F\u0131l\u0131\u011F\u0131)`;
+      const share2 = `%${r.weight}\u2019${r.weight === 25 ? "i" : "\xFC"}`, scaled2 = level().performances[r.performance].column === "normalized";
+      const part = `${r.performance}. performans\u0131n ${share2}${scaled2 ? " (100\u2019l\xFCk kar\u015F\u0131l\u0131\u011F\u0131)" : ""}`;
       $("sheet-title").textContent = `${classLabel()} \xB7 ${r.name}`;
-      $("sheet-desc").textContent = `${r.criteria.length} kriter \xB7 ge\xE7erli puanlar ${[...new Set(r.criteria.map((c) => c.points.join("\xB7")))].join(" / ")} \xB7 toplam ${r.min}\u2013${r.max} \xB7 ${part}. Gri puanlar nottan otomatik da\u011F\u0131t\u0131ld\u0131; bir puan\u0131 de\u011Fi\u015Ftirdi\u011Finizde not kriterlerden hesaplan\u0131r.`;
+      $("sheet-desc").textContent = `${r.criteria.length} kriter \xB7 ge\xE7erli puanlar ${[...new Set(r.criteria.map((c) => pointsText(c)))].join(" / ")} \xB7 toplam ${r.min}\u2013${r.max} \xB7 ${part}. Gri puanlar nottan otomatik da\u011F\u0131t\u0131ld\u0131; bir puan\u0131 de\u011Fi\u015Ftirdi\u011Finizde not kriterlerden hesaplan\u0131r.`;
       renderRubric(r);
     }
     renderFoot();
@@ -2241,7 +4797,7 @@ ${meta.className} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130
     const avg = (p) => {
       const v = [];
       students().forEach((s, i) => {
-        const st = gradeStatus(s, evaluations[i][p - 1], p);
+        const st = gradeStatus2(s, evaluations[i][p - 1], p);
         if (s.name.trim() && st.result !== void 0 && !needsWork(st.kind)) v.push(displayed(st.result));
       });
       return v.length ? format(Math.round(v.reduce((a, b) => a + b, 0) / v.length * 10) / 10) : "\u2014";
@@ -2266,7 +4822,7 @@ ${meta.className} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130
     const s = students()[i], row = rowOf("rows", s);
     if (!row) return;
     for (const p of [1, 2]) {
-      const input = row.querySelector(`[data-field="p${p}"]`), st = gradeStatus(s, evaluations[i][p - 1], p);
+      const input = row.querySelector(`[data-field="p${p}"]`), st = gradeStatus2(s, evaluations[i][p - 1], p);
       if (document.activeElement !== input && input.value !== s[`p${p}`]) input.value = s[`p${p}`];
       input.setAttribute("aria-invalid", st.kind === "error");
       input.classList.toggle("manual", st.kind === "manual" || st.kind === "incomplete");
@@ -2288,7 +4844,7 @@ ${meta.className} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130
     });
   }
   function renderClassSelect() {
-    $("class-select").innerHTML = ws.classes.map((c) => `<option value="${esc(c.id)}">${esc(classLabel(c))} \xB7 ${c.students.filter((s) => s.name.trim()).length} \xF6\u011Frenci</option>`).join("");
+    $("class-select").innerHTML = ws.classes.map((c) => `<option value="${esc(c.id)}">${esc(classLabel(c))} \xB7 ${levelOf(c.level).name} \xB7 ${c.students.filter((s) => s.name.trim()).length} \xF6\u011Frenci</option>`).join("");
     $("class-select").value = cls().id;
     $("class-picker").hidden = ws.classes.length < 2;
     $("delete-class").hidden = ws.classes.length < 2;
@@ -2311,7 +4867,7 @@ ${meta.className} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130
     }
   }
   function changed(i) {
-    evaluations[i] = evaluateStudent(students()[i]);
+    evaluations[i] = evaluateStudent2(students()[i]);
     if (rubricById(sheet2)) updateRubricRow(i);
     else updateRow(i);
     renderSteps();
@@ -2344,7 +4900,7 @@ ${meta.className} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130
     const s = students()[i];
     s[`manual${p}`] = scores;
     delete s[`accepted${p}`];
-    const entry = evaluateStudent(s)[p - 1];
+    const entry = evaluateStudent2(s)[p - 1];
     s[`p${p}`] = entry.data ? format(entry.data.result) : "";
     changed(i);
   }
@@ -2498,17 +5054,17 @@ ${meta.className} SINIFI T\xDCRK D\u0130L\u0130 VE EDEB\u0130YATI DERS\u0130
     }
     const p = r.performance;
     const heads = r.criteria.map((c, k) => {
-      const sub = c.descriptions.length ? c.descriptions.at(-1).replace(/\(?\s*\d+\s*puan\s*\)?\.?\s*$/i, "").trim() : "";
+      const sub = c.note || (c.descriptions.length ? stripPoints(c.descriptions.at(-1)) : "");
       return `<th class="crit" title="${esc(`K${k + 1}. ${c.label}${sub ? ` \u2014 ${sub}` : ""}
-Ge\xE7erli puanlar: ${c.points.join(", ")}`)}"><b>K${k + 1}</b><span>${esc(c.label)}</span><small>${c.points.join("\xB7")}</small></th>`;
+Ge\xE7erli puanlar: ${pointsText(c, ", ")}`)}"><b>K${k + 1}</b><span>${esc(c.label)}</span><small>${pointsText(c)}</small></th>`;
     }).join("");
-    body.innerHTML = `<div class="rubric-scroll"><table class="grid rubric-grid p${p}"><thead><tr><th class="c-idx">#</th><th class="c-student">\xD6\u011Frenci</th>${heads}<th class="c-sum">Toplam<small>${r.min}\u2013${r.max}</small></th><th class="c-sum">${p === 1 ? "Katk\u0131<small>%25</small>" : `100\u2019l\xFCk<small>%${WEIGHT[r.id]}</small>`}</th><th class="c-perf">${p}. Performans</th><th class="c-act"></th></tr></thead><tbody id="rubric-rows">${list.map(([s, i]) => `<tr data-id="${esc(s.id)}"><td class="c-idx">${i + 1}</td><td class="c-student"><b>${esc(s.name || "Ads\u0131z")}</b><small>${esc(s.no)}</small></td>${r.criteria.map((c, k) => `<td class="sc"><input data-k="${k}" data-field="k${k}" inputmode="numeric" maxlength="2" autocomplete="off" aria-label="${esc(`${s.name} K${k + 1} ${c.label}`)}"></td>`).join("")}<td class="c-sum" data-total></td><td class="c-sum" data-part></td><td class="c-perf" data-perf></td><td class="c-act" data-act></td></tr>`).join("")}</tbody></table></div>`;
+    body.innerHTML = `<div class="rubric-scroll"><table class="grid rubric-grid p${p}"><thead><tr><th class="c-idx">#</th><th class="c-student">\xD6\u011Frenci</th>${heads}<th class="c-sum">Toplam<small>${r.min}\u2013${r.max}</small></th><th class="c-sum">${partHead(r)}</th><th class="c-perf">${p}. Performans</th><th class="c-act"></th></tr></thead><tbody id="rubric-rows">${list.map(([s, i]) => `<tr data-id="${esc(s.id)}"><td class="c-idx">${i + 1}</td><td class="c-student"><b>${esc(s.name || "Ads\u0131z")}</b><small>${esc(s.no)}</small></td>${r.criteria.map((c, k) => `<td class="sc"><input data-k="${k}" data-field="k${k}" inputmode="numeric" maxlength="2" autocomplete="off" aria-label="${esc(`${s.name} K${k + 1} ${c.label}`)}"></td>`).join("")}<td class="c-sum" data-total></td><td class="c-sum" data-part></td><td class="c-perf" data-perf></td><td class="c-act" data-act></td></tr>`).join("")}</tbody></table></div>`;
     list.forEach(([, i]) => updateRubricRow(i, true));
   }
   function updateRubricRow(i, values = false) {
     const r = rubricById(sheet2), s = students()[i], row = r && rowOf("rubric-rows", s);
     if (!row) return;
-    const p = r.performance, j = rubricsFor(p).indexOf(r), { values: scores, manual } = rubricScores(s, i, r);
+    const p = r.performance, j = rubricsFor2(p).indexOf(r), { values: scores, manual } = rubricScores(s, i, r);
     row.querySelectorAll("[data-k]").forEach((input) => {
       const v = scores[Number(input.dataset.k)];
       if (values || document.activeElement !== input) {
@@ -2520,13 +5076,13 @@ Ge\xE7erli puanlar: ${c.points.join(", ")}`)}"><b>K${k + 1}</b><span>${esc(c.lab
     });
     const missing = scores.filter((v) => v === null).length, d = evaluations[i][p - 1].data;
     row.querySelector("[data-total]").innerHTML = missing ? `<span class="muted">${missing} bo\u015F</span>` : `<b>${scores.reduce((a, b) => a + b, 0)}</b>`;
-    row.querySelector("[data-part]").textContent = d ? p === 1 ? d.contributions[j] : d.normalized[j] : "\u2014";
+    row.querySelector("[data-part]").textContent = d ? partOf(d, p, j) : "\u2014";
     row.querySelector("[data-perf]").innerHTML = `${d ? `<b>${displayed(d.result)}</b>` : ""}${statusHTML(s, evaluations[i][p - 1], p)}`;
     row.querySelector("[data-act]").innerHTML = manual ? '<button class="btn icon subtle reset" data-reset title="Elle girilen kriterleri silip girilen nota g\xF6re otomatik da\u011F\u0131t" aria-label="Otomatik da\u011F\u0131l\u0131ma d\xF6n">\u21BA</button>' : "";
   }
   function setScore(i, r, k, value) {
     const s = students()[i], p = r.performance, d = evaluations[i][p - 1].data;
-    const scores = structuredClone(s[`manual${p}`] || d?.scores || emptyScores(p));
+    const scores = structuredClone(s[`manual${p}`] || d?.scores || emptyScores2(p));
     scores[r.id][k] = value;
     setManual(i, p, scores);
   }
@@ -2556,7 +5112,7 @@ Ge\xE7erli puanlar: ${c.points.join(", ")}`)}"><b>K${k + 1}</b><span>${esc(c.lab
       const row = rows[first + dr];
       if (!row) return;
       const i = indexOf(row.dataset.id), s = students()[i];
-      const scores = structuredClone(s[`manual${p}`] || evaluations[i][p - 1].data?.scores || emptyScores(p));
+      const scores = structuredClone(s[`manual${p}`] || evaluations[i][p - 1].data?.scores || emptyScores2(p));
       cells.forEach((v, dc) => {
         const k = k0 + dc;
         if (k >= n) return;
@@ -2569,27 +5125,31 @@ Ge\xE7erli puanlar: ${c.points.join(", ")}`)}"><b>K${k + 1}</b><span>${esc(c.lab
       });
       s[`manual${p}`] = scores;
       delete s[`accepted${p}`];
-      const entry = evaluateStudent(s)[p - 1];
+      const entry = evaluateStudent2(s)[p - 1];
       s[`p${p}`] = entry.data ? format(entry.data.result) : "";
     });
     renderAll();
     save();
     undoable(`${applied} puan yap\u0131\u015Ft\u0131r\u0131ld\u0131${rejected ? `, ${rejected} ge\xE7ersiz de\u011Fer atland\u0131` : ""}.`, restore);
   }
-  var PERF = { 1: ["1. Performans", "Konu\u015Fma ve yazma \xB7 her \xF6l\xE7ek %25"], 2: ["2. Performans", "Kitap okuma %33 + %33 \xB7 Ders i\xE7i g\xF6zlem %34"] };
-  var stripPoints = (d) => String(d || "").replace(/\(?\s*\d+\s*puan\s*\)?\s*\.?\s*$/i, "").trim();
+  var stripPoints = (d) => String(d || "").replace(/\(?\s*\d+(?:\s*-\s*\d+)?\s*puan\s*\)?\s*\.?\s*$/i, "").trim();
+  function levelControl(r, c, k, v) {
+    if (!c.ranges) return c.points.map((pt, m2) => `<button class="lvl${pt === v ? " on" : ""}" data-r="${r.id}" data-k="${k}" data-v="${pt}" aria-pressed="${pt === v}" title="${esc(r.levels[m2])}">${pt}</button>`).join("");
+    const m = v === null ? -1 : levelIndex(c, v);
+    return `<span class="lvl-level">${m < 0 ? esc(c.ranges.map(([a, b]) => `${a}\u2013${b}`).join(" \xB7 ")) : `${esc(r.levels[m])} (${c.ranges[m][0]}\u2013${c.ranges[m][1]})`}</span><input class="lvl-input" data-r="${r.id}" data-k="${k}" value="${v ?? ""}" inputmode="numeric" maxlength="2" autocomplete="off" aria-label="${esc(`${c.label}: ${pointsText(c)} aras\u0131 puan`)}">`;
+  }
   function perfSection(s, i, p) {
-    const entry = evaluations[i][p - 1], d = entry.data, [title, sub] = PERF[p];
+    const entry = evaluations[i][p - 1], d = entry.data, title = `${p}. Performans`, sub = level().performances[p].subtitle;
     const manual = s[`manual${p}`], scores = manual || d?.scores;
     const head = `<div class="perf-head p${p}"><div><h3>${title}</h3><p>${sub}</p></div>`;
     if (!scores) return `<section class="perf">${head}</div><div class="perf-empty">${entry.error ? `<p class="bad-text">${esc(entry.error)}</p>` : "<p>Not girilmedi.</p>"}<button class="btn" data-manual-start="${p}">Kriterleri do\u011Frudan puanla</button></div></section>`;
     const result = d ? `<b>${displayed(d.result)}</b>${displayed(d.result) !== d.result ? `<small>Excel hesab\u0131 ${format(d.result)}</small>` : ""}` : `<small class="warn-text">${entry.incomplete.count} kriter bo\u015F</small>`;
     const mode = manual ? `<span class="chip manual">\u270E Kriterlerden hesaplan\u0131yor</span><button class="btn link" data-auto="${p}">Otomatik da\u011F\u0131l\u0131ma d\xF6n</button>` : '<span class="chip">Girilen nota g\xF6re da\u011F\u0131t\u0131ld\u0131</span>';
-    const rubrics = rubricsFor(p).map((r, j) => {
+    const rubrics = rubricsFor2(p).map((r, j) => {
       const vals = scores[r.id], done = vals.every((v) => v !== null);
-      return `<details class="rubric" data-rubric="${r.id}"><summary><span class="r-name">${esc(r.name)}</span><span class="r-score">${done ? vals.reduce((a, b) => a + b, 0) : "\u2026"} <small>/ ${r.max}</small></span><span class="r-part">${d ? p === 1 ? `${d.contributions[j]} puan` : `${d.normalized[j]} / 100` : ""}</span></summary>${r.description ? `<p class="r-desc">${esc(r.description)}</p>` : ""}<ol class="criteria">${r.criteria.map((c, k) => {
-        const v = vals[k], desc = v === null ? "" : stripPoints(c.descriptions[c.points.indexOf(v)]);
-        return `<li class="${v === null ? "missing" : ""}"><div class="c-text"><b>${esc(c.label)}</b>${desc ? `<span>${esc(desc)}</span>` : v === null ? "<span>Puan verilmedi</span>" : ""}</div><div class="levels" role="group" aria-label="${esc(c.label)}">${c.points.map((pt, m) => `<button class="lvl${pt === v ? " on" : ""}" data-r="${r.id}" data-k="${k}" data-v="${pt}" aria-pressed="${pt === v}" title="${esc(r.levels[m])}">${pt}</button>`).join("")}</div></li>`;
+      return `<details class="rubric" data-rubric="${r.id}"><summary><span class="r-name">${esc(r.name)}</span><span class="r-score">${done ? vals.reduce((a, b) => a + b, 0) : "\u2026"} <small>/ ${r.max}</small></span><span class="r-part">${d ? level().performances[p].column === "contributions" ? `${partOf(d, p, j)} puan` : `${partOf(d, p, j)} / 100` : ""}</span></summary>${r.description ? `<p class="r-desc">${esc(r.description)}</p>` : ""}<ol class="criteria">${r.criteria.map((c, k) => {
+        const v = vals[k], desc = c.note || (v === null ? "" : stripPoints(c.descriptions[levelIndex(c, v)]));
+        return `<li class="${v === null ? "missing" : ""}"><div class="c-text"><b>${esc(c.label)}</b>${desc ? `<span>${esc(desc)}</span>` : ""}${v === null ? "<span>Puan verilmedi</span>" : ""}</div><div class="levels${c.ranges ? " ranged" : ""}" role="group" aria-label="${esc(c.label)}">${levelControl(r, c, k, v)}</div></li>`;
       }).join("")}</ol></details>`;
     }).join("");
     return `<section class="perf">${head}<div class="perf-result">${result}</div></div><div class="perf-mode">${mode}</div>${rubrics}</section>`;
@@ -2616,16 +5176,27 @@ Ge\xE7erli puanlar: ${c.points.join(", ")}`)}"><b>K${k + 1}</b><span>${esc(c.lab
     $("drawer-body").scrollTop = 0;
   }
   $("drawer-body").addEventListener("click", (event) => {
-    const i = drawerIndex, lvl = event.target.closest(".lvl");
-    if (lvl) return setScore(i, rubricById(lvl.dataset.r), Number(lvl.dataset.k), Number(lvl.dataset.v));
+    const i = drawerIndex, lvl2 = event.target.closest(".lvl");
+    if (lvl2) return setScore(i, rubricById(lvl2.dataset.r), Number(lvl2.dataset.k), Number(lvl2.dataset.v));
     const start = event.target.closest("[data-manual-start]");
     if (start) {
       const p = Number(start.dataset.manualStart);
-      setManual(i, p, emptyScores(p));
+      setManual(i, p, emptyScores2(p));
       return;
     }
     const auto = event.target.closest("[data-auto]");
     if (auto) clearManual(i, Number(auto.dataset.auto));
+  });
+  $("drawer-body").addEventListener("change", (event) => {
+    const input = event.target.closest(".lvl-input");
+    if (!input) return;
+    const r = rubricById(input.dataset.r), k = Number(input.dataset.k), { value, error } = criterionValue(r, k, input.value);
+    if (error) {
+      toast(`${r.criteria[k].label}: ${error}`);
+      renderDrawer();
+      return;
+    }
+    setScore(drawerIndex, r, k, value);
   });
   $("drawer-prev").onclick = () => openDrawer(Math.max(0, drawerIndex - 1));
   $("drawer-next").onclick = () => openDrawer(Math.min(students().length - 1, drawerIndex + 1));
@@ -2789,7 +5360,33 @@ Ge\xE7erli puanlar: ${c.points.join(", ")}`)}"><b>K${k + 1}</b><span>${esc(c.lab
       const input = $(`f-${id}`);
       if (document.activeElement !== input) input.value = (where === "class" ? cls() : ws.profile)[key];
     }
+    $("f-level").value = lvl();
   }
+  $("f-level").innerHTML = LEVEL_IDS.map((l) => `<option value="${l}">${LEVELS[l].name}</option>`).join("");
+  $("f-level").onchange = (event) => {
+    const c = cls(), before = { level: c.level, students: structuredClone(c.students) }, next = Number(event.target.value);
+    let scored = 0;
+    for (const s of c.students) {
+      if (s.manual1 || s.manual2) scored++;
+      for (const p of [1, 2]) {
+        delete s[`manual${p}`];
+        delete s[`accepted${p}`];
+      }
+    }
+    c.level = next;
+    sheet2 = "grades";
+    renderAll();
+    const restore = () => {
+      const k = ws.classes.find((x) => x.id === c.id);
+      if (!k) return;
+      Object.assign(k, before);
+      ws.activeId = k.id;
+      sheet2 = "grades";
+      renderAll();
+      fillInfo();
+    };
+    undoable(`${classLabel(c)}: ${levelOf(next).name} \xE7izelgeleri se\xE7ildi${scored ? `; ${scored} \xF6\u011Frencinin elle girilen kriter puanlar\u0131 kald\u0131r\u0131ld\u0131, notlar yeni \xF6l\xE7eklere da\u011F\u0131t\u0131ld\u0131` : ""}.`, restore);
+  };
   for (const [id, [where, key]] of Object.entries(INFO)) $(`f-${id}`).addEventListener("input", (event) => {
     const value = event.target.value;
     if (where === "class") cls()[key] = value;
@@ -2803,7 +5400,7 @@ Ge\xE7erli puanlar: ${c.points.join(", ")}`)}"><b>K${k + 1}</b><span>${esc(c.lab
     return name && ws.classes.some((c) => c.name === name) ? "" : name;
   }
   $("new-class").onclick = () => {
-    const c = newClass(nextClassName());
+    const c = newClass(nextClassName(), lvl());
     ws.classes.push(c);
     ws.activeId = c.id;
     sheet2 = "grades";
@@ -2850,7 +5447,7 @@ Ge\xE7erli puanlar: ${c.points.join(", ")}`)}"><b>K${k + 1}</b><span>${esc(c.lab
     $("import-error").textContent = "";
     try {
       if (file.size > 10 * 1024 * 1024) throw new Error("Dosya 10 MB s\u0131n\u0131r\u0131n\u0131 a\u015F\u0131yor.");
-      const list = /\.xlsx$/i.test(file.name) ? await importWorkbook(file, { withScores: $("import-scores").checked }) : studentsFromRows(parseDelimited(await file.text()));
+      const list = /\.xlsx$/i.test(file.name) ? await importWorkbook(file, { withScores: $("import-scores").checked, level: lvl() }) : studentsFromRows(parseDelimited(await file.text()));
       addImported(list, $("import-replace").checked);
     } catch (e2) {
       $("import-error").textContent = e2.message;
@@ -2903,7 +5500,13 @@ Ge\xE7erli puanlar: ${c.points.join(", ")}`)}"><b>K${k + 1}</b><span>${esc(c.lab
       event.target.value = "";
     }
   };
-  $("help").onclick = () => $("help-dialog").showModal();
+  $("help").onclick = () => {
+    for (const p of [1, 2]) {
+      $(`help-p${p}-title`).textContent = `${p}. Performans \xB7 ${level().name}`;
+      $(`help-p${p}`).innerHTML = level().performances[p].help;
+    }
+    $("help-dialog").showModal();
+  };
   for (const d of document.querySelectorAll("dialog.modal")) d.addEventListener("click", (event) => {
     if (event.target === d) d.close();
   });
@@ -2914,11 +5517,11 @@ Ge\xE7erli puanlar: ${c.points.join(", ")}`)}"><b>K${k + 1}</b><span>${esc(c.lab
       const who = s.name.trim() || `${i + 1}. sat\u0131r`;
       if (!s.name.trim()) items.push({ i, field: "name", text: `${i + 1}. sat\u0131rda \xF6\u011Frenci ad\u0131 eksik.` });
       for (const p of [1, 2]) {
-        const entry = evaluations[i][p - 1], st = gradeStatus(s, entry, p);
+        const entry = evaluations[i][p - 1], st = gradeStatus2(s, entry, p);
         if (st.kind === "error") items.push({ i, field: `p${p}`, text: `${who}: ${p}. performans notu ge\xE7ersiz.` });
         if (st.kind === "pending") items.push({ i, field: `p${p}`, text: `${who}: ${p}. performans i\xE7in ${format(st.target)} girildi, Excel ${format(st.result)} hesaplayacak. Onaylay\u0131n veya notu de\u011Fi\u015Ftirin.` });
         if (st.kind === "incomplete") {
-          const r = rubricsFor(p).find((r2) => entry.scores[r2.id].some((v) => v === null));
+          const r = rubricsFor2(p).find((r2) => entry.scores[r2.id].some((v) => v === null));
           items.push({ i, field: `p${p}`, rubric: r.id, k: entry.scores[r.id].indexOf(null), text: `${who}: ${st.missing.map((m) => `${m.name} ${m.count} kriter`).join(", ")} bo\u015F.` });
         }
       }
@@ -2928,6 +5531,7 @@ Ge\xE7erli puanlar: ${c.points.join(", ")}`)}"><b>K${k + 1}</b><span>${esc(c.lab
   var blocked = () => reportIssues(reportState(), evaluations).length > 0;
   function renderOutput() {
     const items = issueList(), stop = blocked();
+    $("out-lead").textContent = `${level().name} ortak performans \xE7izelgesi ve yedi \xF6l\xE7ek A4 yatay sayfalara haz\u0131rlan\u0131r.`;
     for (const id of ["print", "export-excel", "print-summary", "print-scales"]) $(id).disabled = stop;
     if (stop) {
       $("out-status").innerHTML = `<div class="card issues"><h2>Yazd\u0131rmadan \xF6nce kontrol edin</h2>${items.length ? `<p>A\u015Fa\u011F\u0131daki notlar Excel\u2019de girilen de\u011Ferden farkl\u0131 \xE7\u0131kacak ya da eksik. Bir maddeye t\u0131klay\u0131nca ilgili h\xFCcreye gidersiniz.</p><ul>${items.slice(0, 40).map((it, n) => `<li><button class="btn link" data-issue="${n}">${esc(it.text)}</button></li>`).join("")}${items.length > 40 ? `<li class="muted">\u2026 ve ${items.length - 40} uyar\u0131 daha</li>` : ""}</ul>` : "<p>\xC7\u0131kt\u0131 i\xE7in en az bir \xF6\u011Frencinin ad\u0131n\u0131 ve performans notunu girin.</p>"}</div>`;

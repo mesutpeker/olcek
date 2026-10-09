@@ -1,5 +1,6 @@
-import { RUBRICS } from './rubrics.js';
-import { evaluateStudent, gradeStatus, format, displayed, parseDelimited, parseGrade, studentsFromRows, rubricsFor, validShape, emptyScores, criterionValue, parseEokul } from './core.js';
+import { LEVELS, LEVEL_IDS, DEFAULT_LEVEL, levelOf, isLevel, levelIndex, pointsText } from './levels.js';
+import * as core from './core.js';
+import { format, displayed, parseDelimited, parseGrade, studentsFromRows, validShape, criterionValue, parseEokul } from './core.js';
 import { buildReportHTML, reportIssues } from './reports.js';
 import { reportModels } from './layout.js';
 import { createWorkbook, importWorkbook } from './xlsx.js';
@@ -12,26 +13,25 @@ const uid = () => globalThis.crypto?.randomUUID?.() ?? `id-${Date.now().toString
 const today = () => new Date().toLocaleDateString('sv-SE');
 const schoolYear = () => { const d = new Date(), y = d.getFullYear(); return d.getMonth() >= 7 ? `${y}–${y + 1}` : `${y - 1}–${y}`; };
 const blankStudent = () => ({ id: uid(), no: '', name: '', p1: '', p2: '' });
-const newClass = (name = '') => ({ id: uid(), name, book1: '', book2: '', students: [] });
+const newClass = (name = '', level = DEFAULT_LEVEL) => ({ id: uid(), name, level, book1: '', book2: '', students: [] });
 const isBlank = s => ![s.no, s.name, s.p1, s.p2].some(v => String(v).trim()) && !s.manual1 && !s.manual2;
 const FIELDS = ['no', 'name', 'p1', 'p2'];
-const WEIGHT = { book1: 33, book2: 33, observe: 34 };
 
 // ---------- Workspace (several classes, shared teacher details) ----------
 const text = (v, max, fallback = '') => typeof v === 'string' && v.length <= max ? v : fallback;
-function cleanStudent(s) {
+function cleanStudent(s, level) {
   if (!s || FIELDS.some(k => typeof s[k] !== 'string')) throw new Error('Yedekteki öğrenci alanları geçersiz.');
   if (s.no.length > 30 || s.name.length > 150 || s.p1.length > 6 || s.p2.length > 6) throw new Error('Yedekteki öğrenci alanları çok uzun.');
   const student = { id: text(s.id, 100) || uid(), no: s.no, name: s.name, p1: s.p1, p2: s.p2 };
   for (const p of [1, 2]) {
     if (typeof s[`accepted${p}`] === 'number') student[`accepted${p}`] = s[`accepted${p}`];
-    if (validShape(s[`manual${p}`], p)) student[`manual${p}`] = Object.fromEntries(rubricsFor(p).map(r => [r.id, [...s[`manual${p}`][r.id]]]));
+    if (validShape(s[`manual${p}`], p, level)) student[`manual${p}`] = Object.fromEntries(core.rubricsFor(p, level).map(r => [r.id, [...s[`manual${p}`][r.id]]]));
   }
   return student;
 }
-function cleanStudents(list) {
+function cleanStudents(list, level) {
   if (!Array.isArray(list) || list.length > MAX_STUDENTS) throw new Error('Yedekteki öğrenci listesi geçersiz.');
-  const students = list.map(cleanStudent).filter(s => !isBlank(s));
+  const students = list.map(s => cleanStudent(s, level)).filter(s => !isBlank(s));
   if (new Set(students.map(s => s.id)).size !== students.length) throw new Error('Yedekte yinelenen öğrenci kayıtları var.');
   return students;
 }
@@ -39,11 +39,12 @@ const cleanProfile = p => ({ school: text(p.school, 200), teacher: text(p.teache
 export function parseWorkspace(saved) {
   if (saved?.version === 1 && saved.meta && Array.isArray(saved.students)) {
     const m = saved.meta, c = newClass(text(m.className, 40));
-    Object.assign(c, { book1: text(m.book1, 200), book2: text(m.book2, 200), students: cleanStudents(saved.students) });
+    Object.assign(c, { book1: text(m.book1, 200), book2: text(m.book2, 200), students: cleanStudents(saved.students, DEFAULT_LEVEL) });
     return { version: 2, profile: cleanProfile(m), activeId: c.id, classes: [c] };
   }
   if (saved?.version !== 2 || !Array.isArray(saved.classes) || !saved.classes.length || saved.classes.length > MAX_CLASSES) throw new Error('Bu dosya geçerli bir Ölçek yedeği değil.');
-  const classes = saved.classes.map(c => ({ id: text(c?.id, 100) || uid(), name: text(c?.name, 40), book1: text(c?.book1, 200), book2: text(c?.book2, 200), students: cleanStudents(c?.students) }));
+  // Backups made before grade levels existed hold 9th grade classes.
+  const classes = saved.classes.map(c => { const level = isLevel(c?.level) ? Number(c.level) : DEFAULT_LEVEL; return { id: text(c?.id, 100) || uid(), name: text(c?.name, 40), level, book1: text(c?.book1, 200), book2: text(c?.book2, 200), students: cleanStudents(c?.students, level) }; });
   if (new Set(classes.map(c => c.id)).size !== classes.length) throw new Error('Yedekte yinelenen sınıf kayıtları var.');
   return { version: 2, profile: cleanProfile(saved.profile || {}), activeId: classes.some(c => c.id === saved.activeId) ? saved.activeId : classes[0].id, classes };
 }
@@ -62,10 +63,20 @@ const cls = () => ws.classes.find(c => c.id === ws.activeId) || ws.classes[0];
 // Shown wherever the class is named; a new work session starts without a class name.
 const classLabel = (c = cls()) => c.name.trim() || (ws.classes.filter(x => !x.name.trim()).length > 1 ? `Adsız sınıf ${ws.classes.indexOf(c) + 1}` : 'Sınıf adı girilmedi');
 const students = () => cls().students;
-const reportState = () => { const c = cls(); return { meta: { ...ws.profile, className: c.name.trim(), book1: c.book1, book2: c.book2 }, students: c.students, policy: 'rounded' }; };
+// The active class's grade level decides its scales and how grades are computed.
+const lvl = () => cls().level;
+const level = () => levelOf(lvl());
+const rubricsFor = p => core.rubricsFor(p, lvl());
+const emptyScores = p => core.emptyScores(p, lvl());
+const evaluateStudent = s => core.evaluateStudent(s, lvl());
+const gradeStatus = (s, entry, p) => core.gradeStatus(s, entry, p, lvl());
+// What a scale adds to its performance grade: points (contribution) or its 100-point equivalent.
+const partOf = (d, p, j) => format(d[level().performances[p].column][j]);
+const partHead = r => level().performances[r.performance].column === 'contributions' ? `Katkı<small>%${r.weight}</small>` : `100’lük<small>%${r.weight}</small>`;
+const reportState = () => { const c = cls(); return { meta: { ...ws.profile, className: c.name.trim(), book1: c.book1, book2: c.book2 }, level: c.level, students: c.students, policy: 'rounded' }; };
 const evaluateAll = () => { evaluations = students().map(evaluateStudent); };
 const indexOf = id => students().findIndex(s => s.id === id);
-const rubricById = id => RUBRICS.find(r => r.id === id);
+const rubricById = id => level().rubrics.find(r => r.id === id);
 const body = $('sheet-body');
 
 const hasWork = () => ws.classes.some(c => c.students.some(s => !isBlank(s)));
@@ -95,7 +106,7 @@ function statusHTML(s, entry, p) {
     case 'rounded': return `<span class="chip ok" title="Excel hesabı ${format(st.result)}; çizelgede ${displayed(st.result)} görünür">✓ <small>${format(st.result)}</small></span>`;
     case 'manual': return `<span class="chip manual" title="Not, girilen kriter puanlarından hesaplandı">✎ Kriterlerden</span>`;
     case 'accepted': return `<span class="chip soft" title="Girilen ${format(st.target)}; Excel sonucu ${format(st.result)} onaylandı">Excel ${format(st.result)} ✓</span>`;
-    case 'pending': return `<button class="chip warn" data-accept="${p}" title="${esc(st.belowMin ? `Ölçeklerle en düşük ${st.min} üretilebilir. Görevi yapmayan öğrencinin notunu boş bırakın.` : `Girilen ${format(st.target)} tam üretilemiyor.`)} Onaylamak için tıklayın.">Excel ${format(st.result)} · Onayla</button>`;
+    case 'pending': return `<button class="chip warn" data-accept="${p}" title="${esc(st.belowMin ? `Ölçeklerle en düşük ${format(st.min)} üretilebilir. Görevi yapmayan öğrencinin notunu boş bırakın.` : `Girilen ${format(st.target)} tam üretilemiyor.`)} Onaylamak için tıklayın.">Excel ${format(st.result)} · Onayla</button>`;
     default: return '';
   }
 }
@@ -109,7 +120,7 @@ function renderSteps() {
   const missing = [!cls().name.trim() && 'sınıf adı', !p.school.trim() && 'okul adı', !p.teacher.trim() && 'öğretmen adı'].filter(Boolean);
   const graded = listed.filter(([s, i]) => [1, 2].some(q => evaluations[i]?.[q - 1]?.data) && ![1, 2].some(q => needsWork(gradeStatus(s, evaluations[i][q - 1], q).kind))).length;
   const info = [
-    { text: missing.length ? `Eksik: ${missing.join(', ')}` : `${cls().name.trim()} · ${p.school}`, state: missing.length ? 'todo' : 'done' },
+    { text: missing.length ? `Eksik: ${missing.join(', ')}` : `${level().name} · ${cls().name.trim()} · ${p.school}`, state: missing.length ? 'todo' : 'done' },
     { text: listed.length ? `${listed.length} öğrenci` : 'Liste boş', state: listed.length ? 'done' : 'todo' },
     { text: !listed.length ? 'Önce öğrenci ekleyin' : issues.length ? `${issues.length} not kontrol bekliyor` : graded ? `${graded} öğrenci hazır` : 'Notları girin', state: !listed.length ? 'idle' : issues.length ? 'warn' : graded ? 'done' : 'todo' },
     { text: !graded ? 'Notlardan sonra' : issues.length ? 'Önce uyarıları giderin' : 'Hazır', state: graded && !issues.length ? 'done' : 'idle' },
@@ -156,9 +167,10 @@ function renderSheet() {
     $('sheet-desc').textContent = 'Her öğrencinin 1. ve 2. performans notunu yazın. Satırdaki “Ölçekler” bağlantısı öğrencinin bütün kriterlerini açar.';
     renderGrades();
   } else {
-    const part = r.performance === 1 ? '1. performansın %25’i' : `2. performansın %${WEIGHT[r.id]}’ü (100’lük karşılığı)`;
+    const share = `%${r.weight}’${r.weight === 25 ? 'i' : 'ü'}`, scaled = level().performances[r.performance].column === 'normalized';
+    const part = `${r.performance}. performansın ${share}${scaled ? ' (100’lük karşılığı)' : ''}`;
     $('sheet-title').textContent = `${classLabel()} · ${r.name}`;
-    $('sheet-desc').textContent = `${r.criteria.length} kriter · geçerli puanlar ${[...new Set(r.criteria.map(c => c.points.join('·')))].join(' / ')} · toplam ${r.min}–${r.max} · ${part}. Gri puanlar nottan otomatik dağıtıldı; bir puanı değiştirdiğinizde not kriterlerden hesaplanır.`;
+    $('sheet-desc').textContent = `${r.criteria.length} kriter · geçerli puanlar ${[...new Set(r.criteria.map(c => pointsText(c)))].join(' / ')} · toplam ${r.min}–${r.max} · ${part}. Gri puanlar nottan otomatik dağıtıldı; bir puanı değiştirdiğinizde not kriterlerden hesaplanır.`;
     renderRubric(r);
   }
   renderFoot();
@@ -211,7 +223,7 @@ function markDuplicates() {
   });
 }
 function renderClassSelect() {
-  $('class-select').innerHTML = ws.classes.map(c => `<option value="${esc(c.id)}">${esc(classLabel(c))} · ${c.students.filter(s => s.name.trim()).length} öğrenci</option>`).join('');
+  $('class-select').innerHTML = ws.classes.map(c => `<option value="${esc(c.id)}">${esc(classLabel(c))} · ${levelOf(c.level).name} · ${c.students.filter(s => s.name.trim()).length} öğrenci</option>`).join('');
   $('class-select').value = cls().id;
   $('class-picker').hidden = ws.classes.length < 2;
   $('delete-class').hidden = ws.classes.length < 2;
@@ -357,10 +369,10 @@ function renderRubric(r) {
   if (!list.length) { body.innerHTML = emptyState(); return; }
   const p = r.performance;
   const heads = r.criteria.map((c, k) => {
-    const sub = c.descriptions.length ? c.descriptions.at(-1).replace(/\(?\s*\d+\s*puan\s*\)?\.?\s*$/i, '').trim() : '';
-    return `<th class="crit" title="${esc(`K${k + 1}. ${c.label}${sub ? ` — ${sub}` : ''}\nGeçerli puanlar: ${c.points.join(', ')}`)}"><b>K${k + 1}</b><span>${esc(c.label)}</span><small>${c.points.join('·')}</small></th>`;
+    const sub = c.note || (c.descriptions.length ? stripPoints(c.descriptions.at(-1)) : '');
+    return `<th class="crit" title="${esc(`K${k + 1}. ${c.label}${sub ? ` — ${sub}` : ''}\nGeçerli puanlar: ${pointsText(c, ', ')}`)}"><b>K${k + 1}</b><span>${esc(c.label)}</span><small>${pointsText(c)}</small></th>`;
   }).join('');
-  body.innerHTML = `<div class="rubric-scroll"><table class="grid rubric-grid p${p}"><thead><tr><th class="c-idx">#</th><th class="c-student">Öğrenci</th>${heads}<th class="c-sum">Toplam<small>${r.min}–${r.max}</small></th><th class="c-sum">${p === 1 ? 'Katkı<small>%25</small>' : `100’lük<small>%${WEIGHT[r.id]}</small>`}</th><th class="c-perf">${p}. Performans</th><th class="c-act"></th></tr></thead><tbody id="rubric-rows">${list.map(([s, i]) => `<tr data-id="${esc(s.id)}"><td class="c-idx">${i + 1}</td><td class="c-student"><b>${esc(s.name || 'Adsız')}</b><small>${esc(s.no)}</small></td>${r.criteria.map((c, k) => `<td class="sc"><input data-k="${k}" data-field="k${k}" inputmode="numeric" maxlength="2" autocomplete="off" aria-label="${esc(`${s.name} K${k + 1} ${c.label}`)}"></td>`).join('')}<td class="c-sum" data-total></td><td class="c-sum" data-part></td><td class="c-perf" data-perf></td><td class="c-act" data-act></td></tr>`).join('')}</tbody></table></div>`;
+  body.innerHTML = `<div class="rubric-scroll"><table class="grid rubric-grid p${p}"><thead><tr><th class="c-idx">#</th><th class="c-student">Öğrenci</th>${heads}<th class="c-sum">Toplam<small>${r.min}–${r.max}</small></th><th class="c-sum">${partHead(r)}</th><th class="c-perf">${p}. Performans</th><th class="c-act"></th></tr></thead><tbody id="rubric-rows">${list.map(([s, i]) => `<tr data-id="${esc(s.id)}"><td class="c-idx">${i + 1}</td><td class="c-student"><b>${esc(s.name || 'Adsız')}</b><small>${esc(s.no)}</small></td>${r.criteria.map((c, k) => `<td class="sc"><input data-k="${k}" data-field="k${k}" inputmode="numeric" maxlength="2" autocomplete="off" aria-label="${esc(`${s.name} K${k + 1} ${c.label}`)}"></td>`).join('')}<td class="c-sum" data-total></td><td class="c-sum" data-part></td><td class="c-perf" data-perf></td><td class="c-act" data-act></td></tr>`).join('')}</tbody></table></div>`;
   list.forEach(([, i]) => updateRubricRow(i, true));
 }
 function updateRubricRow(i, values = false) {
@@ -373,7 +385,7 @@ function updateRubricRow(i, values = false) {
   });
   const missing = scores.filter(v => v === null).length, d = evaluations[i][p - 1].data;
   row.querySelector('[data-total]').innerHTML = missing ? `<span class="muted">${missing} boş</span>` : `<b>${scores.reduce((a, b) => a + b, 0)}</b>`;
-  row.querySelector('[data-part]').textContent = d ? (p === 1 ? d.contributions[j] : d.normalized[j]) : '—';
+  row.querySelector('[data-part]').textContent = d ? partOf(d, p, j) : '—';
   row.querySelector('[data-perf]').innerHTML = `${d ? `<b>${displayed(d.result)}</b>` : ''}${statusHTML(s, evaluations[i][p - 1], p)}`;
   row.querySelector('[data-act]').innerHTML = manual ? '<button class="btn icon subtle reset" data-reset title="Elle girilen kriterleri silip girilen nota göre otomatik dağıt" aria-label="Otomatik dağılıma dön">↺</button>' : '';
 }
@@ -415,10 +427,15 @@ function pasteScores(grid, start, k0) {
 }
 
 // ---------- Student drawer ----------
-const PERF = { 1: ['1. Performans', 'Konuşma ve yazma · her ölçek %25'], 2: ['2. Performans', 'Kitap okuma %33 + %33 · Ders içi gözlem %34'] };
-const stripPoints = d => String(d || '').replace(/\(?\s*\d+\s*puan\s*\)?\s*\.?\s*$/i, '').trim();
+const stripPoints = d => String(d || '').replace(/\(?\s*\d+(?:\s*-\s*\d+)?\s*puan\s*\)?\s*\.?\s*$/i, '').trim();
+// Fixed levels are buttons; a criterion scored within point ranges takes a typed number.
+function levelControl(r, c, k, v) {
+  if (!c.ranges) return c.points.map((pt, m) => `<button class="lvl${pt === v ? ' on' : ''}" data-r="${r.id}" data-k="${k}" data-v="${pt}" aria-pressed="${pt === v}" title="${esc(r.levels[m])}">${pt}</button>`).join('');
+  const m = v === null ? -1 : levelIndex(c, v);
+  return `<span class="lvl-level">${m < 0 ? esc(c.ranges.map(([a, b]) => `${a}–${b}`).join(' · ')) : `${esc(r.levels[m])} (${c.ranges[m][0]}–${c.ranges[m][1]})`}</span><input class="lvl-input" data-r="${r.id}" data-k="${k}" value="${v ?? ''}" inputmode="numeric" maxlength="2" autocomplete="off" aria-label="${esc(`${c.label}: ${pointsText(c)} arası puan`)}">`;
+}
 function perfSection(s, i, p) {
-  const entry = evaluations[i][p - 1], d = entry.data, [title, sub] = PERF[p];
+  const entry = evaluations[i][p - 1], d = entry.data, title = `${p}. Performans`, sub = level().performances[p].subtitle;
   const manual = s[`manual${p}`], scores = manual || d?.scores;
   const head = `<div class="perf-head p${p}"><div><h3>${title}</h3><p>${sub}</p></div>`;
   if (!scores) return `<section class="perf">${head}</div><div class="perf-empty">${entry.error ? `<p class="bad-text">${esc(entry.error)}</p>` : '<p>Not girilmedi.</p>'}<button class="btn" data-manual-start="${p}">Kriterleri doğrudan puanla</button></div></section>`;
@@ -426,9 +443,9 @@ function perfSection(s, i, p) {
   const mode = manual ? `<span class="chip manual">✎ Kriterlerden hesaplanıyor</span><button class="btn link" data-auto="${p}">Otomatik dağılıma dön</button>` : '<span class="chip">Girilen nota göre dağıtıldı</span>';
   const rubrics = rubricsFor(p).map((r, j) => {
     const vals = scores[r.id], done = vals.every(v => v !== null);
-    return `<details class="rubric" data-rubric="${r.id}"><summary><span class="r-name">${esc(r.name)}</span><span class="r-score">${done ? vals.reduce((a, b) => a + b, 0) : '…'} <small>/ ${r.max}</small></span><span class="r-part">${d ? (p === 1 ? `${d.contributions[j]} puan` : `${d.normalized[j]} / 100`) : ''}</span></summary>${r.description ? `<p class="r-desc">${esc(r.description)}</p>` : ''}<ol class="criteria">${r.criteria.map((c, k) => {
-      const v = vals[k], desc = v === null ? '' : stripPoints(c.descriptions[c.points.indexOf(v)]);
-      return `<li class="${v === null ? 'missing' : ''}"><div class="c-text"><b>${esc(c.label)}</b>${desc ? `<span>${esc(desc)}</span>` : v === null ? '<span>Puan verilmedi</span>' : ''}</div><div class="levels" role="group" aria-label="${esc(c.label)}">${c.points.map((pt, m) => `<button class="lvl${pt === v ? ' on' : ''}" data-r="${r.id}" data-k="${k}" data-v="${pt}" aria-pressed="${pt === v}" title="${esc(r.levels[m])}">${pt}</button>`).join('')}</div></li>`;
+    return `<details class="rubric" data-rubric="${r.id}"><summary><span class="r-name">${esc(r.name)}</span><span class="r-score">${done ? vals.reduce((a, b) => a + b, 0) : '…'} <small>/ ${r.max}</small></span><span class="r-part">${d ? (level().performances[p].column === 'contributions' ? `${partOf(d, p, j)} puan` : `${partOf(d, p, j)} / 100`) : ''}</span></summary>${r.description ? `<p class="r-desc">${esc(r.description)}</p>` : ''}<ol class="criteria">${r.criteria.map((c, k) => {
+      const v = vals[k], desc = c.note || (v === null ? '' : stripPoints(c.descriptions[levelIndex(c, v)]));
+      return `<li class="${v === null ? 'missing' : ''}"><div class="c-text"><b>${esc(c.label)}</b>${desc ? `<span>${esc(desc)}</span>` : ''}${v === null ? '<span>Puan verilmedi</span>' : ''}</div><div class="levels${c.ranges ? ' ranged' : ''}" role="group" aria-label="${esc(c.label)}">${levelControl(r, c, k, v)}</div></li>`;
     }).join('')}</ol></details>`;
   }).join('');
   return `<section class="perf">${head}<div class="perf-result">${result}</div></div><div class="perf-mode">${mode}</div>${rubrics}</section>`;
@@ -451,6 +468,12 @@ $('drawer-body').addEventListener('click', event => {
   if (start) { const p = Number(start.dataset.manualStart); setManual(i, p, emptyScores(p)); return; }
   const auto = event.target.closest('[data-auto]');
   if (auto) clearManual(i, Number(auto.dataset.auto));
+});
+$('drawer-body').addEventListener('change', event => {
+  const input = event.target.closest('.lvl-input'); if (!input) return;
+  const r = rubricById(input.dataset.r), k = Number(input.dataset.k), { value, error } = criterionValue(r, k, input.value);
+  if (error) { toast(`${r.criteria[k].label}: ${error}`); renderDrawer(); return; }
+  setScore(drawerIndex, r, k, value);
 });
 $('drawer-prev').onclick = () => openDrawer(Math.max(0, drawerIndex - 1));
 $('drawer-next').onclick = () => openDrawer(Math.min(students().length - 1, drawerIndex + 1));
@@ -542,7 +565,24 @@ $('roster-add').onclick = () => {
 
 // ---------- 1. Class details ----------
 const INFO = { className: ['class', 'name'], book1: ['class', 'book1'], book2: ['class', 'book2'], school: ['profile', 'school'], teacher: ['profile', 'teacher'], year: ['profile', 'year'], date: ['profile', 'date'] };
-function fillInfo() { for (const [id, [where, key]] of Object.entries(INFO)) { const input = $(`f-${id}`); if (document.activeElement !== input) input.value = (where === 'class' ? cls() : ws.profile)[key]; } }
+function fillInfo() {
+  for (const [id, [where, key]] of Object.entries(INFO)) { const input = $(`f-${id}`); if (document.activeElement !== input) input.value = (where === 'class' ? cls() : ws.profile)[key]; }
+  $('f-level').value = lvl();
+}
+$('f-level').innerHTML = LEVEL_IDS.map(l => `<option value="${l}">${LEVELS[l].name}</option>`).join('');
+// Another level has other scales: criterion scores typed for the old scales are
+// dropped and the grades are distributed again to the new ones (undoable).
+$('f-level').onchange = event => {
+  const c = cls(), before = { level: c.level, students: structuredClone(c.students) }, next = Number(event.target.value);
+  let scored = 0;
+  for (const s of c.students) {
+    if (s.manual1 || s.manual2) scored++;
+    for (const p of [1, 2]) { delete s[`manual${p}`]; delete s[`accepted${p}`]; }
+  }
+  c.level = next; sheet = 'grades'; renderAll();
+  const restore = () => { const k = ws.classes.find(x => x.id === c.id); if (!k) return; Object.assign(k, before); ws.activeId = k.id; sheet = 'grades'; renderAll(); fillInfo(); };
+  undoable(`${classLabel(c)}: ${levelOf(next).name} çizelgeleri seçildi${scored ? `; ${scored} öğrencinin elle girilen kriter puanları kaldırıldı, notlar yeni ölçeklere dağıtıldı` : ''}.`, restore);
+};
 for (const [id, [where, key]] of Object.entries(INFO)) $(`f-${id}`).addEventListener('input', event => {
   const value = event.target.value;
   if (where === 'class') cls()[key] = value; else ws.profile[key] = value;
@@ -554,7 +594,7 @@ function nextClassName() {
   return name && ws.classes.some(c => c.name === name) ? '' : name;
 }
 $('new-class').onclick = () => {
-  const c = newClass(nextClassName()); ws.classes.push(c); ws.activeId = c.id; sheet = 'grades'; sortState = null;
+  const c = newClass(nextClassName(), lvl()); ws.classes.push(c); ws.activeId = c.id; sheet = 'grades'; sortState = null;
   renderAll(); fillInfo(); $('f-className').focus(); $('f-className').select();
   toast('Yeni sınıf eklendi. Bilgilerini girip öğrenci listesine geçin.');
 };
@@ -584,7 +624,7 @@ $('import-file').onchange = async event => {
   $('import-error').textContent = '';
   try {
     if (file.size > 10 * 1024 * 1024) throw new Error('Dosya 10 MB sınırını aşıyor.');
-    const list = /\.xlsx$/i.test(file.name) ? await importWorkbook(file, { withScores: $('import-scores').checked }) : studentsFromRows(parseDelimited(await file.text()));
+    const list = /\.xlsx$/i.test(file.name) ? await importWorkbook(file, { withScores: $('import-scores').checked, level: lvl() }) : studentsFromRows(parseDelimited(await file.text()));
     addImported(list, $('import-replace').checked);
   } catch (e) { $('import-error').textContent = e.message; event.target.value = ''; }
 };
@@ -612,7 +652,11 @@ $('restore-file').onchange = async event => {
     ws = restored; sheet = 'grades'; renderAll(); fillInfo(); toast(`Yedek açıldı: ${ws.classes.length} sınıf.`);
   } catch (e) { toast(e instanceof SyntaxError ? 'Yedek dosyası okunamadı.' : e.message); } finally { event.target.value = ''; }
 };
-$('help').onclick = () => $('help-dialog').showModal();
+// The help describes the formulas of the active class's grade level.
+$('help').onclick = () => {
+  for (const p of [1, 2]) { $(`help-p${p}-title`).textContent = `${p}. Performans · ${level().name}`; $(`help-p${p}`).innerHTML = level().performances[p].help; }
+  $('help-dialog').showModal();
+};
 for (const d of document.querySelectorAll('dialog.modal')) d.addEventListener('click', event => { if (event.target === d) d.close(); });
 
 // ---------- Checks, printing and Excel ----------
@@ -638,6 +682,7 @@ function issueList() {
 const blocked = () => reportIssues(reportState(), evaluations).length > 0;
 function renderOutput() {
   const items = issueList(), stop = blocked();
+  $('out-lead').textContent = `${level().name} ortak performans çizelgesi ve yedi ölçek A4 yatay sayfalara hazırlanır.`;
   for (const id of ['print', 'export-excel', 'print-summary', 'print-scales']) $(id).disabled = stop;
   if (stop) {
     $('out-status').innerHTML = `<div class="card issues"><h2>Yazdırmadan önce kontrol edin</h2>${items.length ? `<p>Aşağıdaki notlar Excel’de girilen değerden farklı çıkacak ya da eksik. Bir maddeye tıklayınca ilgili hücreye gidersiniz.</p><ul>${items.slice(0, 40).map((it, n) => `<li><button class="btn link" data-issue="${n}">${esc(it.text)}</button></li>`).join('')}${items.length > 40 ? `<li class="muted">… ve ${items.length - 40} uyarı daha</li>` : ''}</ul>` : '<p>Çıktı için en az bir öğrencinin adını ve performans notunu girin.</p>'}</div>`;

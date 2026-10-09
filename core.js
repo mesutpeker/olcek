@@ -1,4 +1,4 @@
-import { RUBRICS } from './rubrics.js';
+import { levelOf, DEFAULT_LEVEL } from './levels.js';
 
 export const sum = values => values.reduce((a, b) => a + b, 0);
 export const round = n => Math.floor(n + 0.5 + 1e-9);
@@ -32,87 +32,90 @@ export function allocate(rubric, target, seed = '') {
   order.forEach((i, j) => { values[i] = chosen.values[j]; });
   return values;
 }
-export function calculate(scores, performance) {
-  const rubrics = RUBRICS.filter(r => r.performance === performance);
-  const totals = rubrics.map(r => sum(scores[r.id]));
-  if (performance === 1) {
-    const contributions = totals.map(t => round(t * .25));
-    return { totals, normalized: totals, contributions, result: sum(contributions) };
-  }
-  const normalized = totals.map((t, i) => round(t / rubrics[i].max * 100));
-  const contributions = normalized.map((n, i) => n * [33, 33, 34][i] / 100);
-  return { totals, normalized, contributions, result: round(sum(contributions) * 100) / 100 };
+export const rubricsFor = (performance, level = DEFAULT_LEVEL) => levelOf(level).rubrics.filter(r => r.performance === performance);
+const scaled = (total, rubric) => round(total / rubric.max * 100);
+// A scale's share of the performance grade in hundredths, as the summary sheet computes it.
+function share(formula, rubric, total) {
+  if (formula === 'roundedQuarter') return round(total * .25) * 100;
+  if (formula === 'quarter') return total * 25;
+  if (formula === 'average') return scaled(total, rubric) * 25;
+  return scaled(total, rubric) * rubric.weight;
 }
+export function calculate(scores, performance, level = DEFAULT_LEVEL) {
+  const rubrics = rubricsFor(performance, level), { formula } = levelOf(level).performances[performance];
+  const totals = rubrics.map(r => sum(scores[r.id]));
+  const normalized = formula === 'roundedQuarter' || formula === 'quarter' ? totals : totals.map((t, i) => scaled(t, rubrics[i]));
+  const contributions = totals.map((t, i) => share(formula, rubrics[i], t) / 100);
+  return { totals, normalized, contributions, result: sum(totals.map((t, i) => share(formula, rubrics[i], t))) / 100 };
+}
+// Every total a scale can reach with its legal criterion levels.
+const reachable = rubric => {
+  let totals = new Set([0]);
+  for (const c of rubric.criteria) totals = new Set([...totals].flatMap(t => c.points.map(p => t + p)));
+  return [...totals].sort((a, b) => a - b);
+};
 const totalCache = new Map();
-function chooseTotals(target, performance) {
-  const key = `${performance}:${target}`;
+// The scale totals whose grade is nearest the target; among equals, the totals
+// closest to the target on the 100-point scale (the most balanced distribution).
+function chooseTotals(target, performance, level) {
+  const key = `${level}:${performance}:${target}`;
   if (totalCache.has(key)) return totalCache.get(key);
-  let selected;
-  if (performance === 1) {
-    let states = new Map([[0, { cost: 0, totals: [] }]]);
-    for (let i = 0; i < 4; i++) {
-      const next = new Map();
-      for (const [score, entry] of states) for (let total = 40; total <= 100; total += 2) {
-        const value = score + round(total / 4);
-        const cost = entry.cost + (total - target) ** 2;
-        if (!next.has(value) || cost < next.get(value).cost) next.set(value, { cost, totals: [...entry.totals, total] });
-      }
-      states = next;
+  const rubrics = rubricsFor(performance, level), { formula } = levelOf(level).performances[performance];
+  let states = new Map([[0, { cost: 0, totals: [] }]]);
+  for (const r of rubrics) {
+    const next = new Map(), options = reachable(r);
+    for (const [score, entry] of states) for (const total of options) {
+      const value = score + share(formula, r, total), cost = entry.cost + (scaled(total, r) - target) ** 2;
+      if (!next.has(value) || cost < next.get(value).cost) next.set(value, { cost, totals: [...entry.totals, total] });
     }
-    selected = [...states].sort((a, b) => Math.abs(a[0] - target) - Math.abs(b[0] - target) || a[1].cost - b[1].cost || a[0] - b[0])[0][1].totals;
-  } else {
-    let bestDiff = Infinity, bestCost = Infinity;
-    for (let a = 14; a <= 42; a++) for (let b = 14; b <= 42; b++) for (let c = 6; c <= 18; c++) {
-      const n = [round(a / 42 * 100), round(b / 42 * 100), round(c / 18 * 100)];
-      const actual = n[0] * 33 + n[1] * 33 + n[2] * 34;
-      const diff = Math.abs(actual - round(target * 100));
-      const cost = sum(n.map(x => (x - target) ** 2));
-      if (diff < bestDiff || (diff === bestDiff && cost < bestCost)) {
-        bestDiff = diff; bestCost = cost; selected = [a, b, c];
-      }
-    }
+    states = next;
   }
+  const goal = round(target * 100);
+  // Last tie-break as in the first release: the lower grade for the first performance,
+  // the first totals in order for the weighted second performance.
+  const firstTotals = (x, y) => { const i = x.findIndex((t, k) => t !== y[k]); return i < 0 ? 0 : x[i] - y[i]; };
+  const order = (a, b) => formula === 'weighted' ? firstTotals(a[1].totals, b[1].totals) : a[0] - b[0];
+  const selected = [...states].sort((a, b) => Math.abs(a[0] - goal) - Math.abs(b[0] - goal) || a[1].cost - b[1].cost || order(a, b))[0][1].totals;
   totalCache.set(key, selected);
   return selected;
 }
-export function distribute(value, performance, seed = '') {
+export function distribute(value, performance, seed = '', level = DEFAULT_LEVEL) {
   const target = parseGrade(value);
   if (target === null) return null;
-  const totals = chooseTotals(target, performance);
-  const rubrics = RUBRICS.filter(r => r.performance === performance);
+  const totals = chooseTotals(target, performance, level);
+  const rubrics = rubricsFor(performance, level);
   const scores = Object.fromEntries(rubrics.map((r, i) => [r.id, allocate(r, totals[i], seed)]));
-  const computed = calculate(scores, performance);
+  const computed = calculate(scores, performance, level);
   return { ...computed, scores, target, exact: Math.abs(computed.result - target) < .001 };
 }
-export const rubricsFor = performance => RUBRICS.filter(r => r.performance === performance);
 // Criterion scores entered by the teacher, as in the source Excel sheets.
 // null marks a criterion that has not been scored yet.
-export function validShape(scores, performance) {
-  return Boolean(scores) && rubricsFor(performance).every(r => Array.isArray(scores[r.id]) && scores[r.id].length === r.criteria.length && scores[r.id].every((v, i) => v === null || r.criteria[i].points.includes(v)));
+export function validShape(scores, performance, level = DEFAULT_LEVEL) {
+  return Boolean(scores) && rubricsFor(performance, level).every(r => Array.isArray(scores[r.id]) && scores[r.id].length === r.criteria.length && scores[r.id].every((v, i) => v === null || r.criteria[i].points.includes(v)));
 }
-export const validScores = (scores, performance) => validShape(scores, performance) && rubricsFor(performance).every(r => scores[r.id].every(v => v !== null));
-export const emptyScores = performance => Object.fromEntries(rubricsFor(performance).map(r => [r.id, r.criteria.map(() => null)]));
+export const validScores = (scores, performance, level = DEFAULT_LEVEL) => validShape(scores, performance, level) && rubricsFor(performance, level).every(r => scores[r.id].every(v => v !== null));
+export const emptyScores = (performance, level = DEFAULT_LEVEL) => Object.fromEntries(rubricsFor(performance, level).map(r => [r.id, r.criteria.map(() => null)]));
 // Turns a typed criterion value into a legal level, or explains why it is not one.
 export function criterionValue(rubric, index, text) {
   const value = String(text ?? '').trim();
   if (!value) return { value: null };
   const points = rubric.criteria[index].points;
-  if (!/^\d{1,2}$/.test(value) || !points.includes(Number(value))) return { error: `Bu kriter için yalnızca ${points.join(', ')} girilebilir.` };
+  if (!/^\d{1,2}$/.test(value) || !points.includes(Number(value))) return { error: `Bu kriter için yalnızca ${rubric.criteria[index].ranges ? `${points[0]}–${points.at(-1)} arası tam sayı` : points.join(', ')} girilebilir.` };
   return { value: Number(value) };
 }
-export function evaluateStudent(student) {
+export function evaluateStudent(student, level = DEFAULT_LEVEL) {
   return [1, 2].map(p => {
     const manual = student[`manual${p}`];
-    if (manual && validShape(manual, p)) {
-      const scores = Object.fromEntries(rubricsFor(p).map(r => [r.id, [...manual[r.id]]]));
-      if (!validScores(scores, p)) {
-        const missing = rubricsFor(p).map(r => ({ name: r.name, count: scores[r.id].filter(v => v === null).length })).filter(m => m.count);
+    if (manual && validShape(manual, p, level)) {
+      const scores = Object.fromEntries(rubricsFor(p, level).map(r => [r.id, [...manual[r.id]]]));
+      if (!validScores(scores, p, level)) {
+        const missing = rubricsFor(p, level).map(r => ({ name: r.name, count: scores[r.id].filter(v => v === null).length })).filter(m => m.count);
         return { data: null, error: null, incomplete: { missing, count: missing.reduce((a, m) => a + m.count, 0) }, scores };
       }
-      const computed = calculate(scores, p);
+      const computed = calculate(scores, p, level);
       return { data: { ...computed, scores, target: computed.result, exact: true, manual: true }, error: null };
     }
-    try { return { data: distribute(student[`p${p}`], p, student.id), error: null }; }
+    try { return { data: distribute(student[`p${p}`], p, student.id, level), error: null }; }
     catch (e) { return { data: null, error: e.message }; }
   });
 }
@@ -121,7 +124,9 @@ export const displayed = result => round(result);
 export function isAccepted(student, result, performance, policy = 'rounded') {
   return Boolean(result && (result.exact || (policy === 'rounded' && displayed(result.result) === result.target) || student[`accepted${performance}`] === result.result));
 }
-export function gradeStatus(student, entry, performance) {
+// The lowest grade the scales can produce (every criterion at its lowest level).
+export const minimumGrade = (performance, level = DEFAULT_LEVEL) => calculate(Object.fromEntries(rubricsFor(performance, level).map(r => [r.id, r.criteria.map(c => c.points[0])])), performance, level).result;
+export function gradeStatus(student, entry, performance, level = DEFAULT_LEVEL) {
   if (entry.error) return { kind: 'error', message: entry.error };
   if (entry.incomplete) return { kind: 'incomplete', ...entry.incomplete };
   const d = entry.data;
@@ -130,7 +135,7 @@ export function gradeStatus(student, entry, performance) {
   if (d.exact) return { kind: 'exact', result: d.result };
   if (displayed(d.result) === d.target) return { kind: 'rounded', result: d.result };
   if (student[`accepted${performance}`] === d.result) return { kind: 'accepted', result: d.result, target: d.target };
-  const min = performance === 1 ? 40 : 33;
+  const min = minimumGrade(performance, level);
   return { kind: 'pending', result: d.result, target: d.target, belowMin: d.target < min, min };
 }
 export function parseDelimited(text) {

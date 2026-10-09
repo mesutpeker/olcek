@@ -151,3 +151,72 @@ test('Summary rows share one height whether a name takes one line or two',()=>{
     assert.equal(new Set(rows).size,1,`${count} students: ${[...new Set(rows)]}`);
   }
 });
+
+// ---------- 10th and 11th grade (their own reference workbooks) ----------
+const { LEVELS } = await import('../levels.js');
+const { minimumGrade, rubricsFor } = await import('../core.js');
+test('10th and 11th grade scales match their reference workbooks',()=>{
+  assert.deepEqual(LEVELS[10].rubrics.map(r=>[r.name,r.criteria.length,r.max]),[['1. Tema Konuşma',11,33],['2. Tema Konuşma',6,18],['1. Tema Yazma',10,30],['2. Tema Yazma',7,21],['1. Tema Kitap Okuma',14,42],['2. Tema Kitap Okuma',14,42],['Ders İçi Gözlem',6,18]]);
+  assert.deepEqual(LEVELS[11].rubrics.map(r=>[r.name,r.criteria.length,r.min,r.max]),[['1. Tema Konuşma',6,6,100],['2. Tema Konuşma',5,5,100],['1. Tema Yazma',6,6,100],['2. Tema Yazma',5,5,100],['Ders İçi Gözlem',6,6,18],['1. Tema Kitap Okuma',14,14,42],['2. Tema Kitap Okuma',14,14,42]]);
+  // "Özgünlük (18 puan)": 1-4 · 5-9 · 10-14 · 15-18, every whole point is legal.
+  assert.deepEqual(LEVELS[11].rubrics[0].criteria[2].ranges,[[1,4],[5,9],[10,14],[15,18]]);
+  assert.equal(LEVELS[11].rubrics[0].criteria[2].points.length,18);
+  assert.deepEqual(LEVELS[11].rubrics.filter(r=>r.performance===2).map(r=>r.weight),[34,33,33]);
+});
+test('Every level allocates every reachable total with legal levels only',()=>{
+  for(const level of [10,11])for(const r of LEVELS[level].rubrics)for(let total=r.min;total<=r.max;total++){
+    const points=allocate(r,total,'s');assert.equal(sum(points),total);points.forEach((p,i)=>assert.ok(r.criteria[i].points.includes(p)));
+  }
+});
+test('10th grade first performance: average of the four rounded 100-point grades',()=>{
+  const twos=Object.fromEntries(rubricsFor(1,10).map(r=>[r.id,r.criteria.map(()=>2)]));
+  assert.deepEqual(calculate(twos,1,10).normalized,[67,67,67,67]);assert.equal(calculate(twos,1,10).result,67);
+  assert.equal(minimumGrade(1,10),33);
+  for(let target=33;target<=100;target++){
+    const d=distribute(target,1,'x',10);assert.equal(calculate(d.scores,1,10).result,d.result);
+    if(target===99){assert.equal(d.result,99.25);assert.equal(isAccepted({},d,1),true);}else assert.ok(d.exact,`${target}`);
+  }
+});
+test('11th grade first performance: scale totals × %25, not rounded',()=>{
+  const scores=Object.fromEntries(rubricsFor(1,11).map(r=>[r.id,r.criteria.map(c=>c.points.at(-1))]));
+  scores['speak1-11']=[13,13,15,15,15,15];
+  const c=calculate(scores,1,11);assert.deepEqual(c.contributions,[21.5,25,25,25]);assert.equal(c.result,96.5);
+  assert.equal(minimumGrade(1,11),5.5);
+  for(let target=6;target<=100;target++){const d=distribute(target,1,'y',11);assert.ok(d.exact,`${target}`);}
+  // Second performance: observation first (%34), then the two books (%33).
+  const p2=Object.fromEntries(rubricsFor(2,11).map(r=>[r.id,r.criteria.map(c=>r.id.startsWith('observe')?1:3)]));
+  assert.equal(calculate(p2,2,11).result,77.22);
+});
+test('10th and 11th grade sheets fit the page and link the summary to the right totals',()=>{
+  const at=ref=>{const [,l,r]=ref.match(/^([A-Z]+)(\d+)$/);return [[...l].reduce((n,c)=>n*26+c.charCodeAt(0)-64,0),Number(r)];};
+  for(const level of [10,11])for(const count of [3,25,26,51]){
+    const students=Array.from({length:count},(_,i)=>({id:String(i),no:String(i+1),name:`Örnek Öğrenci ${i+1}`,p1:String(40+i),p2:'90'}));
+    const evaluations=students.map(s=>evaluateStudent(s,level));
+    const models=reportModels({students,meta:{},level},evaluations),byName=new Map(models.map(m=>[m.name,m]));
+    for(const model of models){
+      assert.ok(model.widths.reduce((a,b)=>a+b,0)<=PAGE.width+1,`${level} ${model.name} width`);
+      assert.ok(model.heights.reduce((a,b)=>a+b,0)<=PAGE.height+1,`${level} ${model.name} height`);
+    }
+    assert.equal(models.filter(m=>m.spec).length,7*(count<=25?1:count<=50?2:3));
+    for(const m of models.filter(m=>!m.spec))for(const cell of m.cells.filter(c=>c.formula&&c.formula.includes('!'))){
+      const [,sheet,target]=cell.formula.match(/'([^']+)'!([A-Z]+\d+)/),scale=byName.get(sheet),[col,row]=at(target);
+      assert.equal(row,scale.totalRow);
+      assert.equal(scale.cells.find(c=>c.row===3&&c.col===col).value.replace(/\n/g,' '),m.cells.find(c=>c.row===cell.row&&c.col===3).value.replace(/\n/g,' '));
+    }
+    const summary=models[0],row=summary.cells.filter(c=>c.row===3);
+    if(level===10){assert.equal(row.find(c=>c.col===8).formula,'AVERAGE(D3:G3)');assert.match(row.find(c=>c.col===4).formula,/\/33\*100,0\)$/);}
+    else{assert.equal(row.find(c=>c.col===8).formula,'SUM(D3:G3)');assert.match(row.find(c=>c.col===4).formula,/^'[^']+'!\w+\*25\/100$/);assert.equal(row.find(c=>c.col===12).formula,'I3*34/100+J3*33/100+K3*33/100');}
+    const ranged=models.find(m=>m.rubric==='speak1-11');
+    if(ranged)assert.deepEqual(ranged.validations.map(v=>[v.min,v.max]),[[1,16],[1,18]]);
+  }
+});
+test('The evaluation line stays visible beside the date in small classes',()=>{
+  const students=[{id:'a',no:'1',name:'Ali Veli',p1:'80',p2:'90'}];
+  for(const level of [9,10,11]){
+    const models=reportModels({students,meta:{date:'2026-10-09'},level},students.map(s=>evaluateStudent(s,level)));
+    for(const m of models.filter(m=>m.spec)){
+      const values=m.cells.filter(c=>c.row>m.totalRow).map(c=>c.value);
+      assert.ok(values.some(v=>/^Değerlendirme/.test(v)),`${level} ${m.name}`);assert.ok(values.includes('09.10.2026'));
+    }
+  }
+});

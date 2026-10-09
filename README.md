@@ -1,6 +1,6 @@
 # Ölçek — Performans Değerlendirme
 
-9. sınıf Türk Dili ve Edebiyatı, 1. dönem performans notlarını referans Excel dosyasındaki yedi ölçeğe dağıtan web uygulaması. Sunucu, hesap, API anahtarı veya derleme gerektirmez. GitHub Pages üzerinde çalışır. Mevcut Chrome uzantısından bağımsızdır.
+9, 10 ve 11. sınıf Türk Dili ve Edebiyatı, 1. dönem performans notlarını her sınıf düzeyinin referans Excel dosyasındaki yedi ölçeğe dağıtan web uygulaması. Sunucu, hesap, API anahtarı veya derleme gerektirmez. GitHub Pages üzerinde çalışır. Mevcut Chrome uzantısından bağımsızdır.
 
 Canlı adres: https://mesutpeker.com/olcek/
 
@@ -8,7 +8,7 @@ Canlı adres: https://mesutpeker.com/olcek/
 
 Uygulama dört adımlıdır. Sayfanın üstündeki adım şeridi hangi adımda olduğunuzu ve her adımın durumunu gösterir; adımlara tıklayarak ya da alttaki **Geri / İleri** düğmeleriyle geçebilirsiniz.
 
-1. **Sınıf bilgileri:** Sınıf/şube, okul, öğretmen, yıl, tarih ve kitap adlarını girin. Aynı oturumda başka bir şube için de ölçek hazırlayacaksanız **＋ Başka bir sınıf ekle** ile yeni sınıf açın; sınıflar arasında geçiş seçicisi o zaman görünür. Önceki bir çalışmaya devam etmek için yedek dosyasını buradan açın.
+1. **Sınıf bilgileri:** Sınıf düzeyi (9, 10 veya 11. sınıf), sınıf/şube, okul, öğretmen, yıl, tarih ve kitap adlarını girin. Aynı oturumda başka bir şube için de ölçek hazırlayacaksanız **＋ Başka bir sınıf ekle** ile yeni sınıf açın; sınıflar arasında geçiş seçicisi o zaman görünür. Önceki bir çalışmaya devam etmek için yedek dosyasını buradan açın. Sınıf düzeyi her sınıf için ayrı seçilir; çizelgeleri, ölçütleri ve not hesabını belirler. Düzey değiştirilirse elle girilen kriter puanları (eski ölçeklere ait oldukları için) kaldırılır, notlar yeni ölçeklere yeniden dağıtılır; bildirimdeki **Geri al** ile dönülebilir. Yeni eklenen sınıf, o an seçili sınıfın düzeyini alır.
 2. **Öğrenci listesi:** e-Okul’un not giriş ekranında öğrenci listesini seçip kopyalayın ve kutuya yapıştırın. “No / AD SOYAD” satırı ile altındaki not satırı (“Öğrenci Not Bilgisi”) birlikte okunur. Kopyada not varsa hangi not sütununun 1. ve 2. performans olduğunu seçebilirsiniz (varsayılan: aktarma). Aynı numaralı öğrencinin adı güncellenir, yeni öğrenciler eklenir. Listedeki numara ve adlar düzenlenebilir; Excel/CSV dosyasından aktarma, örnek öğrenciler ve listeyi temizleme de bu adımdadır.
 3. **Notlar ve kriterler:** **Performans notları** tablosuna notları yazın. Notun yanındaki işaret: **✓** Excel aynı notu verir (**✓ 84,98** Excel’in ondalıklı hesabıdır, çizelgede 85 görünür); **Excel 40 · Onayla** not ölçekle üretilemiyor; **✎ Kriterlerden** not kriterlerden hesaplandı; **N kriter boş** elle girilen kriterlerde eksik var. Kriter puanlarını girmek için **1. Performans çizelgeleri** veya **2. Performans çizelgeleri** açılır menüsünden bir ölçek seçin. Gri puanlar nottan otomatik dağıtılmıştır; bir puanı yazdığınızda o öğrencinin o performansı kriterlerden hesaplanır. Rakam yazınca imleç sonraki kritere geçer, `Enter` alt satıra iner; Excel’deki ölçek sayfasından kopyalanan blok yapıştırılabilir. **↺** kriterleri silip nota göre otomatik dağıtıma döner. Satırdaki **Ölçekler** bağlantısı öğrencinin bütün kriterlerini açar.
 4. **Yazdır / Excel:** Kontrol bekleyen not varsa burada listelenir; maddeye tıklayınca ilgili hücreye gidilir. Her şey hazırsa sayfa sayısı gösterilir ve **Tümünü yazdır / PDF**, **Yalnızca ortak çizelgeyi yazdır**, **Yalnızca 7 ölçeği yazdır** ve **Excel indir** kullanılabilir. **Yedek indir** ile çalışmayı sonra devam etmek üzere kaydedebilirsiniz.
@@ -20,6 +20,8 @@ Silme, yapıştırma, sıralama, liste temizleme ve aktarma işlemleri bildirimd
 **Bilgiler kaydedilmez.** Aynı bilgisayarı art arda farklı öğretmenler kullanabileceği için sayfa her açıldığında (yenilemede de) boş bir çalışmayla başlar; öğrenci girilmişken sayfadan ayrılmak istenirse tarayıcı uyarır. Uygulamanın önceki sürümlerinin tarayıcıda bıraktığı kayıtlar ilk açılışta silinir. Çalışmaya sonra devam etmek için 4. adımdaki **Yedek indir** ile JSON yedeği alın ve 1. adımdaki “yedek dosyasını açın” bağlantısıyla yükleyin. Yedek tüm sınıfları içerir. Öğrenci bilgileri hiçbir sunucuya gönderilmez. (Yalnızca e-Okul sütun seçimi tercihi hatırlanır.)
 
 ## Excel’in puanlama mantığı
+
+### 9. sınıf
 
 Kaynak: `9.SINIFLAR   1. DÖNEM PERF. ÖLÇEĞİ 2026.xlsx`.
 
@@ -37,13 +39,53 @@ Kaynak: `9.SINIFLAR   1. DÖNEM PERF. ÖLÇEĞİ 2026.xlsx`.
 
 **2. performans:** Kitap toplamları 42’ye, gözlem toplamı 18’e bölünerek 100 ile çarpılır. Her 100’lük karşılık ayrı ayrı tam sayıya yuvarlanır. Ardından %33 + %33 + %34 ile ağırlıklı toplam hesaplanır. Kaynak: `1. DÖNEM 2. PERFORMANS PUANI!E4:H4`. Son toplam kaynak Excel’de yuvarlanmaz. En düşük sonuç 33’tür. Her hedef not tam olarak mümkün değildir; örneğin 85 için en yakın sonuç 84,98; 90 için 89,99’dur. 33–100 arasındaki 68 tam sayıdan yalnızca 14’ü tam olarak üretilebilir. Kaynak dosya bu hücreleri `0` sayı biçimiyle gösterdiği için her tam sayı hedefte çizelgede görünen not girilen notla aynıdır (en büyük fark 0,32); uygulama bu durumu onay istemeden kabul eder.
 
+### 10. sınıf
+
+Kaynak: `10.SINIFLAR 1. DÖNEM 1. ve 2. PERFORMANS PUANI DEĞERLENDİRME ÖLÇEKLERİ.xlsx`.
+
+| Ölçek | Kriter | Geçerli puanlar | Ham toplam |
+| --- | ---: | --- | --- |
+| 1. Tema Konuşma | 11 | 1, 2, 3 | 11–33 |
+| 2. Tema Konuşma | 6 | 1, 2, 3 | 6–18 |
+| 1. Tema Yazma | 10 | 1, 2, 3 | 10–30 |
+| 2. Tema Yazma | 7 | 1, 2, 3 | 7–21 |
+| 1. ve 2. Tema Kitap Okuma | 14 | 1, 2, 3 | 14–42 |
+| Ders İçi Gözlem | 6 | 1, 2, 3 | 6–18 |
+
+**1. performans:** Her ölçeğin toplamı 100’lük sisteme çevrilip ayrı ayrı tam sayıya yuvarlanır (`ROUND(toplam/en çok*100,0)`), 1. performans bu dört puanın ortalamasıdır (`AVERAGE`, `0` sayı biçimiyle gösterilir). En düşük sonuç 33’tür; 33–100 arasındaki her tam not tam olarak üretilebilir, yalnızca 99 için en yakın sonuç 99,25’tir (çizelgede 99). Kriter sayfalarında “ÖLÇÜTLER” ve “AÇIKLAMALAR” sütunları vardır; 3 puan iyi, 2 orta, 1 geliştirilebilir anlamına gelir.
+
+**2. performans:** 9. sınıfla aynıdır (%33 + %33 + %34).
+
+### 11. sınıf
+
+Kaynak: `11.SINIFLAR 1. DÖNEM PERF. ÖLÇEĞİ 2026.xlsx`.
+
+| Ölçek | Ölçüt | Geçerli puanlar | Ham toplam |
+| --- | ---: | --- | --- |
+| 1. Tema Konuşma | 6 | 16 puanlık ölçütler 1–4 · 5–8 · 9–12 · 13–16; 18 puanlıklar 1–4 · 5–9 · 10–14 · 15–18 | 6–100 |
+| 2. Tema Konuşma | 5 | 1–5 · 6–10 · 11–15 · 16–20 | 5–100 |
+| 1. Tema Yazma | 6 | 16 puanlıklar 1–4 · 5–8 · 9–12 · 13–16; 18 puanlıklar 1–5 · 6–10 · 11–14 · 15–18 | 6–100 |
+| 2. Tema Yazma | 5 | 1–5 · 6–10 · 11–15 · 16–20 | 5–100 |
+| Ders İçi Gözlem | 6 | 1, 2, 3 | 6–18 |
+| 1. ve 2. Tema Kitap Okuma | 14 | 1, 2, 3 | 14–42 |
+
+Her düzey bir puan aralığıdır; aralıktaki her tam puan verilebilir. Uygulamada bu ölçütlere puan yazılır (öğrenci penceresinde düzeyi yanında gösterilir), Excel’de hücre yalnızca 1–16 gibi aralıktaki tam sayıları kabul eder.
+
+**1. performans:** Her ölçek toplamının %25’i alınır ve toplanır; kaynak bu katkıları yuvarlamaz (ör. 86 → 21,5). 6–100 arasındaki her tam not tam olarak üretilebilir.
+
+**2. performans:** Ders İçi Gözlem %34, 1. ve 2. Tema Kitap Okuma %33 + %33 (kaynaktaki sırayla).
+
+**Kaynak dosyalardaki formül hataları (uygulamaya taşınmadı):** 10. sınıf dosyasında `I.Donem_Yazma_Per._Puanlar!E16:E43` bir satır kaymıştır; 13. öğrenciden itibaren her öğrenciye bir sonraki öğrencinin 1. Tema Yazma puanı yazılır. 11. sınıf dosyasında `1. Tema Konuşma` sayfasında 5., 10., 15. … 35. öğrencinin TOPLAM formülü (`K10`, `P10`, `U10`, `Z10`, `AE10`, `AJ10`, `AO10`) ilk ölçütü (Konu Seçimi) toplama katmaz. Uygulama her öğrenci için doğru formülü kullanır. Bu iki formül düzeltildiğinde, uygulamanın ürettiği kriter puanları özgün dosyalara yazılıp LibreOffice’te yeniden hesaplatılmış ve 1.208 durumun tamamında (her iki performans, 0–100 arası tam ve ondalıklı hedefler) sonuç uygulamayla aynı çıkmıştır.
+
+### Dağıtım
+
 Uygulama geçerli tüm ölçek toplamları arasından hedefe en yakın sonucu bulur. Eşit yakınlıkta hedefe daha dengeli dağılan ölçek toplamlarını seçer. Kriterler yalnızca kaynakta belirtilen puan basamaklarını alır. Aynı öğrenci ve aynı notlar her zaman aynı dağılımı üretir. Bu ters hesaplama kaynak Excel’de bulunmayan, uygulamanın eklediği bir özelliktir. Toplam not tek bir kriter dağılımını belirlemez; üretilen dağılım, gerçekleşmiş gözlemleri yeniden elde ettiği iddiası taşımaz.
 
-Kriter adları, alt ölçütler ve düzey açıklamaları kaynak dosyadan alınmıştır. Yalnızca fazla boşluklar ve satır sonları düzenlenmiştir; kaynak metindeki yazım hataları ve `1. Tema Konuşma` açıklamasındaki “yazma performans çalışması” ifadesi korunmuştur. Çıktılardaki birleştirilmiş kriter başlıkları, özgün dosyadaki birleşimleriyle korunur.
+Kriter adları, alt ölçütler ve düzey açıklamaları kaynak dosyalardan alınmıştır. 11. sınıf metinlerinde dar sütun için tire ile bölünmüş sözcükler (ör. “gerçekleştiril-miştir”) birleştirilmiştir. Yalnızca fazla boşluklar ve satır sonları düzenlenmiştir; kaynak metindeki yazım hataları ve `1. Tema Konuşma` açıklamasındaki “yazma performans çalışması” ifadesi korunmuştur. Çıktılardaki birleştirilmiş kriter başlıkları, özgün dosyadaki birleşimleriyle korunur.
 
 ## Çıktı düzeni (yazdırma ve Excel)
 
-Ortak performans çizelgesi ve yedi ölçek tek ve ortak bir tasarımla, yatay A4 sayfayı (10 mm kenar boşluğu) tam dolduracak şekilde oluşturulur:
+Her sınıf düzeyinin ortak performans çizelgesi ve yedi ölçeği tek ve ortak bir tasarımla, yatay A4 sayfayı (10 mm kenar boşluğu) tam dolduracak şekilde oluşturulur:
 
 - **Sütunlar öğrenci sayısı kadardır.** Boş öğrenci sütunu veya satırı oluşmaz.
 - **Sayfa kuralı:** 25 öğrenciye kadar her ölçek tek sayfadır. 26–50 öğrenci en fazla iki sayfaya dengeli bölünür (ör. 34 → 17 + 17). Daha kalabalık sınıflarda sayfa başına en fazla 25 öğrenci olur. Bölünen tablolar aynı düzenle sonraki sayfada yeniden oluşturulur ve başlıkta sayfa numarası (1/2) yazar. Tüm ölçeklerde aynı öğrenciler aynı sayfa numarasındadır. Yazı boyutu, sayfaya sığacak en büyük değere kendiliğinden ayarlanır. Ortak çizelge, mümkünse bütün sınıfı tek sayfada gösterir.
@@ -53,6 +95,8 @@ Ortak performans çizelgesi ve yedi ölçek tek ve ortak bir tasarımla, yatay A
 - **Baskı ve Excel ayrı ölçülür:** Yazdırma görünümü tarayıcının, Excel dosyası Excel'in yazı ölçüsüne (daha geniş satır aralığı, daha erken satır kaydırma) göre düzenlenir.
 - **Excel'de satır yükseklikleri:** Kriter açıklaması satırlarının yüksekliğini Excel kendi yazı ölçümüyle belirler. Sayfa yapısı "1 sayfa genişliğinde, 1 sayfa yüksekliğinde" ve A4'tür. Böylece metin kesilmez, her sayfa tek kâğıda basılır. (Excel'in Sayfa Düzeni görünümü bu ölçeklemeyi göstermeyebilir; baskı önizlemesi ve PDF doğrudur.)
 - **Formül bağlantıları:** Ortak çizelgedeki formüller her öğrencinin ilgili ölçek sayfasındaki toplam hücresine bağlıdır (ör. `ROUND('1. Tema Konuşma (2)'!H14*25/100,0)`). Elle girilen kriter puanları dosyanın belge özelliklerinde de saklanır, yeniden içe aktarılabilir.
+- **10 ve 11. sınıf:** Aynı tasarım kullanılır. 10. sınıfın 1. performans ölçeklerinde ölçüt ve açıklama sütunları, 11. sınıfınkilerde dört düzey sütunu bulunur; bütün ölçütlerde aynı olan puan aralıkları (ör. 2. Tema Konuşma “1-5 puan”) düzey başlığına taşınır. 10. sınıf konuşma ölçeklerinde kaynakta not satırı olmadığından aynı dosyanın “3 puan iyi, 2 puan orta, 1 puan geliştirilebilir” notu kullanılır. 11. sınıf ölçeklerinin “Değerlendirme Sistemi” paragrafının son iki cümlesi değerlendirme satırına yazılır. Ortak çizelgenin sütunları ve formülleri her düzeyin kendi kaynak dosyasına göredir (10. sınıf: `AVERAGE`, 11. sınıf: `toplam*25/100`).
+- **Az öğrencili sınıflar:** Değerlendirme satırı tarihin yanına sığmazsa tarih bir satır aşağı yazılır.
 - **Kaynaktan farklar:** Kriter, düzey ve açıklama metinleri kaynak dosyadan alınır. 2. performans ölçeklerindeki kaynakta yarım kalan “NOT” cümlesinin yalnızca ilk cümlesi kullanılır. Bu ölçeklere kaynakta olmayan “en düşük/en yüksek puan” satırı eklenmiştir. Kaynakta “DEĞERLENDİRME ÖLÇEĞİ” ifadesi eksik olan 2. Tema Yazma başlığı tamamlanır.
 
 ## GitHub Pages’te yayınlama
@@ -77,9 +121,11 @@ Kaynak JavaScript dosyalarını değiştiriyorsanız ilk seferde `npm ci`, ardı
 
 ## Testler ve dosyalar
 
-- `node --test tests/core.test.js`: Puan sınırları, tüm yasal ham toplamlar, 40–100 arasındaki ilk performans notları, ikinci performansın tüm 0–100 tam hedefleri için en yakın sonuç, yuvarlama, içe aktarma ve rapor kabul kuralları.
+- `node --test tests/core.test.js`: Üç sınıf düzeyinin ölçekleri ve formülleri, puan sınırları, tüm yasal ham toplamlar, 40–100 arasındaki ilk performans notları, ikinci performansın tüm 0–100 tam hedefleri için en yakın sonuç, yuvarlama, içe aktarma ve rapor kabul kuralları.
 - `app.bundle.js`: `npm run build` ile kaynak modüllerden üretilen, yerel dosya ve GitHub Pages üzerinde çalışan tarayıcı paketi.
-- `rubrics.js`: Öğrenci bilgisi içermeyen kaynak ölçek tanımları.
+- `rubrics.js`: Öğrenci bilgisi içermeyen 9. sınıf kaynak ölçek tanımları (`tests/extract_source.py`).
+- `rubrics-10-11.js`: 10 ve 11. sınıf kaynak ölçek tanımları (`python3 tests/extract_grades.py <10. sınıf.xlsx> <11. sınıf.xlsx>` ile üretilir).
+- `levels.js`: Sınıf düzeyleri; her düzeyin ölçekleri, ortak çizelge sütunları ve performans formülleri.
 - `core.js`: Dağıtım ve hesaplama.
 - `layout.js`: Ortak çizelge ve yedi ölçeğin sayfa yerleşimi, sayfalara bölme ve formül bağlantıları (yazdırma ve Excel için ortak).
 - `reports.js`: Baskı görünümü ve çıktı öncesi kontroller.
