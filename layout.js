@@ -192,14 +192,14 @@ function summaryGeometry(names, f = 1) {
   const rowHeight = lines => Math.ceil(lines * px(8 * f) * 1.15 + 4);
   return { widths, header, rowHeight };
 }
+// Student rows are distributed evenly: every row is as tall as the tallest name,
+// so one-line and two-line names share one row height.
+const summaryLines = names => Math.max(1, ...names.map(l => l.length));
 export function summaryPerPage(names, f = 1) {
   const { header, rowHeight } = summaryGeometry(names, f), title = Math.ceil(3 * lineHeight(10) + 12), foot = footerHeight(f);
-  let used = title + header + foot, n = 0;
-  const sorted = names.map(l => rowHeight(l.length)).sort((a, b) => b - a);
-  for (const h of sorted) { if (used + h > PAGE.height) break; used += h; n++; }
-  return Math.max(1, n);
+  return Math.max(1, Math.floor((PAGE.height - title - header - foot) / rowHeight(summaryLines(names))));
 }
-function summaryPage(rows, meta, pageNo, pages, name, locate, twoLines, f) {
+function summaryPage(rows, meta, pageNo, pages, name, locate, twoLines, f, lines) {
   const names = rows.map(r => twoLines ? nameLines(r.student.name) : [r.student.name.trim()]), { widths, header, rowHeight } = summaryGeometry(names, f);
   const m = sheet(name, SUMMARY_INDEX, { page: pageNo }), last = widths.length;
   const title = `${meta.year} EĞİTİM ÖĞRETİM YILI ${meta.school}\n${meta.className} SINIFI TÜRK DİLİ VE EDEBİYATI DERSİ\n1. DÖNEM 1. VE 2. PERFORMANS PUANLARI${pages > 1 ? ` (${pageNo}/${pages})` : ''}`;
@@ -221,7 +221,7 @@ function summaryPage(rows, meta, pageNo, pages, name, locate, twoLines, f) {
       m.put(9 + j, row, value, cell, { formula: value == null ? null : `ROUND('${at.sheet}'!${at.ref}/${rubric.max}*100,0)` });
     });
     m.put(12, row, r?.[1]?.result, { ...cell, bold: true, fill: RESULT_FILL }, { formula: r?.[1] ? `I${row}*33/100+J${row}*33/100+K${row}*34/100` : null, numberFormat: '0' });
-    heights.push(rowHeight(names[k].length));
+    heights.push(rowHeight(lines));
   });
   footer(m, widths, heights, 3 + rows.length, '', meta, f);
   return finish(m, widths, heights);
@@ -250,7 +250,8 @@ export function reportModels(state, evaluations, { target = 'print' } = {}) {
   const single = records.map(r => [r.student.name.trim()]), N = records.length;
   const options = [1, 0.95, 0.9, 0.85, 0.8].flatMap(f => [{ twoLines: true, f }, { twoLines: false, f }]);
   const choice = options.find(o => summaryPerPage(o.twoLines ? names : single, o.f) >= N) || { twoLines: false, f: 1 };
-  const summaryPages = balanced(records, summaryPerPage(choice.twoLines ? names : single, choice.f));
-  const summaries = summaryPages.map((rows, g) => summaryPage(rows, meta, g + 1, summaryPages.length, summaryPages.length > 1 ? `1. DÖNEM PERF. PUANLARI (${g + 1})` : SUMMARY_NAME, (id, index) => located.get(`${id}:${index}`), choice.twoLines, choice.f));
+  const listed = choice.twoLines ? names : single, lines = summaryLines(listed);
+  const summaryPages = balanced(records, summaryPerPage(listed, choice.f));
+  const summaries = summaryPages.map((rows, g) => summaryPage(rows, meta, g + 1, summaryPages.length, summaryPages.length > 1 ? `1. DÖNEM PERF. PUANLARI (${g + 1})` : SUMMARY_NAME, (id, index) => located.get(`${id}:${index}`), choice.twoLines, choice.f, lines));
   return [...summaries, ...scales];
 }

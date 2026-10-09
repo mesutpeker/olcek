@@ -141,3 +141,13 @@ test('Shared points move to level headers; differing points stay in the cell',()
   assert.equal(speak1.cells.find(c=>c.ref==='B3').value,'Başlangıç Düzeyinde\n(4 puan)');
   assert.doesNotMatch(speak1.cells.find(c=>c.ref==='B4').value,/puan\)?$/);
 });
+test('Summary rows share one height whether a name takes one line or two',()=>{
+  for(const count of [5,12,20,30,45]){
+    const students=Array.from({length:count},(_,i)=>({id:String(i),no:String(i+1),name:i%2?'Ali Yılmaz':'Fatma Zehra Karaoğlu Demirtaş',p1:'80',p2:'90'}));
+    const evaluations=students.map(s=>[{data:distribute(s.p1,1,s.id)},{data:distribute(s.p2,2,s.id)}]);
+    const summaries=reportModels({students,meta:{}},evaluations).filter(m=>!m.spec);
+    const rows=summaries.flatMap(m=>m.heights.slice(2,m.heights.length-4));
+    assert.equal(rows.length,count);
+    assert.equal(new Set(rows).size,1,`${count} students: ${[...new Set(rows)]}`);
+  }
+});
